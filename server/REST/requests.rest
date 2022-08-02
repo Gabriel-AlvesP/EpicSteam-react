@@ -1,0 +1,37 @@
+###
+
+GET http://localhost:3030/
+
+###
+
+GET http://localhost:3030/home
+
+###
+
+GET http://localhost:3030/users
+
+###
+
+POST  http://localhost:3030/users
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN 
+
+{
+	"username" : "janota",
+	"email": "janota@epicsteam.com",
+	"passwd": "cenoura"
+}
+
+###
+
+POST  http://localhost:3030/users/login
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN 
+
+{
+	"username" : "native",
+	"passwd": "cenoura"
+}
+
+###
+
