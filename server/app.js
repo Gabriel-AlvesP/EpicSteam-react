@@ -21,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Cors config
-const whiteList = ['localhost:3000'];
+const whiteList = ['http://localhost:3000'];
 const corsOptions = {
 	origin: function (origin, callback) {
 		if (whiteList.indexOf(origin) !== -1) callback(null, true);
