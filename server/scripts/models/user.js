@@ -20,10 +20,11 @@ const roles = {
  * @param @property {Number} role - user role
  * @property {Date} joinDate - timestamp on user creation
  */
-function User(username, email, passwd, role = roles.visitor) {
+function User(id, username, email, passwd, role = roles.visitor) {
+	this.id = id || null;
 	this.username = username;
 	this.email = email;
 	this.passwd = passwd;
 	this.role = role;
-	this.joinDate = new Date().toLocaleDateString();
+	this.joinDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 }

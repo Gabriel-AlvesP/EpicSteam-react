@@ -6,8 +6,8 @@ const requestHandlers = require('../requests');
 router.get('/users', requestHandlers.users);
 
 // POST
-router.post('/users', requestHandlers.signUp);
+router.post('/signup', requestHandlers.signUp);
 
-router.post('/users/login', requestHandlers.signIn);
+router.post('/login', requestHandlers.signIn);
 
 module.exports = router;

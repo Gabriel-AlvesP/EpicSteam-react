@@ -15,24 +15,15 @@ const cors = require('cors');
 
 const database = require('./database/dbConfig');
 const routes = require('./scripts/router/routes');
+const corsOptions = require('./config/cors');
 
 // Configs
 const app = express();
-const PORT = process.env.PORT || 3001;
-
-// Cors config
-const whiteList = ['http://localhost:3000'];
-const corsOptions = {
-	origin: function (origin, callback) {
-		if (whiteList.indexOf(origin) !== -1) callback(null, true);
-		else callback(new Error('Not allowed by CORS...'));
-	},
-	optionsSuccessStatus: 200,
-};
+const PORT = process.env.PORT || 3031;
 
 // Express config
-app.use(cors(corsOptions));
-app.use(logger('dev'));
+app.use(cors(corsOptions)); // Cors
+app.use(logger('dev')); // Logger
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
