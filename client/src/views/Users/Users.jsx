@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import getUsers from '../../services/api/AxiosAPI';
+import { getUsers } from '../../services/api/AxiosAPI';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
