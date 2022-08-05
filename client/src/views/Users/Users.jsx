@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import getUsers from '../../services/axiosAPI';
+import getUsers from '../../services/api/AxiosAPI';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
@@ -15,9 +16,9 @@ export default function Users() {
 	return (
 		<>
 			<Container>
-				<button className="justify-content-center" onClick={handleUsers}>
-					Update Users {typeof users}
-				</button>
+				<Button className="mt-5" onClick={handleUsers}>
+					Update Users
+				</Button>
 				<ul>
 					{users?.map((val, key) => {
 						return <li key={key}>{val.Username}</li>;
