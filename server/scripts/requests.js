@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt');
 //TODO: Check roles and if user is authenticated
 /**
  *
- * @param {*} req
- * @param {*} res
+ * @param {*} req request
+ * @param {*} res response
  */
 function users(req, res) {
 	db.connection.query(`SELECT * from Users`, (err, dbRes) => {

@@ -39,7 +39,7 @@ export function useSetAuth() {
  *
  * Aggregates {@link AuthContext} & {@link SetAuthContext} contexts and provides them to children
  *
- * @param {Components} children - wrapped components
+ * @param {Element} children - wrapped components
  * @returns {Element} Context Providers {@link AuthContext} & {@link SetAuthContext}
  */
 export function AuthProvider({ children }) {

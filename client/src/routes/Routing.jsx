@@ -11,7 +11,6 @@ export default function Routing() {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
-			<Route path="/home" element={<Home />} />
 			<Route path="/browse" element={<Browse />} />
 			<Route path="/game/:id" element={<Game />} />
 			<Route path="/users">

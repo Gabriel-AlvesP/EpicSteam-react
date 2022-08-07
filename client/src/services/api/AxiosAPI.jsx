@@ -3,10 +3,10 @@
  *
  */
 import Axios from 'axios';
-import serverUrl from '../../utils/urls.js';
+import SERVER_URL from '../../utils/urls.js';
 
 export const getUsers = async () => {
-	let serverRes = await Axios.get(`${serverUrl}/users`);
+	let serverRes = await Axios.get(`${SERVER_URL}/users`);
 	return serverRes.data;
 };
 

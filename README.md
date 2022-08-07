@@ -2,9 +2,29 @@
 
 Construção de Biblioteca de videojogos (Website e Fórum)
 
-## Instalacao
+## Instalação
 
-...
+### Serviço MySQL
+
+- Ter o serviço mysql a correr
+
+### Ficheiro DotEnv
+
+- Associar ao servidor um ficheiro **_.env_** com a seguinte estrutura :
+
+```.env
+# Node app environment variables
+NODE_ENV=development
+PORT=3031
+
+# Database connection environment variables
+HOST=localhost   # Optional
+USR=root         # Optional
+PASSWD=password  # Required
+DB=gameslibrary  # Optional
+```
+
+- Substituir as credenciais necessárias
 
 ## Entidades
 
