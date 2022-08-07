@@ -8,3 +8,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+.my-modal .modal-content{
+    background-color: rgb(39, 39, 39);
+}

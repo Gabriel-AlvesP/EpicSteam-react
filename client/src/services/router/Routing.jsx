@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../views/Home';
-import Browse from '../views/Browse';
-import Game from '../views/Game';
-import Users from '../views/Users/Users';
-import Profile from '../views/Users/Profile';
-import NotFound from '../views/NotFound';
+import Home from '../../views/Home';
+import Browse from '../../views/Browse';
+import Game from '../../views/Game';
+import Users from '../../views/Users/Users';
+import Profile from '../../views/Users/Profile';
+import NotFound from '../../views/NotFound';
 
 export default function Routing() {
 	return (

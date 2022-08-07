@@ -77,6 +77,14 @@ export default function SignUp() {
 			>
 				{errMsg}
 			</p> */
-		<p>signUp modal content</p>
+		<>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+			<div>signUp modal content</div>
+		</>
 	);
 }

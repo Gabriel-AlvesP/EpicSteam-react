@@ -1,23 +1,13 @@
-import Routing from './routes/Routing';
+import Routing from './services/router/Routing';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar';
+import Header from './components/Header';
 //TODO: Remove
 //import { Link } from 'react-router-dom';
 function App() {
 	return (
 		<div className="App">
-			<Navbar></Navbar>
-			{
-				//TODO: Remove
-				/*	<div>
-				<Link to="/">Home</Link>
-				<br />
-				<Link to="/browse">Browse</Link>
-				<br />
-				<Link to="/users">Users</Link>
-			</div> */
-			}
+			<Header></Header>
 			<Routing />
 		</div>
 	);
