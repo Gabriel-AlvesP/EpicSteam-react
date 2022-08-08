@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600&display=swap');
 
+/* Font */
 *{
   font-family: -apple-system, BlinkMacSystemFont, 'Nunito','Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -11,5 +12,7 @@
 
 
 .my-modal .modal-content{
-    background-color: rgb(39, 39, 39);
+/*     background-color: rgb(39, 39, 39); */
+  background-color: #393939;
+/*   background-color: #E8E9EB; */
 }

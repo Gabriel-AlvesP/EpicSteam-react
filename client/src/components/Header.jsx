@@ -7,28 +7,50 @@ import SignUp from './authentication/SignUp';
 import SignIn from './authentication/SignIn';
 import logo from '../assets/images/icon.png';
 
+/**
+ * Header Component is composed by a navbar and the authentication modal
+ * It handles basic website navigation
+ * @returns {Element} Header navbar + Authentication modal
+ */
 export default function Header() {
 	const [modalShow, setModalShow] = useState(false);
 	const [modalContent, setModalContent] = useState(<></>);
 	const [navbarBg, setNavbarBg] = useState('navbar-container active');
 
-	useEffect(() => window.addEventListener('scroll', changeNavBg), []);
+	/**
+	 * Set a listener for scroll event
+	 */
+	useEffect(() => {
+		window.addEventListener('scroll', changeNavBg);
+	}, []);
 
+	/**
+	 * Change navbar background
+	 */
 	const changeNavBg = () => {
 		if (window.scrollY > 400) setNavbarBg('navbar-container');
 		else setNavbarBg('navbar-container active');
 	};
 
+	/**
+	 * Show the authentication modal with sign up content
+	 */
 	const handleSignUp = () => {
 		setModalContent(<SignUp />);
 		setModalShow(true);
 	};
 
+	/**
+	 * Show the authentication modal with sign in content
+	 */
 	const handleSignIn = () => {
 		setModalContent(<SignIn />);
 		setModalShow(true);
 	};
 
+	/**
+	 * Handle authentication modal hide
+	 */
 	const handleModalHide = () => {
 		setModalShow(false);
 		setModalContent(<></>);

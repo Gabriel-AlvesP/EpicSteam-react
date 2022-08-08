@@ -1,0 +1,79 @@
+.loginContainer { 
+    width: 300px;
+    margin: 2em auto;
+    align-content: center;
+    align-items: center;
+}
+
+.loginGroup {
+    position:relative; 
+    margin-bottom:45px;
+}
+
+input 				{
+    font-size: 18px;
+	padding: 10px 10px 10px 5px; 
+	-webkit-appearance: none;
+	display: block;
+	background: transparent;
+/* 	color: #394679; */
+    color: #E8E9EB;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #757575;
+}
+input:focus 		{ outline:none; }
+
+label 				 {
+  color:#999; 
+/*     color: #E8E9EB; */
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+/*   color:#5264AE; */
+    color:#ff7800;
+} 
+
+.errMsg{
+    margin: "auto";
+    width: "100%";
+    padding-bottom: "30px";
+    color: "#FF0000";
+}
+
+.auth-title{
+    margin-top: 0.8em;
+/*     color: #5264AE; */
+    color: #ff7800;
+    text-align: center; 
+}
+
+.modal-nav{
+/*     color: black; */
+    margin: auto;
+    width: 80%;
+    padding-top: 40px;
+}
+
+.modal-nav-link{
+/*     color:#5264AE; */
+color: #ff7800;
+}
+
+.my-modal .modal-header{
+	border-bottom: none;
+	position: relative;
+	justify-content: center;
+}

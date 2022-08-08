@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Modal } from 'react-bootstrap';
+import './Auth.css';
 
 /**
- *
+ * Handle sign up process
  * @returns
  */
 export default function SignUp() {
@@ -10,9 +12,6 @@ export default function SignUp() {
 
 	const errRef = useRef();
 	const userRef = useRef();
-
-	//Modal
-	const [modalShow, setModalShow] = useState(false);
 
 	//Username
 	const [username, setUsername] = useState('');
@@ -38,53 +37,121 @@ export default function SignUp() {
 	const [errMsg, setErrMsg] = useState('');
 	const [success, setSuccess] = useState(false);
 
-	//Use Effect (On mount)
-	//useEffect(() => userRef.current.focus(), []);
+	const [btnDisable, setBtnDisable] = useState(true);
+	const [btnStyle, setBtnStyle] = useState({
+		borderRadius: 3,
+		border: 0,
+		color: 'white',
+		height: 48,
+		width: 300,
+		padding: '0 30px',
+		fontSize: '18px',
+		background: '#5264AE',
+	});
 
+	//TODO: useEffect(() => userRef.current.focus(), []);
+
+	/*
+	 * Username validation
+	 */
 	useEffect(() => {
-		//TODO: RegEx - username
+		/* Username
+		 * Characters: Alphanumeric and SpecialCharacters: { _ .}
+		 * Length: [3,20]
+		 * Special Characters: can't be together or at the start
+		 */
+		const usernameValidator = RegExp(
+			'^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^._].*$'
+		);
+		let regExResult = usernameValidator.test(username);
 
-		let condition = false;
-		setValidUsername(condition);
+		setBtnDisable(regExResult);
+		setValidUsername(regExResult);
 	}, [username]);
 
+	/*
+	 * Email validation
+	 */
 	useEffect(() => {
 		const emailValidator = RegExp('^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$');
 
-		let condition = false;
-		setValidEmail(condition);
+		setValidEmail(emailValidator.test(email));
 	}, [email]);
 
+	/*
+	 * Password Validation
+	 */
 	useEffect(() => {
-		const regEx = RegExp('^(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,24}$');
-
-		//TODO: RegEx - pwd
-		let condition = false;
-		setValidPasswd(condition);
+		const passwdValidator = RegExp('^(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,24}$');
+		setValidPasswd(!passwdValidator.test(passwd));
 		setValidMatch(passwd === matchPasswd);
 	}, [passwd, matchPasswd]);
 
+	/*
+	 * Reset error message
+	 */
 	useEffect(() => {
 		setErrMsg('');
 	}, [username, email, passwd, matchPasswd]);
 
-	//TODO: Add Sign up modal
+	/*
+	 * Disable submit button
+	 */
+	useEffect(() => {
+		const color = btnDisable ? '#A8B1D6' : '#ff7800';
+		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
+	}, [btnDisable]);
+
 	return (
-		/* 			<p
-				ref={errRef}
-				className={errMsg ? 'errMsg' : 'offScreen'}
-				aria-live="assertive"
-			>
-				{errMsg}
-			</p> */
 		<>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
-			<div>signUp modal content</div>
+			{/* 			<Modal.Header closeButton></Modal.Header> */}
+			<Modal.Body>
+				<h2 className="auth-title">Sign up</h2>
+				<div className="loginContainer">
+					{errMsg}
+					<div className="loginGroup">
+						<input type="text" required></input>
+						<label>Username</label>
+					</div>
+
+					<div className="loginGroup">
+						<input type="text" required></input>
+						<label>Email</label>
+					</div>
+
+					<div className="loginGroup">
+						<input required type="password"></input>
+						<label>Password</label>
+					</div>
+					<div className="loginGroup">
+						<input type="password" required></input>
+						<label>Confirm Password</label>
+					</div>
+
+					<div>
+						<button
+							type="button"
+							style={btnStyle}
+							/* 							
+							onClick={handleSignUp} //TODO: write a handleSignUp on AxiosApi.js and import it
+							onMouseEnter={() => setButtonHover(true)}
+							onMouseLeave={() => setButtonHover(false)} */
+							disabled={btnDisable}
+						>
+							Sign up
+						</button>
+						<div
+							className="modal-nav"
+							/* TODO:
+						onClick={this.navigateSignup}
+						onMouseEnter={this.handleSignUpHoverEnter}
+						onMouseLeave={this.handleSignUpHoverLeave} */
+						>
+							Don't have an account? <b className="modal-nav-link">Sign Up</b>
+						</div>
+					</div>
+				</div>
+			</Modal.Body>
 		</>
 	);
 }
