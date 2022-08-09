@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal } from 'react-bootstrap';
 import './Auth.css';
 
 /**
  * Handle sign up process
  * @returns
  */
-export default function SignUp() {
+export default function SignUp(props) {
 	//Regular Expressions
 	//const userName = RegEx.text
 
@@ -104,54 +103,51 @@ export default function SignUp() {
 
 	return (
 		<>
-			{/* 			<Modal.Header closeButton></Modal.Header> */}
-			<Modal.Body>
-				<h2 className="auth-title">Sign up</h2>
-				<div className="loginContainer">
-					{errMsg}
-					<div className="loginGroup">
-						<input type="text" required></input>
-						<label>Username</label>
-					</div>
+			{errMsg}
+			<div className="loginGroup">
+				<input type="text" required></input>
+				<label>Username</label>
+			</div>
 
-					<div className="loginGroup">
-						<input type="text" required></input>
-						<label>Email</label>
-					</div>
+			<div className="loginGroup">
+				<input type="text" required></input>
+				<label>Email</label>
+			</div>
 
-					<div className="loginGroup">
-						<input required type="password"></input>
-						<label>Password</label>
-					</div>
-					<div className="loginGroup">
-						<input type="password" required></input>
-						<label>Confirm Password</label>
-					</div>
+			<div className="loginGroup">
+				<input required type="password"></input>
+				<label>Password</label>
+			</div>
+			<div className="loginGroup">
+				<input type="password" required></input>
+				<label>Confirm Password</label>
+			</div>
 
-					<div>
-						<button
-							type="button"
-							style={btnStyle}
-							/* 							
+			<div>
+				<button
+					type="button"
+					style={btnStyle}
+					/* 							
 							onClick={handleSignUp} //TODO: write a handleSignUp on AxiosApi.js and import it
 							onMouseEnter={() => setButtonHover(true)}
 							onMouseLeave={() => setButtonHover(false)} */
-							disabled={btnDisable}
-						>
-							Sign up
-						</button>
-						<div
-							className="modal-nav"
-							/* TODO:
+					disabled={btnDisable}
+				>
+					Sign up
+				</button>
+				<div
+					className="modal-nav"
+					/* TODO:
 						onClick={this.navigateSignup}
 						onMouseEnter={this.handleSignUpHoverEnter}
 						onMouseLeave={this.handleSignUpHoverLeave} */
-						>
-							Don't have an account? <b className="modal-nav-link">Sign Up</b>
-						</div>
-					</div>
+				>
+					Already have an account?{' '}
+					<b onClick={props.onNavClick} className="modal-nav-link">
+						Sign in
+					</b>
 				</div>
-			</Modal.Body>
+			</div>
 		</>
 	);
 }

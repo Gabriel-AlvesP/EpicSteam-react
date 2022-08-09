@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import AuthModal from './authentication/AuthModal';
 import './Header.css';
 import '../assets/style/hoverEffects.css';
-import { Link } from 'react-router-dom';
-import { Modal, Navbar, Nav, Container } from 'react-bootstrap';
-import SignUp from './authentication/SignUp';
-import SignIn from './authentication/SignIn';
 import logo from '../assets/images/icon.png';
 
 /**
@@ -14,7 +13,7 @@ import logo from '../assets/images/icon.png';
  */
 export default function Header() {
 	const [modalShow, setModalShow] = useState(false);
-	const [modalContent, setModalContent] = useState(<></>);
+	const [modalContent, setModalContent] = useState(true);
 	const [navbarBg, setNavbarBg] = useState('navbar-container active');
 
 	/**
@@ -36,7 +35,7 @@ export default function Header() {
 	 * Show the authentication modal with sign up content
 	 */
 	const handleSignUp = () => {
-		setModalContent(<SignUp />);
+		setModalContent(false);
 		setModalShow(true);
 	};
 
@@ -44,7 +43,7 @@ export default function Header() {
 	 * Show the authentication modal with sign in content
 	 */
 	const handleSignIn = () => {
-		setModalContent(<SignIn />);
+		setModalContent(true);
 		setModalShow(true);
 	};
 
@@ -53,7 +52,6 @@ export default function Header() {
 	 */
 	const handleModalHide = () => {
 		setModalShow(false);
-		setModalContent(<></>);
 	};
 
 	//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
@@ -106,9 +104,11 @@ export default function Header() {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-			<Modal className="my-modal" show={modalShow} onHide={handleModalHide}>
-				{modalContent}
-			</Modal>
+			<AuthModal
+				modalContent={modalContent}
+				show={modalShow}
+				onHide={handleModalHide}
+			/>
 		</>
 	);
 }
