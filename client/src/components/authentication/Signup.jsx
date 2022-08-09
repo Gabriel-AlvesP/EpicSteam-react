@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Auth.css';
+import ErrorMsg from './ErrorMsg';
 
 /**
  * Handle sign up process
@@ -101,19 +102,18 @@ export default function SignUp(props) {
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnDisable]);
 
+	//TODO: Pass the error message to the component
 	return (
 		<>
-			{errMsg}
+			<ErrorMsg errorMsg={''} />
 			<div className="loginGroup">
 				<input type="text" required></input>
 				<label>Username</label>
 			</div>
-
 			<div className="loginGroup">
 				<input type="text" required></input>
 				<label>Email</label>
 			</div>
-
 			<div className="loginGroup">
 				<input required type="password"></input>
 				<label>Password</label>
@@ -122,7 +122,6 @@ export default function SignUp(props) {
 				<input type="password" required></input>
 				<label>Confirm Password</label>
 			</div>
-
 			<div>
 				<button
 					type="button"

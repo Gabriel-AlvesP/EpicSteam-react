@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Auth.css';
+import ErrorMsg from './ErrorMsg';
 
 export default function SignIn(props) {
 	const [userIdentifier, setUserIdentifier] = useState('');
@@ -32,9 +33,10 @@ export default function SignIn(props) {
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnDisable]);
 
+	//TODO: Mudar o errMsg para um componente separado e utiliza-lo para toda a autenticacao
 	return (
 		<>
-			{errMsg}
+			<ErrorMsg errorMsg={''} />
 			<div className="loginGroup">
 				<input type="text" required></input>
 				<label>Username or Email</label>

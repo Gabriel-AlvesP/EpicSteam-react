@@ -1,8 +1,6 @@
 .loginContainer { 
     width: 300px;
     margin: 2em auto;
-    align-content: center;
-    align-items: center;
 }
 
 .loginGroup {
@@ -27,7 +25,6 @@ input:focus { outline:none; }
 
 label {
   color:#999; 
-/*     color: #E8E9EB; */
   font-size:18px;
   font-weight:normal;
   position:absolute;
@@ -46,12 +43,6 @@ input:focus ~ label, input:valid ~ label {
     color:#ff7800;
 } 
 
-.errMsg {
-    margin: "auto";
-    width: "100%";
-    padding-bottom: "30px";
-    color: "#FF0000";
-}
 
 .auth-title {
     margin-top: 0.7em;
@@ -59,6 +50,14 @@ input:focus ~ label, input:valid ~ label {
 /*     color: #5264AE; */
     color: #ff7800;
     text-align: center; 
+}
+
+.error-msg {
+    margin: auto ;
+    width: 100% ;
+    padding-bottom: 30px ;
+    color: #FF0000  ;
+    text-align: center;
 }
 
 .modal-nav {
