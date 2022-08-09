@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
+import {
+	usernameValidator,
+	emailValidator,
+	passwdValidator,
+} from '../../utils/authRegExp';
 
 export default function SignIn(props) {
 	const [userIdentifier, setUserIdentifier] = useState('');
-	const [userValid, setUserValid] = useState(false);
+	const [validId, setValidId] = useState(false);
+	const [idType, setIdType] = useState(true); // True username : False email
 
 	const [passwd, setPasswd] = useState('');
-	const [passwdValid, setPasswdValid] = useState(false);
+	const [validPasswd, setValidPasswd] = useState(false);
 
 	const [errMsg, setErrMsg] = useState('');
 
@@ -23,13 +29,45 @@ export default function SignIn(props) {
 		background: '#999999',
 	});
 
-	useEffect(() => {});
+	useEffect(() => {
+		if (usernameValidator.test(userIdentifier)) {
+			setIdType(true);
+			setValidId(true);
+			return;
+		}
+
+		if (emailValidator.test(userIdentifier)) {
+			setIdType(false);
+			setValidId(true);
+			return;
+		}
+
+		setValidId(false);
+		setErrMsg('This user does not exist');
+	}, [userIdentifier]);
+
+	useEffect(() => {
+		if (passwdValidator.test(passwd)) setValidPasswd(true);
+		else {
+			setValidPasswd(false);
+			setErrMsg('Invalid password.');
+		}
+	}, [passwd]);
+
+	useEffect(() => {
+		if (validId && validPasswd) setBtnEnable(true);
+		else setBtnEnable(false);
+	}, [validId, validPasswd]);
+
+	const signIn = () => {
+		//TODO:
+	};
 
 	/*
 	 * Disable submit button
 	 */
 	useEffect(() => {
-		const color = btnEnable ? '#999999' : '#ff7800';
+		const color = btnEnable ? '#ff7800' : '#999999';
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnEnable]);
 
@@ -38,12 +76,20 @@ export default function SignIn(props) {
 		<>
 			<ErrorMsg errorMsg={''} />
 			<div className="loginGroup">
-				<input type="text" onChange={} required></input>
+				<input
+					type="text"
+					onChange={e => setUserIdentifier(e.target.value)}
+					required
+				></input>
 				<label>Username or Email</label>
 			</div>
 
 			<div className="loginGroup">
-				<input required type="password"></input>
+				<input
+					onChange={e => setPasswd(e.target.value)}
+					type="password"
+					required
+				></input>
 				<label>Password</label>
 			</div>
 
@@ -55,9 +101,9 @@ export default function SignIn(props) {
 							onClick={handleSignUp} //TODO: write a handleSignUp on AxiosApi.js and import it
 							onMouseEnter={() => setButtonHover(true)}
 							onMouseLeave={() => setButtonHover(false)} */
-					disabled={btnEnable}
+					disabled={!btnEnable}
 				>
-					Sign up
+					Sign in
 				</button>
 				<div
 					className="modal-nav"

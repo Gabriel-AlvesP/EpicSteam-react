@@ -5,17 +5,12 @@ import {
 	usernameValidator,
 	emailValidator,
 	passwdValidator,
-} from '../../utils/AuthRegExp';
+} from '../../utils/authRegExp';
 /**
  * Handle sign up process
  * @returns
  */
 export default function SignUp(props) {
-	//Regular Expressions
-
-	const errRef = useRef();
-	const userRef = useRef();
-
 	//Username
 	const [username, setUsername] = useState('');
 	const [validUsername, setValidUsername] = useState(false);
@@ -78,7 +73,7 @@ export default function SignUp(props) {
 	}, [passwd, matchPasswd]);
 
 	/*
-	 * Reset error message
+	 * Reset error message when user is writing
 	 */
 	useEffect(() => {
 		setErrMsg('');
@@ -101,15 +96,6 @@ export default function SignUp(props) {
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnEnable]);
 
-	/**
-	 * Used to set a state through the 'useState' function when the content of an input changes
-	 * @param {Object} e event
-	 * @param {function} callback setState
-	 */
-	const onInputChange = (e, callback) => {
-		callback(e.target.value);
-	};
-
 	//TODO: Pass the error message to the component
 	return (
 		<>
@@ -117,7 +103,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="text"
-					onChange={e => onInputChange(e, setUsername)}
+					onChange={e => setUsername(e.target.value)}
 					onFocus={() => setUsernameFocus(true)}
 					onBlur={() => setUsernameFocus(false)}
 					required
@@ -127,7 +113,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="text"
-					onChange={e => onInputChange(e, setEmail)}
+					onChange={e => setEmail(e.target.value)}
 					onFocus={() => setEmailFocus(true)}
 					onBlur={() => setEmailFocus(false)}
 					required
@@ -138,7 +124,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="password"
-					onChange={e => onInputChange(e, setPasswd)}
+					onChange={e => setPasswd(e.target.value)}
 					onFocus={() => setPasswdFocus(true)}
 					onBlur={() => setPasswdFocus(false)}
 					required
@@ -149,7 +135,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="password"
-					onChange={e => onInputChange(e, setMatchPasswd)}
+					onChange={e => setMatchPasswd(e.target.value)}
 					onFocus={() => setMatchFocus(true)}
 					onBlur={() => setMatchFocus(false)}
 					required
@@ -173,10 +159,7 @@ export default function SignUp(props) {
 				</button>
 				<div
 					className="modal-nav"
-					/* TODO:
-						onClick={this.navigateSignup}
-						onMouseEnter={this.handleSignUpHoverEnter}
-						onMouseLeave={this.handleSignUpHoverLeave} */
+					/* TODO: onClick={this.navigateSignup}*/
 				>
 					Already have an account?{' '}
 					<b onClick={props.onNavClick} className="modal-nav-link">
