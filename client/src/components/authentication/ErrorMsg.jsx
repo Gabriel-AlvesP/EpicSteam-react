@@ -18,5 +18,6 @@ export default function ErrorMsg(props) {
 			setMsgStyle(prevStyle => ({ ...prevStyle, paddingBottom: '30px' }));
 		else setMsgStyle(prevStyle => ({ ...prevStyle, paddingBottom: '0' }));
 	}, [errMsg]);
+
 	return <div style={msgStyle}>{errMsg}</div>;
 }

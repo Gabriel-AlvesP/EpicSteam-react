@@ -11,7 +11,7 @@ export default function SignIn(props) {
 
 	const [errMsg, setErrMsg] = useState('');
 
-	const [btnDisable, setBtnDisable] = useState(true);
+	const [btnEnable, setBtnEnable] = useState(false);
 	const [btnStyle, setBtnStyle] = useState({
 		borderRadius: 3,
 		border: 0,
@@ -20,7 +20,7 @@ export default function SignIn(props) {
 		width: 300,
 		padding: '0 30px',
 		fontSize: '18px',
-		background: '#5264AE',
+		background: '#999999',
 	});
 
 	useEffect(() => {});
@@ -29,16 +29,16 @@ export default function SignIn(props) {
 	 * Disable submit button
 	 */
 	useEffect(() => {
-		const color = btnDisable ? '#999999' : '#ff7800';
+		const color = btnEnable ? '#999999' : '#ff7800';
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
-	}, [btnDisable]);
+	}, [btnEnable]);
 
 	//TODO: Mudar o errMsg para um componente separado e utiliza-lo para toda a autenticacao
 	return (
 		<>
 			<ErrorMsg errorMsg={''} />
 			<div className="loginGroup">
-				<input type="text" required></input>
+				<input type="text" onChange={} required></input>
 				<label>Username or Email</label>
 			</div>
 
@@ -55,7 +55,7 @@ export default function SignIn(props) {
 							onClick={handleSignUp} //TODO: write a handleSignUp on AxiosApi.js and import it
 							onMouseEnter={() => setButtonHover(true)}
 							onMouseLeave={() => setButtonHover(false)} */
-					disabled={btnDisable}
+					disabled={btnEnable}
 				>
 					Sign up
 				</button>
