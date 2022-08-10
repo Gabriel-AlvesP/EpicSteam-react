@@ -5,7 +5,7 @@ import {
 	usernameValidator,
 	emailValidator,
 	passwdValidator,
-} from '../../utils/authRegExp';
+} from '../../utils/authValidations';
 
 export default function SignIn(props) {
 	const [userIdentifier, setUserIdentifier] = useState('');
@@ -36,7 +36,7 @@ export default function SignIn(props) {
 			return;
 		}
 
-		if (emailValidator.test(userIdentifier)) {
+		if (emailValidator(userIdentifier)) {
 			setIdType(false);
 			setValidId(true);
 			return;
@@ -60,7 +60,13 @@ export default function SignIn(props) {
 	}, [validId, validPasswd]);
 
 	const signIn = () => {
-		//TODO:
+		//!CLG
+		console.log('Implementing');
+		if (idType) {
+			//TODO: usernames query/handling
+		}
+
+		//TODO: emails query/handling
 	};
 
 	/*
@@ -97,21 +103,12 @@ export default function SignIn(props) {
 				<button
 					type="button"
 					style={btnStyle}
-					/* 							
-							onClick={handleSignUp} //TODO: write a handleSignUp on AxiosApi.js and import it
-							onMouseEnter={() => setButtonHover(true)}
-							onMouseLeave={() => setButtonHover(false)} */
+					onClick={signIn}
 					disabled={!btnEnable}
 				>
 					Sign in
 				</button>
-				<div
-					className="modal-nav"
-					/* TODO:
-						onClick={this.navigateSignup}
-						onMouseEnter={this.handleSignUpHoverEnter}
-						onMouseLeave={this.handleSignUpHoverLeave} */
-				>
+				<div className="modal-nav">
 					Already have an account?{' '}
 					<b onClick={props.onNavClick} className="modal-nav-link">
 						Sign in

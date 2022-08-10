@@ -21,6 +21,11 @@ input {
 	border-radius: 0;
 	border-bottom: 1px solid #757575;
 }
+
+.inputErr{
+	border-bottom: 1px solid #FF0000;
+}
+
 input:focus { outline:none; }
 
 label {

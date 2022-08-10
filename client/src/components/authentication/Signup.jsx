@@ -1,35 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
-import {
+import setInputColor, {
 	usernameValidator,
 	emailValidator,
 	passwdValidator,
-} from '../../utils/authRegExp';
+} from '../../utils/authValidations';
+
 /**
  * Handle sign up process
  * @returns
  */
 export default function SignUp(props) {
+	const usernameRef = useRef();
+
 	//Username
 	const [username, setUsername] = useState('');
 	const [validUsername, setValidUsername] = useState(false);
 	const [usernameFocus, setUsernameFocus] = useState(false);
+	const [usernameColor, setUsernameColor] = useState('');
 
 	//User email
 	const [email, setEmail] = useState('');
 	const [validEmail, setValidEmail] = useState(false);
 	const [emailFocus, setEmailFocus] = useState(false);
+	const [emailColor, setEmailColor] = useState('');
 
 	//Password
 	const [passwd, setPasswd] = useState('');
 	const [validPasswd, setValidPasswd] = useState(false);
 	const [passwdFocus, setPasswdFocus] = useState(false);
+	const [passwdColor, setPasswdColor] = useState('');
 
 	//Confirm password
 	const [matchPasswd, setMatchPasswd] = useState('');
 	const [validMatch, setValidMatch] = useState(false);
 	const [matchFocus, setMatchFocus] = useState(false);
+	const [matchColor, setMatchColor] = useState('');
 
 	//Messages
 	const [errMsg, setErrMsg] = useState('');
@@ -50,6 +57,10 @@ export default function SignUp(props) {
 
 	//TODO: useEffect(() => userRef.current.focus(), []);
 
+	useEffect(() => {
+		usernameRef.current.focus();
+	}, []);
+
 	/*
 	 * Username validation
 	 */
@@ -61,7 +72,7 @@ export default function SignUp(props) {
 	 * Email validation
 	 */
 	useEffect(() => {
-		setValidEmail(emailValidator.test(email));
+		setValidEmail(emailValidator(email));
 	}, [email]);
 
 	/*
@@ -78,6 +89,29 @@ export default function SignUp(props) {
 	useEffect(() => {
 		setErrMsg('');
 	}, [username, email, passwd, matchPasswd]);
+
+	/*
+	 * Set Input colors with validation
+	 */
+	useEffect(() => {
+		setInputColor(username, validUsername, setUsernameColor);
+	}, [username, validUsername]);
+
+	useEffect(() => {
+		setInputColor(email, validEmail, setEmailColor);
+	}, [email, validEmail]);
+
+	useEffect(() => {
+		setInputColor(email, validEmail, setEmailColor);
+	}, [email, validEmail]);
+
+	useEffect(() => {
+		setInputColor(passwd, validPasswd, setPasswdColor);
+	}, [passwd, validPasswd]);
+
+	useEffect(() => {
+		setInputColor(matchPasswd, validMatch, setMatchColor);
+	}, [matchPasswd, validMatch]);
 
 	/*
 	 * Enable/Disable submit button
@@ -99,10 +133,12 @@ export default function SignUp(props) {
 	//TODO: Pass the error message to the component
 	return (
 		<>
-			<ErrorMsg errorMsg={''} />
+			<ErrorMsg errorMsg={errMsg} />
 			<div className="loginGroup">
 				<input
 					type="text"
+					ref={usernameRef}
+					className={usernameColor}
 					onChange={e => setUsername(e.target.value)}
 					onFocus={() => setUsernameFocus(true)}
 					onBlur={() => setUsernameFocus(false)}
@@ -113,6 +149,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="text"
+					className={emailColor}
 					onChange={e => setEmail(e.target.value)}
 					onFocus={() => setEmailFocus(true)}
 					onBlur={() => setEmailFocus(false)}
@@ -124,6 +161,7 @@ export default function SignUp(props) {
 			<div className="loginGroup">
 				<input
 					type="password"
+					className={passwdColor}
 					onChange={e => setPasswd(e.target.value)}
 					onFocus={() => setPasswdFocus(true)}
 					onBlur={() => setPasswdFocus(false)}
@@ -136,6 +174,7 @@ export default function SignUp(props) {
 				<input
 					type="password"
 					onChange={e => setMatchPasswd(e.target.value)}
+					className={matchColor}
 					onFocus={() => setMatchFocus(true)}
 					onBlur={() => setMatchFocus(false)}
 					required
@@ -150,9 +189,6 @@ export default function SignUp(props) {
 						console.log('enable');
 						//TODO: write a handleSignUp on AxiosApi.js and import it
 					}}
-					/* 							
-							onMouseEnter={() => setButtonHover(true)}
-							onMouseLeave={() => setButtonHover(false)} */
 					disabled={!btnEnable}
 				>
 					Sign up <span>{btnEnable}</span>
