@@ -9,7 +9,7 @@ export default function setInputColor(state, validation, callback) {
 }
 
 /* Username Validator
- * Characters: Alphanumeric and SpecialCharacters: { _ .}
+ * Valid Characters: Alphanumeric and SpecialCharacters: { _ .}
  * Length: [3,20]
  * Special Characters: can't be together or at the start
  */
@@ -50,11 +50,38 @@ const emailValidator = email => {
 };
 
 /* Passwd Validator
- *
+ * Valid Character: Alpanumeric and Special Characters { @$!%*?&^#~$ }
+ * Required Characters: 1 capital letter, 1 lowercase letter, 1 number
+ * Length: [8, 28]
  */
-//`^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&^#~$]{8,28}$`
-const passwdValidator = RegExp(
-	`^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,24}$`
-);
+const passwdValidator =
+	/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&^#~$]{8,28}$/;
 
-export { usernameValidator, emailValidator, passwdValidator };
+const signUpHints = msgNumb => {
+	if (msgNumb === 1)
+		return 'Username must contain at least 3 characters. Only supports . and _ as special characters (nonconsecutive)';
+
+	if (msgNumb === 2) return 'Invalid email.';
+
+	if (msgNumb === 3)
+		return 'Password must contain 1 capital and lowercase letter, 1 number and it must be at least 8 length.';
+
+	if (msgNumb === 4) return `Password doesn't match.`;
+
+	return '';
+};
+
+const signInHints = msgNumb => {
+	if (msgNumb === 1) return `This user doesn't exist.`;
+	if (msgNumb === 2) return 'Invalid password';
+
+	return '';
+};
+
+export {
+	usernameValidator,
+	emailValidator,
+	passwdValidator,
+	signUpHints,
+	signInHints,
+};

@@ -8,14 +8,14 @@ import {
 } from '../../utils/authValidations';
 
 export default function SignIn(props) {
-	const [userIdentifier, setUserIdentifier] = useState('');
+	const [userId, setUserId] = useState('');
 	const [validId, setValidId] = useState(false);
 	const [idType, setIdType] = useState(true); // True username : False email
 
 	const [passwd, setPasswd] = useState('');
 	const [validPasswd, setValidPasswd] = useState(false);
 
-	const [errMsg, setErrMsg] = useState('');
+	const [errMessage, setErrMessage] = useState('');
 
 	const [btnEnable, setBtnEnable] = useState(false);
 	const [btnStyle, setBtnStyle] = useState({
@@ -29,43 +29,62 @@ export default function SignIn(props) {
 		background: '#999999',
 	});
 
+	/*
+	 * Check identifier type and validates it
+	 */
 	useEffect(() => {
-		if (usernameValidator.test(userIdentifier)) {
+		if (usernameValidator.test(userId)) {
 			setIdType(true);
 			setValidId(true);
 			return;
 		}
 
-		if (emailValidator(userIdentifier)) {
+		if (emailValidator(userId)) {
 			setIdType(false);
 			setValidId(true);
 			return;
 		}
 
 		setValidId(false);
-		setErrMsg('This user does not exist');
-	}, [userIdentifier]);
+	}, [userId]);
 
+	/*
+	 * Validate password
+	 */
 	useEffect(() => {
 		if (passwdValidator.test(passwd)) setValidPasswd(true);
-		else {
-			setValidPasswd(false);
-			setErrMsg('Invalid password.');
-		}
+		else setValidPasswd(false);
 	}, [passwd]);
 
+	/*
+	 * Enables the submit button
+	 */
 	useEffect(() => {
-		if (validId && validPasswd) setBtnEnable(true);
+		if (userId && passwd) setBtnEnable(true);
 		else setBtnEnable(false);
-	}, [validId, validPasswd]);
+	}, [userId, passwd]);
 
 	const signIn = () => {
-		//!CLG
-		console.log('Implementing');
+		if (!validId) {
+			setErrMessage(`This user doesn't exist`);
+			return;
+		}
+
+		if (!validPasswd) {
+			setErrMessage(`Invalid password`);
+			return;
+		}
+
+		//!clg
+		console.log('success');
+		setErrMessage('');
+
 		if (idType) {
+			//username
 			//TODO: usernames query/handling
 		}
 
+		//email
 		//TODO: emails query/handling
 	};
 
@@ -77,14 +96,13 @@ export default function SignIn(props) {
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnEnable]);
 
-	//TODO: Mudar o errMsg para um componente separado e utiliza-lo para toda a autenticacao
 	return (
 		<>
-			<ErrorMsg errorMsg={''} />
+			<ErrorMsg message={errMessage} />
 			<div className="loginGroup">
 				<input
 					type="text"
-					onChange={e => setUserIdentifier(e.target.value)}
+					onChange={e => setUserId(e.target.value)}
 					required
 				></input>
 				<label>Username or Email</label>
@@ -111,7 +129,7 @@ export default function SignIn(props) {
 				<div className="modal-nav">
 					Already have an account?{' '}
 					<b onClick={props.onNavClick} className="modal-nav-link">
-						Sign in
+						Sign up
 					</b>
 				</div>
 			</div>

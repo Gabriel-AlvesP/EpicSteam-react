@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
 import setInputColor, {
@@ -12,35 +12,27 @@ import setInputColor, {
  * @returns
  */
 export default function SignUp(props) {
-	const usernameRef = useRef();
+	const [focus, setFocus] = useState(0);
 
 	//Username
 	const [username, setUsername] = useState('');
 	const [validUsername, setValidUsername] = useState(false);
-	const [usernameFocus, setUsernameFocus] = useState(false);
 	const [usernameColor, setUsernameColor] = useState('');
 
 	//User email
 	const [email, setEmail] = useState('');
 	const [validEmail, setValidEmail] = useState(false);
-	const [emailFocus, setEmailFocus] = useState(false);
 	const [emailColor, setEmailColor] = useState('');
 
 	//Password
 	const [passwd, setPasswd] = useState('');
 	const [validPasswd, setValidPasswd] = useState(false);
-	const [passwdFocus, setPasswdFocus] = useState(false);
 	const [passwdColor, setPasswdColor] = useState('');
 
 	//Confirm password
 	const [matchPasswd, setMatchPasswd] = useState('');
 	const [validMatch, setValidMatch] = useState(false);
-	const [matchFocus, setMatchFocus] = useState(false);
 	const [matchColor, setMatchColor] = useState('');
-
-	//Messages
-	const [errMsg, setErrMsg] = useState('');
-	const [success, setSuccess] = useState(false);
 
 	//Submit button
 	const [btnEnable, setBtnEnable] = useState(false);
@@ -54,12 +46,14 @@ export default function SignUp(props) {
 		fontSize: '18px',
 		background: '#999999',
 	});
+	//TODO: on signUp success?
+	//const [success, setSuccess] = useState(false);
 
-	//TODO: useEffect(() => userRef.current.focus(), []);
-
-	useEffect(() => {
-		usernameRef.current.focus();
-	}, []);
+	/*
+	 * Auto focus on username when modal opens
+	 */
+	//const usernameRef = useRef();
+	//useEffect(() => usernameRef.current.focus(), []);
 
 	/*
 	 * Username validation
@@ -84,14 +78,7 @@ export default function SignUp(props) {
 	}, [passwd, matchPasswd]);
 
 	/*
-	 * Reset error message when user is writing
-	 */
-	useEffect(() => {
-		setErrMsg('');
-	}, [username, email, passwd, matchPasswd]);
-
-	/*
-	 * Set Input colors with validation
+	 * Set Input colors with validation support
 	 */
 	useEffect(() => {
 		setInputColor(username, validUsername, setUsernameColor);
@@ -114,7 +101,7 @@ export default function SignUp(props) {
 	}, [matchPasswd, validMatch]);
 
 	/*
-	 * Enable/Disable submit button
+	 * Enable/Disable submit button on validations change
 	 */
 	useEffect(() => {
 		if (validUsername && validEmail && validPasswd && validMatch)
@@ -123,25 +110,35 @@ export default function SignUp(props) {
 	}, [validUsername, validEmail, validPasswd, validMatch]);
 
 	/*
-	 * Change submit button color
+	 * Change submit button color on button enabling/disabling
 	 */
 	useEffect(() => {
 		const color = btnEnable ? '#ff7800' : '#999999';
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnEnable]);
 
+	const signUp = e => {
+		//TODO: write a handleSignUp on AxiosApi.js and import it
+		e.preventDefault();
+		//!clg
+		console.log('In development');
+	};
+
 	//TODO: Pass the error message to the component
 	return (
 		<>
-			<ErrorMsg errorMsg={errMsg} />
+			<ErrorMsg
+				focus={focus}
+				validations={[validUsername, validEmail, validPasswd, validMatch]}
+			/>
 			<div className="loginGroup">
 				<input
+					/*ref={usernameRef}*/
 					type="text"
-					ref={usernameRef}
 					className={usernameColor}
 					onChange={e => setUsername(e.target.value)}
-					onFocus={() => setUsernameFocus(true)}
-					onBlur={() => setUsernameFocus(false)}
+					onFocus={() => setFocus(1)}
+					onBlur={() => setFocus(0)}
 					required
 				></input>
 				<label>Username</label>
@@ -151,8 +148,8 @@ export default function SignUp(props) {
 					type="text"
 					className={emailColor}
 					onChange={e => setEmail(e.target.value)}
-					onFocus={() => setEmailFocus(true)}
-					onBlur={() => setEmailFocus(false)}
+					onFocus={() => setFocus(2)}
+					onBlur={() => setFocus(0)}
 					required
 				></input>
 
@@ -163,8 +160,8 @@ export default function SignUp(props) {
 					type="password"
 					className={passwdColor}
 					onChange={e => setPasswd(e.target.value)}
-					onFocus={() => setPasswdFocus(true)}
-					onBlur={() => setPasswdFocus(false)}
+					onFocus={() => setFocus(3)}
+					onBlur={() => setFocus(0)}
 					required
 				></input>
 
@@ -175,8 +172,8 @@ export default function SignUp(props) {
 					type="password"
 					onChange={e => setMatchPasswd(e.target.value)}
 					className={matchColor}
-					onFocus={() => setMatchFocus(true)}
-					onBlur={() => setMatchFocus(false)}
+					onFocus={() => setFocus(4)}
+					onBlur={() => setFocus(0)}
 					required
 				></input>
 				<label>Confirm Password</label>
@@ -185,20 +182,18 @@ export default function SignUp(props) {
 				<button
 					type="button"
 					style={btnStyle}
-					onClick={() => {
-						console.log('enable');
-						//TODO: write a handleSignUp on AxiosApi.js and import it
-					}}
+					onClick={signUp}
 					disabled={!btnEnable}
 				>
 					Sign up <span>{btnEnable}</span>
 				</button>
-				<div
-					className="modal-nav"
-					/* TODO: onClick={this.navigateSignup}*/
-				>
+				<div className="modal-nav">
 					Already have an account?{' '}
-					<b onClick={props.onNavClick} className="modal-nav-link">
+					<b
+						onMouseEnter={() => setFocus(0)}
+						onClick={props.onNavClick}
+						className="modal-nav-link"
+					>
 						Sign in
 					</b>
 				</div>

@@ -57,19 +57,20 @@ input:focus ~ label, input:valid ~ label {
     text-align: center; 
 }
 
-.error-msg {
+/* .error-msg {
     margin: auto ;
     width: 100% ;
     padding-bottom: 30px ;
     color: #FF0000  ;
     text-align: center;
-}
+} */
 
 .modal-nav {
 /*     color: black; */
     margin: auto;
-    width: 80%;
+    width: 85%;
     padding-top: 40px;
+    text-align: center;
 }
 
 .modal-nav-link {
