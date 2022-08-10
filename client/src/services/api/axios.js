@@ -1,9 +1,12 @@
 import axios from 'axios';
-import serverUrl from '../../utils/urls';
+
+const accio = axios.create({
+	baseURL: 'http://localhost:3031',
+});
 
 const getUsers = async () => {
 	try {
-		let res = await axios.get(`${serverUrl}/users`);
+		let res = await accio.get(`/users`);
 		return res.data;
 	} catch (err) {
 		if (err.response.status === 0) {
@@ -16,7 +19,7 @@ const getUsers = async () => {
 			return;
 		}
 
-		return 'Registration failed!';
+		return 'Request failed!';
 	}
 };
 

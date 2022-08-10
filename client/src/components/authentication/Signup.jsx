@@ -117,11 +117,15 @@ export default function SignUp(props) {
 		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
 	}, [btnEnable]);
 
+	/**
+	 * Handle sign up request
+	 * @param {Object} e event
+	 */
 	const signUp = e => {
-		//TODO: write a handleSignUp on AxiosApi.js and import it
 		e.preventDefault();
 		//!clg
 		console.log('In development');
+		//TODO: write a handleSignUp on AxiosApi.js and import it
 	};
 
 	//TODO: Pass the error message to the component
@@ -131,73 +135,66 @@ export default function SignUp(props) {
 				focus={focus}
 				validations={[validUsername, validEmail, validPasswd, validMatch]}
 			/>
-			<div className="loginGroup">
-				<input
-					/*ref={usernameRef}*/
-					type="text"
-					className={usernameColor}
-					onChange={e => setUsername(e.target.value)}
-					onFocus={() => setFocus(1)}
-					onBlur={() => setFocus(0)}
-					required
-				></input>
-				<label>Username</label>
-			</div>
-			<div className="loginGroup">
-				<input
-					type="text"
-					className={emailColor}
-					onChange={e => setEmail(e.target.value)}
-					onFocus={() => setFocus(2)}
-					onBlur={() => setFocus(0)}
-					required
-				></input>
-
-				<label>Email</label>
-			</div>
-			<div className="loginGroup">
-				<input
-					type="password"
-					className={passwdColor}
-					onChange={e => setPasswd(e.target.value)}
-					onFocus={() => setFocus(3)}
-					onBlur={() => setFocus(0)}
-					required
-				></input>
-
-				<label>Password</label>
-			</div>
-			<div className="loginGroup">
-				<input
-					type="password"
-					onChange={e => setMatchPasswd(e.target.value)}
-					className={matchColor}
-					onFocus={() => setFocus(4)}
-					onBlur={() => setFocus(0)}
-					required
-				></input>
-				<label>Confirm Password</label>
-			</div>
-			<div>
-				<button
-					type="button"
-					style={btnStyle}
-					onClick={signUp}
-					disabled={!btnEnable}
-				>
-					Sign up <span>{btnEnable}</span>
-				</button>
-				<div className="modal-nav">
-					Already have an account?{' '}
-					<b
-						onMouseEnter={() => setFocus(0)}
-						onClick={props.onNavClick}
-						className="modal-nav-link"
-					>
-						Sign in
-					</b>
+			<form onSubmit={signUp}>
+				<div className="loginGroup">
+					<input
+						/*ref={usernameRef}*/
+						type="text"
+						className={usernameColor}
+						onChange={e => setUsername(e.target.value)}
+						onFocus={() => setFocus(1)}
+						onBlur={() => setFocus(0)}
+						required
+					></input>
+					<label>Username</label>
 				</div>
-			</div>
+				<div className="loginGroup">
+					<input
+						type="text"
+						className={emailColor}
+						onChange={e => setEmail(e.target.value)}
+						onFocus={() => setFocus(2)}
+						onBlur={() => setFocus(0)}
+						required
+					></input>
+
+					<label>Email</label>
+				</div>
+				<div className="loginGroup">
+					<input
+						type="password"
+						className={passwdColor}
+						onChange={e => setPasswd(e.target.value)}
+						onFocus={() => setFocus(3)}
+						onBlur={() => setFocus(0)}
+						required
+					></input>
+
+					<label>Password</label>
+				</div>
+				<div className="loginGroup">
+					<input
+						type="password"
+						onChange={e => setMatchPasswd(e.target.value)}
+						className={matchColor}
+						onFocus={() => setFocus(4)}
+						onBlur={() => setFocus(0)}
+						required
+					></input>
+					<label>Confirm Password</label>
+				</div>
+				<div>
+					<button type="submit" style={btnStyle} disabled={!btnEnable}>
+						Sign up <span>{btnEnable}</span>
+					</button>
+					<div className="modal-nav">
+						Already have an account?{' '}
+						<b onClick={props.onNavClick} className="modal-nav-link">
+							Sign in
+						</b>
+					</div>
+				</div>
+			</form>
 		</>
 	);
 }

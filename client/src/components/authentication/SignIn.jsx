@@ -64,7 +64,21 @@ export default function SignIn(props) {
 		else setBtnEnable(false);
 	}, [userId, passwd]);
 
-	const signIn = () => {
+	/*
+	 * Disable submit button
+	 */
+	useEffect(() => {
+		const color = btnEnable ? '#ff7800' : '#999999';
+		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
+	}, [btnEnable]);
+
+	/**
+	 * Handle sign in request
+	 * @param {Object} e event
+	 */
+	const signIn = e => {
+		e.preventDefault();
+
 		if (!validId) {
 			setErrMessage(`This user doesn't exist`);
 			return;
@@ -88,51 +102,45 @@ export default function SignIn(props) {
 		//TODO: emails query/handling
 	};
 
-	/*
-	 * Disable submit button
-	 */
-	useEffect(() => {
-		const color = btnEnable ? '#ff7800' : '#999999';
-		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
-	}, [btnEnable]);
-
 	return (
 		<>
 			<ErrorMsg message={errMessage} />
-			<div className="loginGroup">
-				<input
-					type="text"
-					onChange={e => setUserId(e.target.value)}
-					required
-				></input>
-				<label>Username or Email</label>
-			</div>
-
-			<div className="loginGroup">
-				<input
-					onChange={e => setPasswd(e.target.value)}
-					type="password"
-					required
-				></input>
-				<label>Password</label>
-			</div>
-
-			<div>
-				<button
-					type="button"
-					style={btnStyle}
-					onClick={signIn}
-					disabled={!btnEnable}
-				>
-					Sign in
-				</button>
-				<div className="modal-nav">
-					Already have an account?{' '}
-					<b onClick={props.onNavClick} className="modal-nav-link">
-						Sign up
-					</b>
+			<form onSubmit={signIn}>
+				<div className="loginGroup">
+					<input
+						type="text"
+						onChange={e => setUserId(e.target.value)}
+						required
+					></input>
+					<label>Username or Email</label>
 				</div>
-			</div>
+
+				<div className="loginGroup">
+					<input
+						onChange={e => setPasswd(e.target.value)}
+						type="password"
+						required
+					></input>
+					<label>Password</label>
+				</div>
+
+				<div>
+					<button
+						type="submit"
+						style={btnStyle}
+						onClick={signIn}
+						disabled={!btnEnable}
+					>
+						Sign in
+					</button>
+					<div className="modal-nav">
+						Already have an account?{' '}
+						<b onClick={props.onNavClick} className="modal-nav-link">
+							Sign up
+						</b>
+					</div>
+				</div>
+			</form>
 		</>
 	);
 }

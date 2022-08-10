@@ -22,7 +22,7 @@ const usernameValidator = RegExp(
  */
 const emailValidator = email => {
 	var tester =
-		/^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+		/^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
 	if (!email) return false;
 
@@ -71,17 +71,4 @@ const signUpHints = msgNumb => {
 	return '';
 };
 
-const signInHints = msgNumb => {
-	if (msgNumb === 1) return `This user doesn't exist.`;
-	if (msgNumb === 2) return 'Invalid password';
-
-	return '';
-};
-
-export {
-	usernameValidator,
-	emailValidator,
-	passwdValidator,
-	signUpHints,
-	signInHints,
-};
+export { usernameValidator, emailValidator, passwdValidator, signUpHints };
