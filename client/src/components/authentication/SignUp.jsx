@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../services/context/AuthContext';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
 import SubmitBtn from './SubmitBtn';
@@ -14,6 +15,7 @@ import setInputColor, {
  */
 export default function SignUp(props) {
 	const [focus, setFocus] = useState(0);
+	const [, setAuth] = useAuth();
 
 	//Username
 	const [username, setUsername] = useState('');
@@ -112,6 +114,8 @@ export default function SignUp(props) {
 		//!clg
 		console.log('In development');
 		//TODO: write a handleSignUp on AxiosApi.js and import it
+
+		setAuth({ username, email });
 	};
 
 	return (

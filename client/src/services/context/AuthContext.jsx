@@ -1,12 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+//TODO: REMOVE useEffect
 
 //TODO: Add authorization
-//* <-- Contexts -->
+//* <-- Context -->
 
 //Authentication Context
 const AuthContext = React.createContext();
-//Set Authentication Context
-const SetAuthContext = React.createContext();
 
 //* <-- Custom Hooks -->
 
@@ -21,46 +20,25 @@ export function useAuth() {
 	return useContext(AuthContext);
 }
 
-/**
- * Set the state of authentication
- *
- * Uses the function {@link updateUser}, that was set as value for {@link SetAuthContext}, to provide a set authentication state inside components wrapped by the context
- *
- * @returns {function} useContext of SetAuthContext
- */
-export function useSetAuth() {
-	return useContext(SetAuthContext);
-}
-
 //* <-- Provider Class -->
 
 /**
  * Authentication Provider Component
  *
- * Aggregates {@link AuthContext} & {@link SetAuthContext} contexts and provides them to children
+ * Aggregates {@link AuthContext} context and provides it to children
  *
  * @param {Element} children - wrapped components
- * @returns {Element} Context Providers {@link AuthContext} & {@link SetAuthContext}
+ * @returns {Element} Context Providers {@link AuthContext}
  */
-export function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
 	const [user, setUser] = useState({});
 
-	/**
-	 * Update user State
-	 *
-	 * It's used as value in {@link SetAuthContext} to offer the possibility of update the user state in wrapped components
-	 *
-	 * @param {Object} newUser - User
-	 */
-	function updateUser(newUser) {
-		setUser(newUser);
-	}
+	//!clg
+	useEffect(() => console.log(user), [user]); //TODO: REMOVE
 
 	return (
-		<AuthContext.Provider value={user}>
-			<SetAuthContext.Provider value={updateUser}>
-				{children}
-			</SetAuthContext.Provider>
+		<AuthContext.Provider value={[user, setUser]}>
+			{children}
 		</AuthContext.Provider>
 	);
 }

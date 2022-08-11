@@ -64,7 +64,7 @@ export default function Header() {
 				sticky="top"
 				variant="dark"
 			>
-				<Container>
+				<Container className="fakeFluid" fluid>
 					<Navbar.Brand>
 						<Link to="/">
 							<img className="navbar-logo" src={logo} alt="Logo" />

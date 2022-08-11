@@ -14,7 +14,7 @@ input {
 	-webkit-appearance: none;
 	display: block;
 	background: transparent;
-/* 	color: #394679; */
+/* 	color: #394679; TODO: light mode*/
     color: #E8E9EB;
 	width: 100%;
 	border: none;
@@ -57,16 +57,7 @@ input:focus ~ label, input:valid ~ label {
     text-align: center; 
 }
 
-/* .error-msg {
-    margin: auto ;
-    width: 100% ;
-    padding-bottom: 30px ;
-    color: #FF0000  ;
-    text-align: center;
-} */
-
 .modal-nav {
-/*     color: black; */
     margin: auto;
     width: 85%;
     padding-top: 40px;

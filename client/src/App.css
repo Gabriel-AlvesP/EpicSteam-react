@@ -10,6 +10,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body{
+/*     background: linear-gradient(180deg, rgb(39, 39, 39), rgba(5, 4, 10, 0.8) 100%); */
+    background: rgb(39, 39, 39) !important;
+    color: #fff !important;
+}
+
+.fakeFluid{
+  width: 75% !important;
+}
+
+footer{
+  background-color: rgb(20, 20, 20);
+  margin-top: 25px; 
+  padding: 11px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
 
 .my-modal .modal-content{
   background-color: #393939;

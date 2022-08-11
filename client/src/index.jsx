@@ -1,15 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
+import AuthProvider from './services/context/AuthContext';
+import Routing from './services/router/Routing';
 //import reportWebVitals from './reportWebVitals';
 
+/**
+ * Handles dependencies and it translates de components into the html file
+ */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<Router>
-			<App />
+			<AuthProvider>
+				<Routing />
+			</AuthProvider>
 		</Router>
 	</React.StrictMode>
 );
