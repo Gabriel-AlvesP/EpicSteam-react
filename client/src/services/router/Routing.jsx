@@ -1,5 +1,5 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import RequireAuth from '../../components/authentication/RequireAuth';
 import Home from '../../views/Home';
 import Browse from '../../views/Browse';
 import Game from '../../views/Game';
@@ -22,14 +22,15 @@ export default function Routing() {
 				<Route path="/game/:id" element={<Game />} />
 
 				{/* Protected routes */}
-				<Route path="/users">
-					{/* add element to be rendered into children */}
-					<Route index element={<Users />} />
-					<Route path=":id" element={<Profile />}></Route>
+				<Route element={<RequireAuth />}>
+					<Route path="/users">
+						{/* add element to be rendered into children */}
+						<Route index element={<Users />} />
+						<Route path=":id" element={<Profile />}></Route>
+					</Route>
 				</Route>
-
-				{/* Catch errors*/}
 			</Route>
+			{/* Catch errors*/}
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);

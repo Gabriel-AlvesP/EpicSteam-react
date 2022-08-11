@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import AuthModal from './authentication/AuthModal';
 import './Header.css';
 import '../assets/style/hoverEffects.css';
 import logo from '../assets/images/icon.png';
+import AuthModal from './authentication/AuthModal';
+import { useAuth } from '../services/context/AuthContext';
+import { FaUserCircle } from 'react-icons/fa';
 
 /**
  * Header Component is composed by a navbar and the authentication modal
@@ -12,6 +14,7 @@ import logo from '../assets/images/icon.png';
  * @returns {Element} Header navbar + Authentication modal
  */
 export default function Header() {
+	const { auth } = useAuth();
 	const [modalShow, setModalShow] = useState(false);
 	const [modalContent, setModalContent] = useState(true);
 	const [navbarBg, setNavbarBg] = useState('navbar-container active');
@@ -54,7 +57,6 @@ export default function Header() {
 		setModalShow(false);
 	};
 
-	//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
 	return (
 		<>
 			<Navbar
@@ -83,24 +85,40 @@ export default function Header() {
 									Browse
 								</Link>
 							</Nav.Link>
+							{auth?.user ? (
+								/* Authentication Required */
+								//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
+								// TODO: Check for role instead
+								<Nav.Link as="div">
+									<Link className="navbar-link" to="/users">
+										Users
+									</Link>
+								</Nav.Link>
+							) : (
+								<></>
+							)}
 						</Nav>
-						<Nav>
-							<Nav.Link
-								as="div"
-								className="auth-btn hvr-grow hvr-overline-from-center"
-								onClick={handleSignUp}
-							>
-								SignUp
-							</Nav.Link>
-							<div className="divider"></div>
-							<Nav.Link
-								as="div"
-								className="auth-btn hvr-grow hvr-overline-from-center"
-								onClick={handleSignIn}
-							>
-								SignIn
-							</Nav.Link>
-						</Nav>
+						{auth?.user ? (
+							<FaUserCircle size="2em" title="User icon" />
+						) : (
+							<Nav>
+								<Nav.Link
+									as="div"
+									className="auth-btn hvr-grow hvr-overline-from-center"
+									onClick={handleSignUp}
+								>
+									SignUp
+								</Nav.Link>
+								<div className="divider"></div>
+								<Nav.Link
+									as="div"
+									className="auth-btn hvr-grow hvr-overline-from-center"
+									onClick={handleSignIn}
+								>
+									SignIn
+								</Nav.Link>
+							</Nav>
+						)}
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>

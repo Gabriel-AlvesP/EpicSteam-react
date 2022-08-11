@@ -31,13 +31,13 @@ export function useAuth() {
  * @returns {Element} Context Providers {@link AuthContext}
  */
 export default function AuthProvider({ children }) {
-	const [user, setUser] = useState({});
+	const [auth, setAuth] = useState({});
 
 	//!clg
-	useEffect(() => console.log(user), [user]); //TODO: REMOVE
+	useEffect(() => console.log(auth), [auth]); //TODO: REMOVE
 
 	return (
-		<AuthContext.Provider value={[user, setUser]}>
+		<AuthContext.Provider value={{ auth, setAuth }}>
 			{children}
 		</AuthContext.Provider>
 	);

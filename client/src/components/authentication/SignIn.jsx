@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../services/context/AuthContext';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
 import SubmitBtn from './SubmitBtn';
@@ -9,6 +10,7 @@ import {
 } from '../../utils/authValidations';
 
 export default function SignIn(props) {
+	const { setAuth } = useAuth();
 	const [userId, setUserId] = useState('');
 	const [validId, setValidId] = useState(false);
 	const [idType, setIdType] = useState(true); // True username : False email
@@ -83,6 +85,10 @@ export default function SignIn(props) {
 
 		//email
 		//TODO: emails query/handling
+
+		//TODO: REMOVE
+		let user = { username: userId };
+		setAuth({ user });
 	};
 
 	return (

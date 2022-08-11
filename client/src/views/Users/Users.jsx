@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { getUsers } from '../../services/api/axios';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';

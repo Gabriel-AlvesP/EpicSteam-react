@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../services/context/AuthContext';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
@@ -15,7 +15,7 @@ import setInputColor, {
  */
 export default function SignUp(props) {
 	const [focus, setFocus] = useState(0);
-	const [, setAuth] = useAuth();
+	const { setAuth } = useAuth();
 
 	//Username
 	const [username, setUsername] = useState('');
@@ -107,15 +107,17 @@ export default function SignUp(props) {
 	 * Handle sign up request
 	 * @param {Object} e event
 	 */
+	//!!
 	const signUp = e => {
 		e.preventDefault();
 
 		//TODO: check if everything is valid
+
 		//!clg
 		console.log('In development');
 		//TODO: write a handleSignUp on AxiosApi.js and import it
-
-		setAuth({ username, email });
+		let user = { username: username, email: email };
+		setAuth({ user });
 	};
 
 	return (
