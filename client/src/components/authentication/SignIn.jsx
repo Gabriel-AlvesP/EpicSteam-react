@@ -91,20 +91,24 @@ export default function SignIn(props) {
 			<form onSubmit={signIn}>
 				<div className="loginGroup">
 					<input
+						id="loginUsername"
 						type="text"
 						onChange={e => setUserId(e.target.value)}
+						value={userId}
 						required
 					></input>
-					<label>Username or Email</label>
+					<label htmlFor="loginUsername">Username or Email</label>
 				</div>
 
 				<div className="loginGroup">
 					<input
+						id="loginPasswd"
 						onChange={e => setPasswd(e.target.value)}
 						type="password"
+						value={passwd}
 						required
 					></input>
-					<label>Password</label>
+					<label htmlFor="loginPasswd">Password</label>
 				</div>
 
 				<div>

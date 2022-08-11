@@ -107,12 +107,13 @@ export default function SignUp(props) {
 	 */
 	const signUp = e => {
 		e.preventDefault();
+
+		//TODO: check if everything is valid
 		//!clg
 		console.log('In development');
 		//TODO: write a handleSignUp on AxiosApi.js and import it
 	};
 
-	//TODO: Pass the error message to the component
 	return (
 		<>
 			<ErrorMsg
@@ -123,49 +124,57 @@ export default function SignUp(props) {
 				<div className="loginGroup">
 					<input
 						/*ref={usernameRef}*/
+						id="signUpUsername"
 						type="text"
 						className={usernameColor}
 						onChange={e => setUsername(e.target.value)}
+						value={username}
 						onFocus={() => setFocus(1)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
-					<label>Username</label>
+					<label htmlFor="signUpUsername">Username</label>
 				</div>
 				<div className="loginGroup">
 					<input
+						id="signUpEmail"
 						type="text"
 						className={emailColor}
 						onChange={e => setEmail(e.target.value)}
+						value={email}
 						onFocus={() => setFocus(2)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
 
-					<label>Email</label>
+					<label htmlFor="signUpEmail">Email</label>
 				</div>
 				<div className="loginGroup">
 					<input
+						id="signUpPasswd"
 						type="password"
 						className={passwdColor}
 						onChange={e => setPasswd(e.target.value)}
+						value={passwd}
 						onFocus={() => setFocus(3)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
 
-					<label>Password</label>
+					<label htmlFor="signUpPasswd">Password</label>
 				</div>
 				<div className="loginGroup">
 					<input
+						id="signUpMatch"
 						type="password"
-						onChange={e => setMatchPasswd(e.target.value)}
 						className={matchColor}
+						onChange={e => setMatchPasswd(e.target.value)}
+						value={matchPasswd}
 						onFocus={() => setFocus(4)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
-					<label>Confirm Password</label>
+					<label htmlFor="signUpMatch">Confirm Password</label>
 				</div>
 				<div>
 					<SubmitBtn btnEnable={btnEnable} />
