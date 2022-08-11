@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
+import SubmitBtn from './SubmitBtn';
 import setInputColor, {
 	usernameValidator,
 	emailValidator,
@@ -36,16 +37,7 @@ export default function SignUp(props) {
 
 	//Submit button
 	const [btnEnable, setBtnEnable] = useState(false);
-	const [btnStyle, setBtnStyle] = useState({
-		borderRadius: 3,
-		border: 0,
-		color: 'white',
-		height: 48,
-		width: 300,
-		padding: '0 30px',
-		fontSize: '18px',
-		background: '#999999',
-	});
+
 	//TODO: on signUp success?
 	//const [success, setSuccess] = useState(false);
 
@@ -108,14 +100,6 @@ export default function SignUp(props) {
 			setBtnEnable(true);
 		else setBtnEnable(false);
 	}, [validUsername, validEmail, validPasswd, validMatch]);
-
-	/*
-	 * Change submit button color on button enabling/disabling
-	 */
-	useEffect(() => {
-		const color = btnEnable ? '#ff7800' : '#999999';
-		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
-	}, [btnEnable]);
 
 	/**
 	 * Handle sign up request
@@ -184,9 +168,7 @@ export default function SignUp(props) {
 					<label>Confirm Password</label>
 				</div>
 				<div>
-					<button type="submit" style={btnStyle} disabled={!btnEnable}>
-						Sign up <span>{btnEnable}</span>
-					</button>
+					<SubmitBtn btnEnable={btnEnable} />
 					<div className="modal-nav">
 						Already have an account?{' '}
 						<b onClick={props.onNavClick} className="modal-nav-link">

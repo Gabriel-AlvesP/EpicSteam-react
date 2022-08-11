@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
+import SubmitBtn from './SubmitBtn';
 import {
 	usernameValidator,
 	emailValidator,
@@ -18,16 +19,6 @@ export default function SignIn(props) {
 	const [errMessage, setErrMessage] = useState('');
 
 	const [btnEnable, setBtnEnable] = useState(false);
-	const [btnStyle, setBtnStyle] = useState({
-		borderRadius: 3,
-		border: 0,
-		color: 'white',
-		height: 48,
-		width: 300,
-		padding: '0 30px',
-		fontSize: '18px',
-		background: '#999999',
-	});
 
 	/*
 	 * Check identifier type and validates it
@@ -63,14 +54,6 @@ export default function SignIn(props) {
 		if (userId && passwd) setBtnEnable(true);
 		else setBtnEnable(false);
 	}, [userId, passwd]);
-
-	/*
-	 * Disable submit button
-	 */
-	useEffect(() => {
-		const color = btnEnable ? '#ff7800' : '#999999';
-		setBtnStyle(prevBtnStyle => ({ ...prevBtnStyle, background: color }));
-	}, [btnEnable]);
 
 	/**
 	 * Handle sign in request
@@ -125,14 +108,7 @@ export default function SignIn(props) {
 				</div>
 
 				<div>
-					<button
-						type="submit"
-						style={btnStyle}
-						onClick={signIn}
-						disabled={!btnEnable}
-					>
-						Sign in
-					</button>
+					<SubmitBtn btnEnable={btnEnable} />
 					<div className="modal-nav">
 						Already have an account?{' '}
 						<b onClick={props.onNavClick} className="modal-nav-link">
