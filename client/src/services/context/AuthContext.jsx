@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 //TODO: REMOVE useEffect
 
-//TODO: Add authorization
 //* <-- Context -->
 
 //Authentication Context

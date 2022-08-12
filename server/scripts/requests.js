@@ -3,6 +3,8 @@
 const db = require('../database/dbConfig');
 const bcrypt = require('bcrypt');
 
+const serverErr = 'Server error. Try again later';
+
 //TODO: Check roles and if user is authenticated
 /**
  *
@@ -26,36 +28,36 @@ function users(req, res) {
 async function signUp(req, res) {
 	//! Console.log
 	console.log(req);
+	const { username, email, passwd, match } = req.body;
+
 	try {
-		const hashed = await bcrypt.hash(req.body.passwd, 10);
+		const hashed = await bcrypt.hash(passwd, 10);
 		//TODO Use user model?!
 		const user = {
 			id: null,
-			Username: req.body.username,
-			Email: req.body.email,
+			Username: username,
+			Email: email,
 			Password: hashed,
-			Role: 2,
 			JoinDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
 		};
 
 		let query = `SELECT * from Users WHERE Username = "${user.Username}" OR Email = "${user.Email}";`;
 
 		db.connection.query(query, (err, dbRes) => {
-			if (err) res.status(500).json({ message: 'Server error' });
+			if (err) return res.status(500).json({ message: serverErr });
 
-			if (dbRes.length > 0) {
-				//res.status(200).send('Credentials in use'); // 200 re-render or 401 ?
-				res.status(200).json({ message: 'Credentials in use' });
-			} else {
-				db.connection.query(`INSERT INTO Users SET ?`, user, err => {
-					if (err) throw err;
+			if (dbRes.length > 0)
+				return res.status(401).json({ message: 'Credentials in use' });
 
-					res.status(201).json({ message: 'success', user: user });
-				});
-			}
+			db.connection.query(`INSERT INTO Users SET ?`, user, err => {
+				if (err) return res.status(500).json({ message: serverErr });
+
+				//TODO: Add role/Edit user
+				return res.status(201).json({ message: 'success', user: { username } });
+			});
 		});
 	} catch {
-		res.status(500).json({ message: 'Server Error' });
+		return res.status(500).json({ message: serverErr });
 	}
 }
 
@@ -68,30 +70,35 @@ async function signUp(req, res) {
 function signIn(req, res) {
 	//! console.log
 	console.log(req.body);
+
+	const { username, passwd } = req.body;
+
+	if (!username || !passwd)
+		return res
+			.status(400)
+			.json({ message: 'Username and password are required.' });
+
 	try {
-		let query = `SELECT * from Users WHERE Username = "${req.body.username}";`;
+		let query = `SELECT * from Users WHERE Username = "${username}";`;
 
 		db.connection.query(query, (err, dbRes) => {
-			if (err)
-				res.status(500).json({ message: 'Server error. Try again later' });
+			if (err) return res.status(500).json({ message: serverErr });
 
 			let user = dbRes[0];
-			if (user == null) {
-				res.status(200).json({ message: 'Incorrect username or password' });
-			} else {
-				bcrypt.compare(req.body.passwd, user.Password, (err, bcryptRes) => {
-					if (err) res.status(500).json({ message: 'Server error' });
+			let authFailed = 'Incorrect username or password';
 
-					if (bcryptRes) {
-						res.json({ message: 'success' }); //? 302
-					} else {
-						res.status(200).json({ message: 'Incorrect username or password' });
-					}
-				});
-			}
+			if (!user) return res.status(401).json({ message: authFailed });
+
+			bcrypt.compare(passwd, user.Password, (err, bcryptRes) => {
+				if (err) res.status(500).json({ message: serverErr });
+
+				if (bcryptRes) return res.status(200).json({ message: 'success' }); //? 302
+
+				return res.status(401).json({ message: authFailed });
+			});
 		});
 	} catch {
-		res.status(500).json({ message: 'Server error. Try again later' });
+		res.status(500).json({ message: serverErr });
 	}
 }
 
