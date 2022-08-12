@@ -22,12 +22,15 @@ export default function Routing() {
 				<Route path="/game/:id" element={<Game />} />
 
 				{/* Protected routes */}
-				<Route element={<RequireAuth />}>
+				<Route element={<RequireAuth allowedRoles={[1899]} />}>
 					<Route path="/users">
 						{/* add element to be rendered into children */}
 						<Route index element={<Users />} />
 						<Route path=":id" element={<Profile />}></Route>
 					</Route>
+				</Route>
+				<Route element={<RequireAuth allowedRoles={[2008, 1899]} />}>
+					<Route path="/categories" />
 				</Route>
 			</Route>
 			{/* Catch errors*/}

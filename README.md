@@ -26,6 +26,13 @@ DB=gameslibrary  # Optional
 
 - Substituir as credenciais necessárias
 
+### Executar os comandos npm
+
+- Na pasta "client" e "server" executar o comando `npm start` (em diferentes terminais);
+- <mark>Nota:</mark> Se a base de dados for criada a partir do workbench o script de configuração não populará a base de dados.
+
+![Terminal - npm commands](/mockups/Installation.jpg)
+
 ## Entidades
 
 - Categorias
@@ -60,27 +67,29 @@ Para cada reacacao:
 
 ### Exemplo
 
-    Categoria – MMOs (Massive Multiplayer Online Games)
-        Post (videojogo) – World of Warcraft
-        Post (videojogo) – RuneScape
-        Post (videojogo) - Star Wars: The Old Republic
+```txt
+Categoria – MMOs (Massive Multiplayer Online Games)
+    Post (videojogo) – World of Warcraft
+    Post (videojogo) – RuneScape
+    Post (videojogo) - Star Wars: The Old Republic
+```
 
 ## Gestao dos Utilizadores
 
 - CRUD de utilizadores
 
-| Dados                           | Informacao                                               |
-| ------------------------------- | -------------------------------------------------------- |
-| Data de inscricao               | Tempo a que ja esta registado (data atual - de registo ) |
-| Tipo de utilizador (Permissoes) | Gestor do forum, gestor de conteudo e visitante          |
+| Dados                             | Informacao                                               |
+| --------------------------------- | -------------------------------------------------------- |
+| `Data de inscricao`               | Tempo a que ja esta registado (data atual - de registo ) |
+| `Tipo de utilizador (Permissoes)` | Gestor do forum, gestor de conteudo e visitante          |
 
 ## Permissoes
 
-| Role                 | Permissoes                                                                                      |
-| -------------------- | ----------------------------------------------------------------------------------------------- |
-| `Gestor do forum`    | Gestao de utiliadores </br> Moderacao de categorias </br> Controlo e configuracao da plataforma |
-| `Gestor de conteudo` | Criar e moderar os seus posts                                                                   |
-| `Visitante`          | Comentar e reagir (utilizar os emojis) aos posts                                                |
+| Role                 | Permissoes                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `Gestor do forum`    | Gestao de utilizadores </br> Moderação de categorias & comentários </br> Controlo e configuracao da plataforma |
+| `Gestor de conteudo` | Criar e moderar os seus posts                                                                                  |
+| `Visitante`          | Comentar posts </br> Reagir a posts e comentários </br> Marcar se já jogou o jogo (no post)                    |
 
 ## Mini Jogo
 
@@ -93,4 +102,4 @@ Ligar dicas visuais a titulos de jogos. Deve ter um contador de tempo decrescent
 - pasta www (com ficheiros html, pasta de imagens, pasta de scripts e pasta styles)
 - Ficheiros em sql necessarios para a criacao das tabelas
 - Insercao de dummy data
-- COmentarios JSDOC
+- Comentários JSDOC

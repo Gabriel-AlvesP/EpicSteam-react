@@ -59,7 +59,9 @@ function dbInsert(tableName, data) {
 	let sqlQuery = `INSERT IGNORE INTO ${tableName} SET ?`;
 
 	dbConnection.query(sqlQuery, data, (err, res) => {
-		if (res.warningCount === 0)
+		if (!res) errorHandling(err);
+
+		if (res?.warningCount === 0)
 			errorHandling(err, [`\nAdded to ${tableName}...`]);
 	});
 }

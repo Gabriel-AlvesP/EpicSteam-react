@@ -1,13 +1,24 @@
 const dummyData = [
-	['Users', 'Categories', 'Categories', 'Posts', 'Posts', 'Comments'],
+	[
+		'Users',
+		'Categories',
+		'Categories',
+		'Posts',
+		'Posts',
+		'Comments',
+		'Roles',
+		'Roles',
+		'User_Roles',
+		'User_Roles',
+	],
 	[
 		{
-			Id: 1,
+			Id: 'Dummy1',
 			Username: 'SrBatatinha',
 			Email: 'srBatats@batata.com',
 			Password: '12345678',
-			Role: 0,
 			JoinDate: '2022-07-30',
+			Picture: '',
 		},
 		{
 			Id: 1,
@@ -48,6 +59,20 @@ const dummyData = [
 			Description: 'Excelente',
 			UserId: 1,
 			PostId: 1,
+		},
+		{
+			Role: 1899,
+		},
+		{
+			Role: 5204,
+		},
+		{
+			Role: 1899,
+			UserId: 'Dummy1',
+		},
+		{
+			Role: 5204,
+			UserId: 'Dummy1',
 		},
 	],
 ];
