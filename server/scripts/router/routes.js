@@ -5,21 +5,24 @@ const requestHandlers = require('../requests');
 // GET
 router.get('/users', requestHandlers.users);
 
-router.get('/categories', requestHandlers.categories);
+router
+	.route('/categories')
+	.get(requestHandlers.categories)
+	.post(requestHandlers.postCategory);
 
-router.get('/game/:id', requestHandlers.game);
+//router.get('/game/:id', requestHandlers.game);
+
+//router.get('/refresh', requestHandlers.refresh);
 
 // POST
 router.post('/signup', requestHandlers.signUp);
 
 router.post('/login', requestHandlers.signIn);
 
-router.post('/logout', requestHandlers.logout);
+router.post('/logout', requestHandlers.logOut);
 
-router.post('/categories', requestHandlers.categories);
+//router.post('/game', requestHandlers.postGame);
 
-router.post('/game', requestHandlers.postGame);
-
-router.post('/comment', requestHandlers.comment);
+//router.post('/comment', requestHandlers.comment);
 
 module.exports = router;

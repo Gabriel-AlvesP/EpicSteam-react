@@ -1,10 +1,20 @@
 import axios from 'axios';
 
+//* <--  Axios Default config -->
+axios.defaults.baseURL = 'http://localhost:3031';
+
+//* <-- Axios Instance Config -->
+
 /**
  * Axios config
  */
-const accio = axios.create({
-	baseURL: 'http://localhost:3031',
+const accio = axios.create();
+
+const privateAccio = axios.create({
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	withCredentials: true,
 });
 
 /**

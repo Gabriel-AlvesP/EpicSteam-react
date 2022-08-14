@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../services/context/AuthContext';
+import { useAuth } from '../../services/hooks/useAuth';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
 import SubmitBtn from './SubmitBtn';

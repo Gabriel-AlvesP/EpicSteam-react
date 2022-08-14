@@ -5,7 +5,7 @@ import './Header.css';
 import '../assets/style/hoverEffects.css';
 import logo from '../assets/images/icon.png';
 import AuthModal from './authentication/AuthModal';
-import { useAuth } from '../services/context/AuthContext';
+import { useAuth } from '../services/hooks/useAuth';
 import { FaUserCircle } from 'react-icons/fa';
 
 /**

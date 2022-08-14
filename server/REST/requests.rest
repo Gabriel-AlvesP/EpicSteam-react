@@ -1,18 +1,14 @@
 ###
 
-GET http://localhost:3030/
+GET http://localhost:3031/
 
 ###
 
-GET http://localhost:3030/home
+GET http://localhost:3031/users
 
 ###
 
-GET http://localhost:3030/users
-
-###
-
-POST  http://localhost:3030/users
+POST  http://localhost:3031/signup
 Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN 
 
@@ -24,7 +20,7 @@ Authorization: Bearer ACCESS-TOKEN
 
 ###
 
-POST  http://localhost:3030/users/login
+POST  http://localhost:3031/signin
 Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN 
 

@@ -1,61 +1,28 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../services/context/AuthContext';
+import { useAuth } from '../../services/hooks/useAuth';
 import './Auth.css';
 import ErrorMsg from './ErrorMsg';
 import SubmitBtn from './SubmitBtn';
 import {
 	usernameValidator,
-	emailValidator,
 	passwdValidator,
 } from '../../utils/authValidations';
 
 export default function SignIn(props) {
 	const { setAuth } = useAuth();
-	const [userId, setUserId] = useState('');
-	const [validId, setValidId] = useState(false);
-	const [idType, setIdType] = useState(true); // True username : False email
 
+	const [username, setUsername] = useState('');
 	const [passwd, setPasswd] = useState('');
-	const [validPasswd, setValidPasswd] = useState(false);
-
 	const [errMessage, setErrMessage] = useState('');
-
 	const [btnEnable, setBtnEnable] = useState(false);
-
-	/*
-	 * Check identifier type and validates it
-	 */
-	useEffect(() => {
-		if (usernameValidator.test(userId)) {
-			setIdType(true);
-			setValidId(true);
-			return;
-		}
-
-		if (emailValidator(userId)) {
-			setIdType(false);
-			setValidId(true);
-			return;
-		}
-
-		setValidId(false);
-	}, [userId]);
-
-	/*
-	 * Validate password
-	 */
-	useEffect(() => {
-		if (passwdValidator.test(passwd)) setValidPasswd(true);
-		else setValidPasswd(false);
-	}, [passwd]);
 
 	/*
 	 * Enables the submit button
 	 */
 	useEffect(() => {
-		if (userId && passwd) setBtnEnable(true);
+		if (username && passwd) setBtnEnable(true);
 		else setBtnEnable(false);
-	}, [userId, passwd]);
+	}, [username, passwd]);
 
 	/**
 	 * Handle sign in request
@@ -64,12 +31,12 @@ export default function SignIn(props) {
 	const signIn = e => {
 		e.preventDefault();
 
-		if (!validId) {
+		if (!usernameValidator.test(username)) {
 			setErrMessage(`This user doesn't exist`);
 			return;
 		}
 
-		if (!validPasswd) {
+		if (!passwdValidator.test(passwd)) {
 			setErrMessage(`Invalid password`);
 			return;
 		}
@@ -78,16 +45,11 @@ export default function SignIn(props) {
 		console.log('success');
 		setErrMessage('');
 
-		if (idType) {
-			//username
-			//TODO: usernames query/handling
-		}
-
-		//email
-		//TODO: emails query/handling
+		//username
+		//TODO: usernames query/handling
 
 		//TODO: REMOVE
-		let user = { username: userId };
+		let user = { username: username };
 		setAuth({ user });
 	};
 
@@ -99,8 +61,8 @@ export default function SignIn(props) {
 					<input
 						id="loginUsername"
 						type="text"
-						onChange={e => setUserId(e.target.value)}
-						value={userId}
+						onChange={e => setUsername(e.target.value)}
+						value={username}
 						required
 					></input>
 					<label htmlFor="loginUsername">Username or Email</label>
