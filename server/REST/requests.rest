@@ -1,12 +1,8 @@
-### 
-
-GET http://localhost:3031/users
 
 ### Valid sign up
 
 POST  http://localhost:3031/signup
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN 
 
 {
 	"username" : "janota",
@@ -19,21 +15,37 @@ Authorization: Bearer ACCESS-TOKEN
 
 POST  http://localhost:3031/login
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN 
 
 {
 	"username" : "janota",
 	"passwd": "Cenoura"
 }
 
-### 
-
+### Valid login
 
 POST  http://localhost:3031/login
 Content-Type: application/json
-Authorization: Bearer ACCESS-TOKEN 
 
 {
 	"username" : "janota",
 	"passwd": "cenoura"
 }
+
+### Refresh Token 
+
+GET http://localhost:3031/refresh
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm90YSIsImlhdCI6MTY2MDUwOTgzNywiZXhwIjoxNjYwNTA5ODY3fQ.6NVeo-kmIiy-OpSDUZb4sRSjZzjponWsUvZFYG9pkQg
+
+### Get users
+
+GET http://localhost:3031/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm90YSIsImlhdCI6MTY2MDUwOTg0OCwiZXhwIjoxNjYwNTEwNzQ4fQ.VQBD__SmfRxiIXk9U2hdCryAy2qmYpJTlgvh1BEhdQU
+
+### Logout 
+
+GET http://localhost:3031/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm90YSIsImlhdCI6MTY2MDUwOTg0OCwiZXhwIjoxNjYwNTEwNzQ4fQ.VQBD__SmfRxiIXk9U2hdCryAy2qmYpJTlgvh1BEhdQU
+Set-Cookie: jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm90YSIsImlhdCI6MTY2MDUwOTIxOCwiZXhwIjoxNjYwNTk1NjE4fQ.adtnvbl7Sxhm5bGURm58GfPiGUNgUX35DtE1CDB72WM
