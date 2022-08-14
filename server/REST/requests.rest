@@ -1,12 +1,8 @@
-###
-
-GET http://localhost:3031/
-
-###
+### 
 
 GET http://localhost:3031/users
 
-###
+### Valid sign up
 
 POST  http://localhost:3031/signup
 Content-Type: application/json
@@ -15,19 +11,29 @@ Authorization: Bearer ACCESS-TOKEN
 {
 	"username" : "janota",
 	"email": "janota@epicsteam.com",
-	"passwd": "cenoura"
+	"passwd": "cenoura",
+	"match": "cenoura"
 }
 
-###
+### Unauthorized login
 
-POST  http://localhost:3031/signin
+POST  http://localhost:3031/login
 Content-Type: application/json
 Authorization: Bearer ACCESS-TOKEN 
 
 {
-	"username" : "native",
-	"passwd": "cenoura"
+	"username" : "janota",
+	"passwd": "Cenoura"
 }
 
-###
+### 
 
+
+POST  http://localhost:3031/login
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN 
+
+{
+	"username" : "janota",
+	"passwd": "cenoura"
+}

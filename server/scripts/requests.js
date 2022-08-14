@@ -5,6 +5,7 @@ const db = require('../database/dbConfig');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const serverErr = 'Server internal error. Try again later';
+const { v4: uuidV4 } = require('uuid');
 
 //TODO: Check roles and if user is authenticated
 /**
@@ -43,7 +44,7 @@ async function signUp(req, res) {
 		const hashed = await bcrypt.hash(passwd, 10);
 
 		const user = {
-			id: null, //TODO: uuid
+			id: uuidV4(),
 			Username: username,
 			Email: email,
 			Password: hashed,
@@ -94,32 +95,44 @@ async function signIn(req, res) {
 			const user = dbRes[0];
 			const authFailed = 'Incorrect username or password';
 
+			//User not found
 			if (!user) return res.status(401).json({ message: authFailed });
 
-			const bcryptMatch = await bcrypt.compare(passwd, user.password);
+			//Compare input passwd with database records
+			const bcryptMatch = await bcrypt.compare(passwd, user.Password);
 
 			if (!bcryptMatch) return res.status(401).json({ message: authFailed });
 
+			//Access token
 			const accessToken = jwt.sign(
 				{ username: username },
 				process.env.ACCESS_TOKEN_SECRET,
 				{ expiresIn: '15m' }
 			);
 
+			//Refresh token
 			const refreshToken = jwt.sign(
 				{ username: username },
 				process.env.REFRESH_TOKEN_SECRET,
 				{ expiresIn: '1d' }
 			);
 
+			//? Should I save refresh tokens inside a hidden json file, like google do with google calendar their refresh tokens?
+			//Insert refreshToken into database
 			db.connection.query(
-				`UPDATE Users SET ? WHERE username = ${username}`,
+				`UPDATE Users SET RefreshToken=? WHERE Username='${username}'`,
 				refreshToken,
 				(err, res) => {
+					if (err) throw err;
 					if (err) return res.status(500).json({ message: serverErr });
 				}
 			);
 
+			//Response config
+			res.cookie('jwt', refreshToken, {
+				httpOnly: true,
+				maxAge: 24 * 60 * 60 * 1000, //1day
+			});
 			res.json({ accessToken });
 		});
 	} catch {

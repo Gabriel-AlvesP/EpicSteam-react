@@ -10,8 +10,8 @@ require('dotenv').config();
 
 const express = require('express');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const database = require('./database/dbConfig');
 const routes = require('./scripts/router/routes');
@@ -24,8 +24,10 @@ const PORT = process.env.PORT || 3031;
 // Express config
 app.use(cors(corsOptions)); // Cors
 app.use(logger('dev')); // Logger
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware config
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
 // Database
 database.buildDb();
