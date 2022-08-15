@@ -17,8 +17,8 @@ router.post('/login', signIn);
 
 // Private routes
 
-router.get('/refresh', verifyJWT, refreshTokenHandler);
-router.get('/logout', verifyJWT, logOut);
+router.get('/refresh', refreshTokenHandler);
+router.get('/logout', logOut);
 router.get('/users', verifyJWT, users);
 //router.post('/game', requestHandlers.postGame);
 //router.post('/comment', requestHandlers.comment);

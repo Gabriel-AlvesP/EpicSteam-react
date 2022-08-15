@@ -1,11 +1,12 @@
 'use strict';
 
 require('dotenv').config();
-const db = require('../../database/dbConfig');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const serverErr = 'Server internal error. Try again later';
 const { v4: uuidV4 } = require('uuid');
+const { connection } = require('../../database/dbConfig');
+const { insertNewUser } = require('../../database/queries');
+const serverErr = 'Server internal error. Try again later';
 
 /**
  * Sign up request handler
@@ -13,9 +14,7 @@ const { v4: uuidV4 } = require('uuid');
  * @param {*} req
  * @param {*} res
  */
-async function signUp(req, res) {
-	//! Console.log
-	console.log(req);
+const signUp = async (req, res) => {
 	const { username, email, passwd, match } = req.body;
 
 	if (!username || !email || !passwd)
@@ -39,23 +38,22 @@ async function signUp(req, res) {
 
 		let query = `SELECT * from Users WHERE Username = "${username}" OR Email = "${email}";`;
 
-		db.connection.query(query, (err, dbRes) => {
+		connection.query(query, (err, dbRes) => {
 			if (err) return res.status(500).json({ message: serverErr });
 
 			if (dbRes.length > 0)
 				return res.status(409).json({ message: 'Credentials in use' });
 
-			db.connection.query(`INSERT INTO Users SET ?`, user, err => {
+			insertNewUser(user, err => {
 				if (err) return res.status(500).json({ message: serverErr });
 
-				//TODO: Add role/Edit user
 				return res.status(201).json({ user: { username } });
 			});
 		});
 	} catch {
 		res.status(500).json({ message: serverErr });
 	}
-}
+};
 
 /**
  * Login request handler
@@ -72,14 +70,13 @@ async function signIn(req, res) {
 	try {
 		let query = `SELECT password from Users WHERE Username = "${username}";`;
 
-		db.connection.query(query, async (err, dbRes) => {
+		connection.query(query, async (err, dbRes) => {
 			if (err) return res.status(500).json({ message: serverErr });
 
-			const { password } = dbRes[0];
 			const authFailed = 'Incorrect username or password';
+			if (!dbRes[0]) return res.status(401).json({ message: authFailed });
 
-			//User not found
-			if (!password) return res.status(401).json({ message: authFailed });
+			const { password } = dbRes[0];
 
 			//Compare input passwd with database records
 			const bcryptMatch = await bcrypt.compare(passwd, password);
@@ -102,7 +99,7 @@ async function signIn(req, res) {
 
 			//? Should I save refresh tokens inside a hidden json file, like google do with google calendar their refresh tokens?
 			//Insert refreshToken into database
-			db.connection.query(
+			connection.query(
 				`UPDATE Users SET RefreshToken=? WHERE Username='${username}'`,
 				refreshToken,
 				(err, res) => {
@@ -113,6 +110,8 @@ async function signIn(req, res) {
 			//Response config
 			res.cookie('jwt', refreshToken, {
 				httpOnly: true,
+				//sameSite: 'None', //TODO: test without (with frontend code)
+				//secure: true, //TODO: test without
 				maxAge: 24 * 60 * 60 * 1000, //1day
 			});
 			res.json({ accessToken });
@@ -123,27 +122,31 @@ async function signIn(req, res) {
 }
 
 function logOut(req, res) {
-	if (req.cookies?.jwt) return res.sendStatus(204);
+	if (!req.cookies?.jwt) return res.sendStatus(204);
 	const refreshToken = req.cookies?.jwt;
+	const query = `Select username from Users where refreshToken = "${refreshToken}"`;
 
-	const query = `Select username from users where refreshToken = "${refreshToken}"`;
-
-	db.connection.query(query, (err, dbRes) => {
+	connection.query(query, (err, dbRes) => {
+		if (err) throw err;
 		if (err) return res.status(500).json({ message: serverErr });
 
 		const { username } = dbRes[0];
 
 		if (username) {
-			db.connection.query(
-				'UPDATE Users SET refreshToken="" where username=?',
+			connection.query(
+				'UPDATE Users SET RefreshToken=NULL where username=?',
 				username,
 				err => {
-					if (err) return res.sendStatus(204);
+					if (err) return res.sendStatus(500);
 				}
 			);
 		}
 
-		res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+		res.clearCookie('jwt', {
+			httpOnly: true,
+			//sameSite: 'None',
+			//secure: true,
+		}); //TODO: check without
 		res.sendStatus(204);
 	});
 }

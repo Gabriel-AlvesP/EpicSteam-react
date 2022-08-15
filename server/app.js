@@ -15,13 +15,14 @@ const cookieParser = require('cookie-parser');
 
 const database = require('./database/dbConfig');
 const routes = require('./scripts/router/routes');
-const corsOptions = require('./config/cors');
+const { allowCredentials, corsOptions } = require('./config/cors');
 
 // Configs
 const app = express();
 const PORT = process.env.PORT || 3031;
 
 // Express config
+app.use(allowCredentials); //Credentials check
 app.use(cors(corsOptions)); // Cors
 app.use(logger('dev')); // Logger
 // Middleware config

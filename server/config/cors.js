@@ -4,15 +4,26 @@
 const whiteList = ['http://localhost:3000'];
 
 /**
+ * Fetch cookies credentials requirements
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const allowCredentials = (req, res, next) => {
+	if (whiteList.includes(req.headers.origin))
+		res.header('Access-Control-Allow-Credentials', true);
+	next();
+};
+
+/**
  * Cors options configuration
  */
 const corsOptions = {
-	origin: function (origin, callback) {
-		//callback(null, true); //REST test
-		if (whiteList.indexOf(origin) !== -1) callback(null, true);
+	origin: (origin, callback) => {
+		if (whiteList.indexOf(origin) !== -1 || !origin) callback(null, true);
 		else callback(new Error('Not allowed by CORS...'));
 	},
 	optionsSuccessStatus: 200,
 };
 
-module.exports = corsOptions;
+module.exports = { allowCredentials, corsOptions };
