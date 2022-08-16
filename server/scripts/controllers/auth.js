@@ -68,13 +68,13 @@ async function signIn(req, res) {
 		return res.status(400).json({ message: 'Username and password required.' });
 
 	try {
-		let query = `SELECT password from Users WHERE Username = "${username}";`;
-
+		let query = `SELECT DISTINCT usr.password , userRoles.Role FROM Users usr join User_Roles userRoles ON usr.id = userRoles.UserId where usr.username ="${username}"`;
 		connection.query(query, async (err, dbRes) => {
 			if (err) return res.status(500).json({ message: serverErr });
 
 			const authFailed = 'Incorrect username or password';
-			if (!dbRes[0]) return res.status(401).json({ message: authFailed });
+			if (!dbRes || dbRes.length === 0)
+				return res.status(401).json({ message: authFailed });
 
 			const { password } = dbRes[0];
 
@@ -83,9 +83,17 @@ async function signIn(req, res) {
 
 			if (!bcryptMatch) return res.status(401).json({ message: authFailed });
 
+			//User roles arrays
+			let roles = dbRes.map(elem => elem.Role);
+
 			//Access token
 			const accessToken = jwt.sign(
-				{ username: username },
+				{
+					user: {
+						username: username,
+						roles: roles,
+					},
+				},
 				process.env.ACCESS_TOKEN_SECRET,
 				{ expiresIn: '15m' }
 			);

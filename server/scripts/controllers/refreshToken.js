@@ -9,7 +9,7 @@ function refreshTokenHandler(req, res) {
 	if (!req.cookies?.jwt) return res.sendStatus(401); //TODO: 401 or 404?
 	const refreshToken = req.cookies.jwt;
 
-	const query = `SELECT username from Users WHERE RefreshToken = "${refreshToken}";`;
+	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join  User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
 
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -19,6 +19,8 @@ function refreshTokenHandler(req, res) {
 		//User not found
 		if (!username) return res.sendStatus(403);
 
+		let roles = dbRes.map(elem => elem.Role);
+
 		jwt.verify(
 			refreshToken,
 			process.env.REFRESH_TOKEN_SECRET,
@@ -26,7 +28,12 @@ function refreshTokenHandler(req, res) {
 				if (err || username !== decoded.username) return res.sendStatus(403);
 
 				const accessToken = jwt.sign(
-					{ username: decoded.username },
+					{
+						user: {
+							username: decoded.username,
+							roles: roles,
+						},
+					},
 					process.env.ACCESS_TOKEN_SECRET,
 					{ expiresIn: '15m' }
 				);
