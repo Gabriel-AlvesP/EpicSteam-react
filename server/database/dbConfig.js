@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const fs = require('fs');
 const util = require('util');
 if (process.env.NODE_ENV === 'development') require('dotenv').config(); //Environment variables
-const { dummyData } = require('./dummy');
+const dummyData = require('./dummy');
 
 /**
  * Create database connections
@@ -44,9 +44,10 @@ const fetchFile = async path => {
 /**
  * Fill the database with dummy data
  */
-function populateDb() {
-	for (let i = 0; i < dummyData[0].length; i++) {
-		dbInsert(dummyData[0][i], dummyData[1][i]);
+async function populateDb() {
+	const dummy = await dummyData();
+	for (let i = 0; i < dummy[0].length; i++) {
+		dbInsert(dummy[0][i], dummy[1][i]);
 	}
 }
 
