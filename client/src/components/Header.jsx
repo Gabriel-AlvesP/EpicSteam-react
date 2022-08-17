@@ -85,7 +85,7 @@ export default function Header() {
 									Browse
 								</Link>
 							</Nav.Link>
-							{auth?.user ? (
+							{auth?.username ? (
 								/* Authentication Required */
 								//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
 								// TODO: Check for role instead
@@ -125,6 +125,7 @@ export default function Header() {
 			<AuthModal
 				modalContent={modalContent}
 				show={modalShow}
+				setShow={setModalShow}
 				onHide={handleModalHide}
 			/>
 		</>

@@ -17,12 +17,12 @@ export default function AuthModal(props) {
 	useEffect(() => {
 		if (content) {
 			setTitle('Sign In');
-			setBody(<SignIn onNavClick={changeContent} />);
+			setBody(<SignIn onNavClick={changeContent} setShow={props.setShow} />);
 		} else {
 			setTitle('Sign Up');
-			setBody(<SignUp onNavClick={changeContent} />);
+			setBody(<SignUp onNavClick={changeContent} setShow={props.setShow} />);
 		}
-	}, [content]);
+	}, [content, props.setShow]);
 
 	const changeContent = () => {
 		setContent(prevContent => !prevContent);

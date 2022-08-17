@@ -3,10 +3,12 @@ import { getUsers } from '../../services/api/axios';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
+import useRefreshToken from '../../services/hooks/useRefreshToken';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
 	const [err, setErr] = useState('');
+	const refresh = useRefreshToken();
 
 	const handleUsers = async () => {
 		let response = await getUsers();
@@ -33,6 +35,9 @@ export default function Users() {
 				)}
 				<Button className="mt-5" onClick={handleUsers}>
 					Update Users
+				</Button>
+				<Button className="mt-5" onClick={refresh}>
+					Refresh Token
 				</Button>
 			</Container>
 		</>

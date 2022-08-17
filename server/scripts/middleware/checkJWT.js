@@ -10,6 +10,9 @@ const jwt = require('jsonwebtoken');
  */
 const checkJWT = (req, res, next) => {
 	const auth = req.headers.authorization || req.headers.Authorization; //Catch any case
+	//TODO: BUG HUNT => JWT COOKIE IS NOT BEING SET
+	//TODO: clg
+	console.log(auth);
 
 	//? 401 to denied permission || 404 to hide page existence
 	if (!auth?.startsWith('Bearer ')) return res.sendStatus(404);

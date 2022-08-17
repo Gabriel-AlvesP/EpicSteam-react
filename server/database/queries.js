@@ -1,5 +1,6 @@
 const { connection } = require('./dbConfig');
 
+//TODO Update
 const get = (query, data = '', callback) => {
 	if (data) connection.query(query, data, callback);
 	else connection.query(query, callback);

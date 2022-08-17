@@ -12,7 +12,7 @@ import App from '../../App';
  * Application routing handling
  * @returns Routes
  */
-export default function Routing() {
+const Routing = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<App />}>
@@ -37,4 +37,6 @@ export default function Routing() {
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);
-}
+};
+
+export default Routing;

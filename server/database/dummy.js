@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const dummyData = async () => {
-	const passwd = await bcrypt.hash('12345678', 10);
+	const passwd = await bcrypt.hash('B3bado10', 10);
 	return [
 		[
 			'Users',

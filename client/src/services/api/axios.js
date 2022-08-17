@@ -49,8 +49,11 @@ const signUp = async data => {
 	try {
 		let res = await accio.post('/signup', data);
 		//TODO: implement
-		return res;
-	} catch (err) {}
+		console.log(res);
+		return res.data;
+	} catch (err) {
+		return err?.message;
+	}
 };
 
 /**
@@ -59,15 +62,29 @@ const signUp = async data => {
  */
 const signIn = async data => {
 	try {
-		let res = await accio.post('/login', data);
+		const res = await accio.post('/login', data);
+
 		return res.data;
-	} catch (err) {}
+	} catch (err) {
+		const errMessage = err.response?.data?.message;
+		if (errMessage) return errMessage;
+		return 'Sign in failed';
+	}
 };
 
+const refreshToken = async () => {
+	try {
+		const response = await privateAccio.get('/refresh');
+		console.log(response);
+		return response.data;
+	} catch (err) {
+		console.log(err);
+	}
+};
 /* const handleError = status => {
 	if (status === 0) {
 		return 'No server response';
 	}
 }; */
 
-export { getUsers, signIn, signUp };
+export { getUsers, signIn as signInReq, signUp as signUpReq, refreshToken };

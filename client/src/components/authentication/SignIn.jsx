@@ -7,6 +7,7 @@ import {
 	usernameValidator,
 	passwdValidator,
 } from '../../utils/authValidations';
+import { signInReq } from '../../services/api/axios';
 
 export default function SignIn(props) {
 	const { setAuth } = useAuth();
@@ -28,7 +29,7 @@ export default function SignIn(props) {
 	 * Handle sign in request
 	 * @param {Object} e event
 	 */
-	const signIn = e => {
+	const signIn = async e => {
 		e.preventDefault();
 
 		if (!usernameValidator.test(username)) {
@@ -41,16 +42,19 @@ export default function SignIn(props) {
 			return;
 		}
 
-		//!clg
-		console.log('success');
 		setErrMessage('');
+		let res = await signInReq({ username, passwd });
 
-		//username
-		//TODO: usernames query/handling
+		if (typeof res !== 'object') {
+			setErrMessage(res);
+			return;
+		}
 
-		//TODO: REMOVE
-		let user = { username: username };
-		setAuth({ user });
+		const { accessToken } = res;
+		setAuth({ username, accessToken });
+		setUsername('');
+		setPasswd('');
+		props.setShow(false);
 	};
 
 	return (
@@ -80,7 +84,7 @@ export default function SignIn(props) {
 				</div>
 
 				<div>
-					<SubmitBtn btnEnable={btnEnable} />
+					<SubmitBtn btnEnable={btnEnable} action={true} />
 					<div className="modal-nav">
 						Already have an account?{' '}
 						<b onClick={props.onNavClick} className="modal-nav-link">

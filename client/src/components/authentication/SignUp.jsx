@@ -8,6 +8,7 @@ import setInputColor, {
 	emailValidator,
 	passwdValidator,
 } from '../../utils/authValidations';
+import { signUpReq } from '../../services/api/axios';
 
 /**
  * Handle sign up process
@@ -108,10 +109,14 @@ export default function SignUp(props) {
 	 * @param {Object} e event
 	 */
 	//!!
-	const signUp = e => {
+	const signUp = async e => {
 		e.preventDefault();
 
-		//TODO: check if everything is valid
+		if (validUsername && validEmail && validPasswd && validMatch) {
+			const res = await signUpReq(username);
+			//TODO: clg
+			console.log(res);
+		}
 
 		//!clg
 		console.log('In development');

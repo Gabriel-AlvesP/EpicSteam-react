@@ -5,12 +5,20 @@ const db = require('../../database/dbConfig');
 const jwt = require('jsonwebtoken');
 const serverErr = 'Server internal error. Try again later';
 
+/**
+ *
+ * @param {*} req request
+ * @param {*} res response
+ * @returns
+ */
 function refreshTokenHandler(req, res) {
+	//Check refresh token existence
 	if (!req.cookies?.jwt) return res.sendStatus(401); //TODO: 401 or 404?
+
 	const refreshToken = req.cookies.jwt;
 
+	//Validates user refresh token
 	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join  User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
-
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 

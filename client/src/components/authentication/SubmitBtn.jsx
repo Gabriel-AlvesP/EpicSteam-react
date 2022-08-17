@@ -22,7 +22,7 @@ export default function SubmitBtn(props) {
 
 	return (
 		<button type="submit" style={btnStyle} disabled={!props.btnEnable}>
-			Sign up
+			{!props.action ? 'Sign up' : 'Sign in'}
 		</button>
 	);
 }
