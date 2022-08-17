@@ -1,6 +1,6 @@
 /**
  * Check if current user has any necessary roles to access the requested content
- * Dependent of checkJWT since this method decodes roles from the access token
+ * Dependent of checkJWT since it decodes roles from the access token
  * @param  {...any} allowedRoles User roles
  * @returns
  */

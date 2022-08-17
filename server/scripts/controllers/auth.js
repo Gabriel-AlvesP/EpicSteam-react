@@ -78,7 +78,7 @@ async function signIn(req, res) {
 
 		if (!bcryptMatch) return res.status(401).json({ message: authFailed });
 
-		//User roles arrays
+		//User roles array
 		let roles = dbRes.map(elem => elem.Role);
 
 		//Access token
@@ -111,13 +111,6 @@ async function signIn(req, res) {
 		);
 
 		//Response config
-		//TODO: BUG HUNT => JWT COOKIE IS NOT BEING SET
-		/* Possible reasons:
-		 *  cors options ("allowCredentials")
-		 *  sameSite/secure options
-		 *  Authorization param is not being set correctly or it is not being accepted/set in the client side (axios instance)
-		 */
-
 		res.cookie('jwt', refreshToken, {
 			httpOnly: true,
 			sameSite: 'None',
@@ -128,7 +121,13 @@ async function signIn(req, res) {
 	});
 }
 
-function logOut(req, res) {
+/**
+ * Logout function
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+function logout(req, res) {
 	if (!req.cookies?.jwt) return res.sendStatus(204);
 	const refreshToken = req.cookies?.jwt;
 	const query = `Select username from Users where refreshToken = "${refreshToken}"`;
@@ -149,6 +148,7 @@ function logOut(req, res) {
 			);
 		}
 
+		//Clear jwt cookie
 		res.clearCookie('jwt', {
 			httpOnly: true,
 			sameSite: 'None',
@@ -158,4 +158,4 @@ function logOut(req, res) {
 	});
 }
 
-module.exports = { signIn, signUp, logOut };
+module.exports = { signIn, signUp, logout };

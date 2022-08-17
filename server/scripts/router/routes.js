@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { signIn, signUp, logOut } = require('../controllers/auth');
+const { signIn, signUp, logout } = require('../controllers/auth');
 const { users } = require('../controllers/users');
 const { refreshTokenHandler } = require('../controllers/refreshToken');
 const roles = require('../models/roles');
@@ -21,7 +21,7 @@ router.post('/login', signIn);
 // Private routes
 
 router.get('/refresh', refreshTokenHandler);
-router.get('/logout', logOut);
+router.get('/logout', logout);
 router.get('/users', checkJWT, checkRoles(roles.forumManager), users);
 //router.post('/game', requestHandlers.postGame);
 //router.post('/comment', requestHandlers.comment);

@@ -2,18 +2,19 @@ import axios from 'axios';
 
 //* <--  Axios Default config -->
 axios.defaults.baseURL = 'http://localhost:3031';
+axios.defaults.headers = { 'Content-Type': 'application/json' };
 
 //* <-- Axios Instance Config -->
 
 /**
- * Axios config
+ * Axios public routes configuration
  */
 const accio = axios.create();
 
-const privateAccio = axios.create({
-	headers: {
-		'Content-Type': 'application/json',
-	},
+/**
+ * Axios private routes configuration
+ */
+const privAxios = axios.create({
 	withCredentials: true,
 });
 
@@ -22,24 +23,7 @@ const privateAccio = axios.create({
  * @returns [response] : [Error message]
  */
 //TODO: Remove/Edit
-const getUsers = async () => {
-	try {
-		let res = await accio.get(`/users`);
-		return res.data;
-	} catch (err) {
-		if (err.response.status === 0) {
-			return 'No server response';
-		}
-
-		//409 - Conflict
-		if (err.response?.status === 409) {
-			//TODO: Username/Email in use
-			return;
-		}
-
-		return 'Request failed!';
-	}
-};
+const getUsers = async () => {};
 
 /**
  * Create a new user request
@@ -48,10 +32,10 @@ const getUsers = async () => {
 const signUp = async data => {
 	try {
 		let res = await accio.post('/signup', data);
-		//TODO: implement
-		console.log(res);
+
 		return res.data;
 	} catch (err) {
+		if (err.response.status === 0) return 'No server response';
 		return err?.message;
 	}
 };
@@ -62,29 +46,28 @@ const signUp = async data => {
  */
 const signIn = async data => {
 	try {
-		const res = await accio.post('/login', data);
+		const res = await accio.post('/login', data, { withCredentials: true });
 
 		return res.data;
 	} catch (err) {
-		const errMessage = err.response?.data?.message;
-		if (errMessage) return errMessage;
-		return 'Sign in failed';
+		if (err.response.status === 0) return 'No server response';
+		return err.response?.data?.message || 'Sign in failed';
 	}
 };
 
 const refreshToken = async () => {
 	try {
-		const response = await privateAccio.get('/refresh');
-		console.log(response);
+		const response = await accio.get('/refresh', { withCredentials: true });
 		return response.data;
 	} catch (err) {
-		console.log(err);
+		return err.response?.data?.message || 'Refresh error';
 	}
 };
-/* const handleError = status => {
-	if (status === 0) {
-		return 'No server response';
-	}
-}; */
 
-export { getUsers, signIn as signInReq, signUp as signUpReq, refreshToken };
+export {
+	getUsers,
+	signIn as signInReq,
+	signUp as signUpReq,
+	refreshToken,
+	privAxios,
+};

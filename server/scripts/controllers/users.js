@@ -7,7 +7,7 @@ const db = require('../../database/dbConfig');
  */
 function users(req, res) {
 	db.connection.query(`SELECT * from Users`, (err, dbRes) => {
-		if (err) res.status(500).json({ message: serverErr });
+		if (err) res.status(500).json({ message: 'Server internal error' });
 
 		res.json(dbRes);
 	});

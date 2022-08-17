@@ -13,7 +13,7 @@ const serverErr = 'Server internal error. Try again later';
  */
 function refreshTokenHandler(req, res) {
 	//Check refresh token existence
-	if (!req.cookies?.jwt) return res.sendStatus(401); //TODO: 401 or 404?
+	if (!req.cookies?.jwt) return res.sendStatus(401);
 
 	const refreshToken = req.cookies.jwt;
 

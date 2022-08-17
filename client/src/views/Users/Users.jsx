@@ -1,25 +1,42 @@
 import { useState } from 'react';
-import { getUsers } from '../../services/api/axios';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import useRefreshToken from '../../services/hooks/useRefreshToken';
+import useInterceptors from '../../services/hooks/useInterceptors';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
 	const [err, setErr] = useState('');
-	const refresh = useRefreshToken();
+	const axiosInterceptor = useInterceptors();
 
-	const handleUsers = async () => {
-		let response = await getUsers();
-		if (typeof response === 'string') {
-			setErr(response);
-		} else setUsers(response);
-	};
-
+	//TODO:
 	useEffect(() => {
+		let isMounted = true;
+		const controller = new AbortController();
+
+		const handleUsers = async () => {
+			try {
+				const res = await axiosInterceptor.get(`/users`, {
+					signal: controller.signal,
+				});
+				isMounted && setUsers(res.data);
+			} catch (err) {
+				if (err.response.status === 0) {
+					setErr('No server response');
+					return;
+				}
+
+				setErr(err?.response?.message || 'Error loading users');
+			}
+		};
+
 		handleUsers();
-	}, []);
+
+		return () => {
+			isMounted = false;
+			controller.abort();
+		};
+	}, [axiosInterceptor]);
 
 	return (
 		<>
@@ -33,12 +50,9 @@ export default function Users() {
 						})}
 					</ul>
 				)}
-				<Button className="mt-5" onClick={handleUsers}>
+				{/*<Button className="mt-5" onClick={handleUsers}>
 					Update Users
-				</Button>
-				<Button className="mt-5" onClick={refresh}>
-					Refresh Token
-				</Button>
+					</Button>*/}
 			</Container>
 		</>
 	);

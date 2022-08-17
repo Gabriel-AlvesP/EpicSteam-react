@@ -98,7 +98,7 @@ export default function Header() {
 								<></>
 							)}
 						</Nav>
-						{auth?.user ? (
+						{auth?.username ? (
 							<FaUserCircle size="2em" title="User icon" />
 						) : (
 							<Nav>

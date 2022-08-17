@@ -13,15 +13,17 @@ const useRefreshToken = () => {
 	 */
 	const refresh = async () => {
 		const response = await refreshToken();
-		setAuth(prev => {
-			console.log(prev);
-			console.log(response.data.accessToken);
+		if (typeof response !== 'object') {
+			return;
+		}
+
+		setAuth(prev =>
 			//overwrite the new access token
-			return { ...prev, accessToken: response.data.accessToken };
-		});
+			({ ...prev, accessToken: response.accessToken })
+		);
 
 		//New refresh token
-		return response.data.accessToken;
+		return response?.data?.accessToken;
 	};
 	//Function
 	return refresh;

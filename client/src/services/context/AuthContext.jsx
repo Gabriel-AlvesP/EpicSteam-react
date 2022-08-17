@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 //TODO: REMOVE useEffect
 
 //* <-- Context -->
@@ -22,9 +22,6 @@ export const AuthContext = React.createContext();
  */
 export default function AuthProvider({ children }) {
 	const [auth, setAuth] = useState({});
-
-	//!clg
-	useEffect(() => console.log(auth), [auth]); //TODO: REMOVE
 
 	return (
 		<AuthContext.Provider value={{ auth, setAuth }}>

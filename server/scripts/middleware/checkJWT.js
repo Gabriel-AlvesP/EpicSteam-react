@@ -9,20 +9,22 @@ const jwt = require('jsonwebtoken');
  * @returns
  */
 const checkJWT = (req, res, next) => {
-	const auth = req.headers.authorization || req.headers.Authorization; //Catch any case
-	//TODO: BUG HUNT => JWT COOKIE IS NOT BEING SET
-	//TODO: clg
-	console.log(auth);
+	const auth = req.headers.Authorization || req.headers.authorization; //Catch any case
 
-	//? 401 to denied permission || 404 to hide page existence
-	if (!auth?.startsWith('Bearer ')) return res.sendStatus(404);
+	//Validate authorization type
+	if (!auth?.startsWith('Bearer ')) return res.sendStatus(401);
 
-	const token = auth.split(' ')[1]; //Get token
+	//Get token from authorization field
+	const token = auth.split(' ')[1];
+
+	//Validate token
 	jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+		//Validation failed
 		if (err) return res.sendStatus(403);
 
-		req.user = decoded.user.username;
-		req.roles = decoded.user.roles;
+		//Fetch decoded username and roles into request
+		req.username = decoded.user.username;
+		req.roles = decoded.user.roles; //Used in "checkRoles" to validate them
 
 		next();
 	});
