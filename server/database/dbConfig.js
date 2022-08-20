@@ -57,13 +57,14 @@ async function populateDb() {
  * @param {object} data - corresponding to the table information
  */
 function dbInsert(tableName, data) {
-	let sqlQuery = `INSERT IGNORE INTO ${tableName} SET ?`;
+	let sqlQuery = `INSERT INTO ${tableName} SET ?`;
 
 	dbConnection.query(sqlQuery, data, (err, res) => {
 		if (!res) errorHandling(err);
 
 		if (res?.warningCount === 0)
 			errorHandling(err, [`\nAdded to ${tableName}...`]);
+		else console.log(res); //! clg
 	});
 }
 

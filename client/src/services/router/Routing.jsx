@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import RequireAuth from '../../components/authentication/RequireAuth';
+import RequireAuth from './RequireAuth';
 import Home from '../../views/Home';
 import Browse from '../../views/Browse';
 import Game from '../../views/Game';

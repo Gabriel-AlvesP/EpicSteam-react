@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidV4 } = require('uuid');
 const { connection } = require('../../database/dbConfig');
 const { insertNewUser } = require('../../database/queries');
-const serverErr = 'Server internal error. Try again later';
+const serverErr = 'Server error. Try again later';
 
 /**
  * Sign up request handler
@@ -14,15 +14,15 @@ const serverErr = 'Server internal error. Try again later';
  * @param {*} req
  * @param {*} res
  */
-const signUp = async (req, res) => {
-	const { username, email, passwd, match } = req.body;
+async function signUp(req, res) {
+	const { username, email, passwd, matchPasswd } = req.body;
 
 	if (!username || !email || !passwd)
 		return res
 			.status(400)
 			.json({ message: 'Username, email and password required.' });
 
-	if (passwd !== match)
+	if (passwd !== matchPasswd)
 		return res.status(400).json({ message: `Password must match.` });
 
 	const hashed = await bcrypt.hash(passwd, 10);
@@ -46,10 +46,10 @@ const signUp = async (req, res) => {
 		insertNewUser(user, err => {
 			if (err) return res.status(500).json({ message: serverErr });
 
-			return res.status(201).json({ user: { username } });
+			return res.sendStatus(201);
 		});
 	});
-};
+}
 
 /**
  * Login request handler
@@ -81,43 +81,47 @@ async function signIn(req, res) {
 		//User roles array
 		let roles = dbRes.map(elem => elem.Role);
 
-		//Access token
-		const accessToken = jwt.sign(
-			{
-				user: {
-					username: username,
-					roles: roles,
+		try {
+			//Access token
+			const accessToken = jwt.sign(
+				{
+					user: {
+						username: username,
+						roles: roles,
+					},
 				},
-			},
-			process.env.ACCESS_TOKEN_SECRET,
-			{ expiresIn: '15m' }
-		);
+				process.env.ACCESS_TOKEN_SECRET,
+				{ expiresIn: '15m' }
+			);
 
-		//Refresh token
-		const refreshToken = jwt.sign(
-			{ username: username },
-			process.env.REFRESH_TOKEN_SECRET,
-			{ expiresIn: '1d' }
-		);
+			//Refresh token
+			const refreshToken = jwt.sign(
+				{ username: username },
+				process.env.REFRESH_TOKEN_SECRET,
+				{ expiresIn: '1d' }
+			);
 
-		//? Should I save refresh tokens inside a hidden json file, like google do with google calendar their refresh tokens?
-		//Insert refreshToken into database
-		connection.query(
-			`UPDATE Users SET RefreshToken=? WHERE Username='${username}'`,
-			refreshToken,
-			(err, res) => {
-				if (err) return res.status(500).json({ message: serverErr });
-			}
-		);
+			//? Should I save refresh tokens inside a hidden json file, like google do with google calendar their refresh tokens?
+			//Insert refreshToken into database
+			connection.query(
+				`UPDATE Users SET RefreshToken=? WHERE Username='${username}'`,
+				refreshToken,
+				(err, res) => {
+					if (err) return res.status(500).json({ message: serverErr });
+				}
+			);
 
-		//Response config
-		res.cookie('jwt', refreshToken, {
-			httpOnly: true,
-			sameSite: 'None',
-			secure: true, // Comment to use thunder client
-			maxAge: 24 * 60 * 60 * 1000, //1day
-		});
-		res.json({ accessToken });
+			//Response config
+			res.cookie('jwt', refreshToken, {
+				httpOnly: true,
+				sameSite: 'None',
+				secure: true, // Comment to use thunder client
+				maxAge: 24 * 60 * 60 * 1000, //1day
+			});
+			res.json({ accessToken });
+		} catch {
+			res.status(500).json({ message: serverErr });
+		}
 	});
 }
 

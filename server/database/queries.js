@@ -1,14 +1,5 @@
 const { connection } = require('./dbConfig');
-
-//TODO Update
-const get = (query, data = '', callback) => {
-	if (data) connection.query(query, data, callback);
-	else connection.query(query, callback);
-};
-
-const getAsync = async (query, data, callback) => {
-	connection.query(query, data, callback);
-};
+const roles = require('../scripts/models/roles');
 
 const insert = (table, data, callback) => {
 	let query = `INSERT INTO ${table} SET ?`;
@@ -20,7 +11,7 @@ const insertNewUser = (user, callback) => {
 	let query = 'INSERT INTO Users SET ?';
 	let rolesQuery = 'INSERT INTO User_Roles SET ?';
 	let defaultRole = {
-		Role: 666,
+		Role: roles.visitor,
 		UserId: user.id,
 	};
 	connection.query(query, user, err => {
@@ -38,4 +29,7 @@ const updateToken = (data, callback) => {
 	connection.query(query, data, callback);
 };
 
-module.exports = { get, getAsync, insertNewUser, updateToken };
+module.exports = {
+	insertNewUser,
+	updateToken,
+};

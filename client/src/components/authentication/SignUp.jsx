@@ -38,6 +38,10 @@ export default function SignUp(props) {
 
 	//Submit button
 	const [btnEnable, setBtnEnable] = useState(false);
+	const [success, setSuccess] = useState(false);
+
+	//Authentication server error/success messages
+	const [authMessage, setAuthMessage] = useState('');
 
 	/*
 	 * Auto focus on username when modal opens
@@ -117,11 +121,16 @@ export default function SignUp(props) {
 					matchPasswd,
 				});
 
-				props.onNavClick(); //Change modal content
-				//TODO: show success message
+				setSuccess(true);
+				setAuthMessage('Sign up was successful. Sign in now.');
+				setTimeout(() => props.onNavClick(), 3500);
 			} catch (err) {
-				if (err.response.status === 0) return 'No server response';
-				return err?.message;
+				if (err.response?.status === 0) {
+					setAuthMessage('No server response');
+					return;
+				}
+
+				setAuthMessage(err.response?.data?.message ?? 'Sign up failed');
 			}
 		}
 	};
@@ -131,6 +140,8 @@ export default function SignUp(props) {
 			<AuthMessage
 				focus={focus}
 				validations={[validUsername, validEmail, validPasswd, validMatch]}
+				success={success}
+				message={authMessage}
 			/>
 			<form onSubmit={signUp}>
 				<div className="loginGroup">

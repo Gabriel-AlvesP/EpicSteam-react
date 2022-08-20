@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const dummyData = async () => {
-	const passwd = await bcrypt.hash('B3bado10', 10);
+	const passwd = await bcrypt.hash('Dummy100', 10);
 	return [
 		[
 			'Users',
@@ -16,6 +16,8 @@ const dummyData = async () => {
 			'User_Roles',
 			'User_Roles',
 			'User_Roles',
+			'Users_Posts',
+			'Users_Posts',
 		],
 		[
 			{
@@ -45,7 +47,7 @@ const dummyData = async () => {
 				PostDate: '2022-07-20',
 				UpVotes: 1,
 				DownVotes: 0,
-				Owner: 1,
+				Owner: 'Dummy1',
 				CategoryId: 1,
 			},
 			{
@@ -57,13 +59,13 @@ const dummyData = async () => {
 				PostDate: '2022-07-30',
 				UpVotes: 0,
 				DownVotes: 1,
-				Owner: 1,
+				Owner: 'Dummy1',
 				CategoryId: 2,
 			},
 			{
 				Id: 1,
 				Description: 'Excelente',
-				UserId: 1,
+				UserId: 'Dummy1',
 				PostId: 1,
 			},
 			{
@@ -86,6 +88,16 @@ const dummyData = async () => {
 			{
 				Role: 666,
 				UserId: 'Dummy1',
+			},
+			{
+				UserId: 'Dummy1',
+				PostId: 1,
+				DidPlay: true,
+			},
+			{
+				UserId: 'Dummy1',
+				PostId: 2,
+				DidPlay: true,
 			},
 		],
 	];

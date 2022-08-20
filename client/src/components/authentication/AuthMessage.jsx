@@ -15,7 +15,11 @@ export default function AuthMessage(props) {
 			//Message display with focus and validations
 			if (props.focus && !props.validations[props.focus - 1]) {
 				setMessage(signUpHints(props.focus));
-				setMsgStyle(prevStyle => ({ ...prevStyle, paddingBottom: '30px' }));
+				setMsgStyle(prevStyle => ({
+					...prevStyle,
+					color: '#FF0000',
+					paddingBottom: '30px',
+				}));
 			} else {
 				setMessage('');
 				setMsgStyle(prevStyle => ({ ...prevStyle, paddingBottom: '0' }));
@@ -32,7 +36,11 @@ export default function AuthMessage(props) {
 				color: '#3F784C',
 			}));
 		} else {
-			setMsgStyle(prevStyle => ({ ...prevStyle, paddingBottom: '30px' }));
+			setMsgStyle(prevStyle => ({
+				...prevStyle,
+				paddingBottom: '30px',
+				color: '#FF0000',
+			}));
 		}
 	}, [props.message, props.focus, props.validations, props.success]);
 

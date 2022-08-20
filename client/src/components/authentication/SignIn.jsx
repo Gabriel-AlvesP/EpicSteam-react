@@ -10,12 +10,16 @@ import {
 import { pubAxios } from '../../services/api/axios';
 
 export default function SignIn(props) {
+	//Authentication state
 	const { setAuth } = useAuth();
 
+	//User info
 	const [username, setUsername] = useState('');
 	const [passwd, setPasswd] = useState('');
-	const [errMessage, setErrMessage] = useState('');
+
+	//sign in variables
 	const [btnEnable, setBtnEnable] = useState(false);
+	const [authMessage, setAuthMessage] = useState('');
 
 	/*
 	 * Enables the submit button
@@ -32,18 +36,17 @@ export default function SignIn(props) {
 	 */
 	const signIn = async e => {
 		e.preventDefault();
+		setAuthMessage('');
 
 		if (!usernameValidator.test(username)) {
-			setErrMessage(`This user doesn't exist`);
+			setAuthMessage(`This user doesn't exist`);
 			return;
 		}
 
 		if (!passwdValidator.test(passwd)) {
-			setErrMessage(`Invalid password`);
+			setAuthMessage(`Invalid password`);
 			return;
 		}
-
-		setErrMessage('');
 
 		//Login request
 		try {
@@ -58,14 +61,18 @@ export default function SignIn(props) {
 			setPasswd('');
 			props.setShow(false);
 		} catch (err) {
-			if (err.response.status === 0) return 'No server response';
-			return err.response?.data?.message || 'Sign in failed';
+			if (err.response?.status === 0) {
+				setAuthMessage('No server response');
+				return;
+			}
+
+			setAuthMessage(err.response?.data?.message || 'Sign in failed');
 		}
 	};
 
 	return (
 		<>
-			<AuthMessage message={errMessage} />
+			<AuthMessage message={authMessage} />
 			<form onSubmit={signIn}>
 				<div className="loginGroup">
 					<input
@@ -75,7 +82,7 @@ export default function SignIn(props) {
 						value={username}
 						required
 					></input>
-					<label htmlFor="loginUsername">Username or Email</label>
+					<label htmlFor="loginUsername">Username</label>
 				</div>
 
 				<div className="loginGroup">

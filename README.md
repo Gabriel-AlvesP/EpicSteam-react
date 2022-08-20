@@ -16,6 +16,8 @@ Construção de Biblioteca de videojogos (Website e Fórum)
 # Node app environment variables
 NODE_ENV=development
 PORT=3031
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
 
 # Database connection environment variables
 HOST=localhost   # Optional
@@ -25,6 +27,16 @@ DB=gameslibrary  # Optional
 ```
 
 - Substituir as credenciais necessárias
+
+#### Criar os Tokens
+
+Recomendação para gerar os tokens:
+
+- Abrir terminal node e executar o comando para cada token
+
+```shell
+require('crypto').randomBytes(64).toString('hex')
+```
 
 ### Executar os comandos npm
 

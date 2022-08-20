@@ -22,7 +22,7 @@ const refreshToken = async () => {
 		const response = await pubAxios.get('/refresh', { withCredentials: true });
 		return response.data;
 	} catch (err) {
-		return err.response?.data?.message || 'Refresh error';
+		return err.response?.data?.message || 'Refresh failed';
 	}
 };
 

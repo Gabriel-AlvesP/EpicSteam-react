@@ -1,7 +1,14 @@
+import GamesCarousel from '../components/GamesCarousel';
+
 export default function Home() {
 	return (
 		<div>
-			<h1>Home</h1>
+			<div className="mb-5">
+				<h1>Home</h1>
+			</div>
+			<div>
+				<GamesCarousel />
+			</div>
 		</div>
 	);
 }
