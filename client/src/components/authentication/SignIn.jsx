@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../services/hooks/useAuth';
 import './Auth.css';
-import ErrorMsg from './ErrorMsg';
+import AuthMessage from './AuthMessage';
 import SubmitBtn from './SubmitBtn';
 import {
 	usernameValidator,
 	passwdValidator,
 } from '../../utils/authValidations';
-import { signInReq } from '../../services/api/axios';
+import { pubAxios } from '../../services/api/axios';
 
 export default function SignIn(props) {
 	const { setAuth } = useAuth();
@@ -27,6 +27,7 @@ export default function SignIn(props) {
 
 	/**
 	 * Handle sign in request
+	 * Authenticate as an existing user
 	 * @param {Object} e event
 	 */
 	const signIn = async e => {
@@ -43,23 +44,28 @@ export default function SignIn(props) {
 		}
 
 		setErrMessage('');
-		let res = await signInReq({ username, passwd });
 
-		if (typeof res !== 'object') {
-			setErrMessage(res);
-			return;
+		//Login request
+		try {
+			const { accessToken } = await pubAxios.post(
+				'/login',
+				{ username, passwd },
+				{ withCredentials: true }
+			);
+
+			setAuth({ username, accessToken });
+			setUsername('');
+			setPasswd('');
+			props.setShow(false);
+		} catch (err) {
+			if (err.response.status === 0) return 'No server response';
+			return err.response?.data?.message || 'Sign in failed';
 		}
-
-		const { accessToken } = res;
-		setAuth({ username, accessToken });
-		setUsername('');
-		setPasswd('');
-		props.setShow(false);
 	};
 
 	return (
 		<>
-			<ErrorMsg message={errMessage} />
+			<AuthMessage message={errMessage} />
 			<form onSubmit={signIn}>
 				<div className="loginGroup">
 					<input

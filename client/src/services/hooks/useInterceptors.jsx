@@ -23,7 +23,6 @@ const useInterceptors = () => {
 
 		/*
 		 * Set a new access token into header authorization field in case of invalid token
-		 *
 		 */
 		const responseInterceptor = privAxios.interceptors.response.use(
 			response => response,

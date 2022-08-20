@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 import useInterceptors from '../../services/hooks/useInterceptors';
 
 export default function Users() {
@@ -9,7 +8,6 @@ export default function Users() {
 	const [err, setErr] = useState('');
 	const axiosInterceptor = useInterceptors();
 
-	//TODO:
 	useEffect(() => {
 		let isMounted = true;
 		const controller = new AbortController();
@@ -21,12 +19,13 @@ export default function Users() {
 				});
 				isMounted && setUsers(res.data);
 			} catch (err) {
-				if (err.response.status === 0) {
+				if (err?.response?.status === 0) {
 					setErr('No server response');
 					return;
 				}
 
-				setErr(err?.response?.message || 'Error loading users');
+				if (err?.message !== 'canceled')
+					setErr(err?.response?.message || 'Error loading users');
 			}
 		};
 
@@ -50,9 +49,6 @@ export default function Users() {
 						})}
 					</ul>
 				)}
-				{/*<Button className="mt-5" onClick={handleUsers}>
-					Update Users
-					</Button>*/}
 			</Container>
 		</>
 	);

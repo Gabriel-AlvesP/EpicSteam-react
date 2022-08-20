@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../services/hooks/useAuth';
 import './Auth.css';
-import ErrorMsg from './ErrorMsg';
+import AuthMessage from './AuthMessage';
 import SubmitBtn from './SubmitBtn';
 import setInputColor, {
 	usernameValidator,
 	emailValidator,
 	passwdValidator,
 } from '../../utils/authValidations';
-import { signUpReq } from '../../services/api/axios';
+import { pubAxios } from '../../services/api/axios';
 
 /**
  * Handle sign up process
@@ -16,7 +15,6 @@ import { signUpReq } from '../../services/api/axios';
  */
 export default function SignUp(props) {
 	const [focus, setFocus] = useState(0);
-	const { setAuth } = useAuth();
 
 	//Username
 	const [username, setUsername] = useState('');
@@ -40,9 +38,6 @@ export default function SignUp(props) {
 
 	//Submit button
 	const [btnEnable, setBtnEnable] = useState(false);
-
-	//TODO: on signUp success?
-	//const [success, setSuccess] = useState(false);
 
 	/*
 	 * Auto focus on username when modal opens
@@ -106,28 +101,34 @@ export default function SignUp(props) {
 
 	/**
 	 * Handle sign up request
+	 * It creates a new user request
 	 * @param {Object} e event
 	 */
-	//!!
 	const signUp = async e => {
 		e.preventDefault();
 
 		if (validUsername && validEmail && validPasswd && validMatch) {
-			const res = await signUpReq(username);
-			//TODO: clg
-			console.log(res);
-		}
+			//Sign up request
+			try {
+				await pubAxios.post('/signup', {
+					username,
+					email,
+					passwd,
+					matchPasswd,
+				});
 
-		//!clg
-		console.log('In development');
-		//TODO: write a handleSignUp on AxiosApi.js and import it
-		let user = { username: username, email: email };
-		setAuth({ user });
+				props.onNavClick(); //Change modal content
+				//TODO: show success message
+			} catch (err) {
+				if (err.response.status === 0) return 'No server response';
+				return err?.message;
+			}
+		}
 	};
 
 	return (
 		<>
-			<ErrorMsg
+			<AuthMessage
 				focus={focus}
 				validations={[validUsername, validEmail, validPasswd, validMatch]}
 			/>
