@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { signUpHints } from '../../utils/authValidations';
+import { signUpHints } from '../../utils/validations';
 
 export default function AuthMessage(props) {
 	const [message, setMessage] = useState('');

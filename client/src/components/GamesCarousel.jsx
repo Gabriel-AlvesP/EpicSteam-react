@@ -3,14 +3,16 @@ import { Carousel } from 'react-bootstrap';
 import { pubAxios } from '../services/api/axios';
 
 export default function GamesCarousel() {
-	const [items, setItems] = useState([]);
+	const [games, setGames] = useState([]);
 
 	useEffect(() => {
 		const getItems = async () => {
 			try {
-				const res = await pubAxios('/mostPlayed');
-				setItems(res.data.games?.splice(0, 5));
-			} catch (err) {}
+				const res = await pubAxios('/games/mostPlayed');
+				setGames(res.data.mostPlayed?.slice(0, 5));
+			} catch (err) {
+				//TODO: Error handling
+			}
 		};
 
 		getItems();
@@ -18,56 +20,15 @@ export default function GamesCarousel() {
 
 	return (
 		<Carousel>
-			{items.forEach(() => {
+			{games.forEach(game => {
 				<Carousel.Item>
-					<img
-						className="d-block w-100"
-						src="holder.js/800x400?text=First slide&bg=373940"
-						alt="First slide"
-					/>
+					<img className="d-block w-100" src={game.Photo} alt={game.Title} />
 					<Carousel.Caption>
-						<h3>First slide label</h3>
-						<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+						<h3>{game.Title}</h3>
+						<p>{game.Description}</p>
 					</Carousel.Caption>
 				</Carousel.Item>;
 			})}
-			<Carousel.Item>
-				<img
-					className="d-block w-100"
-					src="holder.js/800x400?text=First slide&bg=373940"
-					alt="First slide"
-				/>
-				<Carousel.Caption>
-					<h3>First slide label</h3>
-					<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-				</Carousel.Caption>
-			</Carousel.Item>
-			<Carousel.Item>
-				<img
-					className="d-block w-100"
-					src="holder.js/800x400?text=Second slide&bg=282c34"
-					alt="Second slide"
-				/>
-
-				<Carousel.Caption>
-					<h3>Second slide label</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				</Carousel.Caption>
-			</Carousel.Item>
-			<Carousel.Item>
-				<img
-					className="d-block w-100"
-					src="holder.js/800x400?text=Third slide&bg=20232a"
-					alt="Third slide"
-				/>
-
-				<Carousel.Caption>
-					<h3>Third slide label</h3>
-					<p>
-						Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-					</p>
-				</Carousel.Caption>
-			</Carousel.Item>
 		</Carousel>
 	);
 }

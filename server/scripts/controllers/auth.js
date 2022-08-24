@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidV4 } = require('uuid');
 const { connection } = require('../../database/dbConfig');
 const { insertNewUser } = require('../../database/queries');
-const serverErr = 'Server error. Try again later';
+const { serverErr } = require('../models/errorMessages');
 
 /**
  * Sign up request handler
@@ -35,7 +35,7 @@ async function signUp(req, res) {
 		JoinDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
 	};
 
-	let query = `SELECT * from Users WHERE Username = "${username}" OR Email = "${email}";`;
+	let query = `SELECT * from Users WHERE Username = "${username}";`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });

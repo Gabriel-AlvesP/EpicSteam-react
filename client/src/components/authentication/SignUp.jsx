@@ -6,7 +6,7 @@ import setInputColor, {
 	usernameValidator,
 	emailValidator,
 	passwdValidator,
-} from '../../utils/authValidations';
+} from '../../utils/validations';
 import { pubAxios } from '../../services/api/axios';
 
 /**
@@ -144,7 +144,7 @@ export default function SignUp(props) {
 				message={authMessage}
 			/>
 			<form onSubmit={signUp}>
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						/*ref={usernameRef}*/
 						id="signUpUsername"
@@ -158,7 +158,7 @@ export default function SignUp(props) {
 					></input>
 					<label htmlFor="signUpUsername">Username</label>
 				</div>
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						id="signUpEmail"
 						type="text"
@@ -172,7 +172,7 @@ export default function SignUp(props) {
 
 					<label htmlFor="signUpEmail">Email</label>
 				</div>
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						id="signUpPasswd"
 						type="password"
@@ -186,7 +186,7 @@ export default function SignUp(props) {
 
 					<label htmlFor="signUpPasswd">Password</label>
 				</div>
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						id="signUpMatch"
 						type="password"

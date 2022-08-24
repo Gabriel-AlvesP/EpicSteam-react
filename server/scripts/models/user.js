@@ -19,5 +19,5 @@ function User(id, username, email, passwd, role = roles.visitor) {
 	this.email = email;
 	this.passwd = passwd;
 	this.role = role;
-	this.joinDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	this.joinDate = new Date().toISOString().slice(0, 19).replace('T', ' '); //Date and time
 }

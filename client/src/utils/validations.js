@@ -71,4 +71,18 @@ const signUpHints = msgNumb => {
 	return '';
 };
 
-export { usernameValidator, emailValidator, passwdValidator, signUpHints };
+const imageValidator = image => {
+	const imageValidator = /\.(jpe?g|png)$/i;
+
+	if (!imageValidator.test(image)) return false;
+
+	return true;
+};
+
+export {
+	usernameValidator,
+	emailValidator,
+	passwdValidator,
+	signUpHints,
+	imageValidator,
+};

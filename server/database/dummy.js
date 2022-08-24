@@ -41,7 +41,7 @@ const dummyData = async () => {
 			{
 				Id: 1,
 				Title: "Uncharted:A Thief's End",
-				Photo: '/www/images/uncharted4.png',
+				Photo: '/uploads/images/uncharted4.png',
 				Description: 'Naughty Dog - 2016',
 				Price: 39.99,
 				PostDate: '2022-07-20',
@@ -53,7 +53,7 @@ const dummyData = async () => {
 			{
 				Id: 2,
 				Title: 'CSGO',
-				Photo: '/www/images/csgo.jpg',
+				Photo: '/uploads/images/csgo.jpg',
 				Description: 'Valve - ',
 				Price: 0.0,
 				PostDate: '2022-07-30',

@@ -1,10 +1,10 @@
 const { connection } = require('./dbConfig');
 const roles = require('../scripts/models/roles');
 
-const insert = (table, data, callback) => {
-	let query = `INSERT INTO ${table} SET ?`;
+const insertData = (table, data, callback) => {
+	let query = `INSERT INTO ${table} SET ${data}`;
 
-	connection.query(query, data, callback);
+	connection.query(query, callback);
 };
 
 const insertNewUser = (user, callback) => {

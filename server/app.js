@@ -16,6 +16,7 @@ const cookieParser = require('cookie-parser');
 const database = require('./database/dbConfig');
 const routes = require('./scripts/router/routes');
 const { allowCredentials, corsOptions } = require('./config/cors');
+const path = require('path');
 
 // Configs
 const app = express();
@@ -26,6 +27,7 @@ app.use(allowCredentials); //Credentials check
 app.use(cors(corsOptions)); // Cors
 app.use(logger('dev')); // Logger
 // Middleware config
+app.use(express.static(path.join(__dirname, 'uploads'))); //TODO: Remove?
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

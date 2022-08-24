@@ -3,10 +3,7 @@ import { useAuth } from '../../services/hooks/useAuth';
 import './Auth.css';
 import AuthMessage from './AuthMessage';
 import SubmitBtn from './SubmitBtn';
-import {
-	usernameValidator,
-	passwdValidator,
-} from '../../utils/authValidations';
+import { usernameValidator, passwdValidator } from '../../utils/validations';
 import { pubAxios } from '../../services/api/axios';
 
 export default function SignIn(props) {
@@ -74,7 +71,7 @@ export default function SignIn(props) {
 		<>
 			<AuthMessage message={authMessage} />
 			<form onSubmit={signIn}>
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						id="loginUsername"
 						type="text"
@@ -85,7 +82,7 @@ export default function SignIn(props) {
 					<label htmlFor="loginUsername">Username</label>
 				</div>
 
-				<div className="loginGroup">
+				<div className="inputGroup">
 					<input
 						id="loginPasswd"
 						onChange={e => setPasswd(e.target.value)}
