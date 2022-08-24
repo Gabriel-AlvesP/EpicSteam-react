@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+//Middleware
+const checkRoles = require('../middleware/checkRoles');
+const checkJWT = require('../middleware/checkJWT');
+const { upload } = require('../middleware/multer');
+//Controllers
 const { signIn, signUp, logout } = require('../controllers/auth');
 const { users } = require('../controllers/users');
 const { refreshTokenHandler } = require('../controllers/refreshToken');
@@ -10,30 +15,32 @@ const {
 	addGame,
 } = require('../controllers/games');
 const { categories } = require('../controllers/categories');
+const { getImage } = require('../controllers/images');
+//Models
 const roles = require('../models/roles');
-const checkRoles = require('../middleware/checkRoles');
-const checkJWT = require('../middleware/checkJWT');
-const { upload } = require('../middleware/multer');
-// Public routes
 
-//Authentication
+//* <-- Public routes -->
+
+//?Authentication
 router.post('/signup', signUp);
 router.post('/login', signIn);
-//Games|Posts
+//?Games|Posts
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);
+//?Pictures
+router.get('/picture/:image', getImage);
 //router.get('/game/:id', getGame);
 
-// Private routes
+//* <-- Private routes -->
 
 router.get('/refresh', refreshTokenHandler);
 router.get('/logout', logout);
 router.get('/users', checkJWT, checkRoles(roles.forumManager), users);
 router.get(
 	'/categories',
-	/* 	checkJWT,
-	checkRoles(roles.forumManager, roles.contentManager), */
+	checkJWT,
+	checkRoles(roles.forumManager, roles.contentManager),
 	categories
 );
 router.post(

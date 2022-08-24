@@ -10,30 +10,23 @@ const NewGame = () => {
 	//Input variables
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [file, setFile] = useState({});
+	const [image, setImage] = useState({});
+	const [validImage, setValidImage] = useState(false);
 	const [price, setPrice] = useState(0.0);
-	const [validFile, setValidFile] = useState(false);
-	const [category, setCategory] = useState({});
+	const [category, setCategory] = useState(0);
 	//Dropdown elements
 	const [categoriesList, setCategories] = useState([]);
 	//Err
 	const [errMessage, setErrMessage] = useState('');
-	//Submit status
+	//Form
+	const [dropdownTitle, setDropdownTitle] = useState('Select category');
 	const [uploadStatus, setUploadStatus] = useState(0);
 
 	useEffect(() => {
-		if (imageValidator(file.name)) {
-			setValidFile(true);
-		} else {
-			setValidFile(false);
-		}
-	}, [file]);
-
-	useEffect(() => {
-		const getCategories = async callback => {
+		const getCategories = async () => {
 			try {
 				const response = await privAxios('/categories');
-				setCategory(response.data.categories[0]);
+				setCategory(response.data.categories[0].Id);
 				setCategories(response.data.categories);
 			} catch (err) {
 				setErrMessage(
@@ -45,22 +38,51 @@ const NewGame = () => {
 		getCategories();
 	}, []);
 
+	useEffect(() => {
+		if (imageValidator(image.name)) {
+			console.log(image);
+			console.log(imageValidator(image.name));
+			setValidImage(true);
+		} else {
+			setValidImage(false);
+		}
+	}, [image]);
+
+	/**
+	 *  Handles categories dropdown change
+	 * @param {Number} val category id
+	 */
+	const handleOnSelect = val => {
+		setImage(val);
+		categoriesList.forEach(elem => {
+			if (elem.Id === Number(val)) setDropdownTitle(elem.Name);
+		});
+	};
+
+	/**
+	 * Handles form submission
+	 * @param {Object} e event
+	 * @returns
+	 */
 	const submitForm = async e => {
 		e.preventDefault();
 
 		try {
-			const formData = new FormData();
-			formData.append('image', file);
-			formData.append('title', title);
-
-			if (!validFile) {
+			if (!validImage) {
 				setErrMessage('Only image files (jpg, jpeg, png) are allowed!');
 				return;
 			}
 
+			const formData = new FormData();
+			formData.append('image', image);
+			formData.append('title', title);
+			formData.append('description', description);
+			formData.append('price', price);
+			formData.append('categoryId', category);
+
 			setErrMessage('');
 
-			const response = await privAxios.post('/games/new', formData, {
+			await privAxios.post('/games/new', formData, {
 				onUploadProgress: data => {
 					setUploadStatus(Math.round((data.loaded / data.total) * 100));
 				},
@@ -69,11 +91,9 @@ const NewGame = () => {
 				},
 			});
 
-			//TODO Clg
-			console.log(response);
+			//TODO: Navigate
 		} catch (err) {
-			//TODO: Clg - handle error
-			console.log(err);
+			setErrMessage('New game failed. Try again later.');
 		}
 	};
 
@@ -107,7 +127,7 @@ const NewGame = () => {
 						name="image"
 						accept="image/*"
 						multiple={false}
-						onChange={e => setFile(e.target.files[0])}
+						onChange={e => setImage(e.target.files[0])}
 					/>
 					<label htmlFor="gameImage">Select image</label>
 				</div>
@@ -132,21 +152,19 @@ const NewGame = () => {
 					<label htmlFor="price">Price</label>
 				</div>
 				<div className="inputGroup">
-					<DropdownButton id="category" title={category.Name}>
-						{categoriesList.map(element =>
-							category.Id === element.Id ? (
-								<Dropdown.Item active eventKey={element.Id}>
-									{element.Name}
-								</Dropdown.Item>
-							) : (
-								<Dropdown.Item active eventKey={element.Id}>
-									{element.Name}
-								</Dropdown.Item>
-							)
-						)}
+					<DropdownButton
+						id="category"
+						title={dropdownTitle}
+						onSelect={handleOnSelect}
+					>
+						{categoriesList.map(element => (
+							<Dropdown.Item key={element.Id} eventKey={element.Id}>
+								{element.Name}
+							</Dropdown.Item>
+						))}
 					</DropdownButton>
 				</div>
-				<Button>Submit</Button>
+				<Button type="submit">Submit</Button>
 			</form>
 		</>
 	);

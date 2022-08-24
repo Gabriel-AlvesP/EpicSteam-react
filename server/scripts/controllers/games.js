@@ -56,27 +56,37 @@ function recentlyAdded(req, res) {
  */
 function addGame(req, res) {
 	const query = `INSERT INTO posts SET ?`;
-	const { path } = req.file;
+
+	const { filename } = req.file;
 	const { title, description, price, categoryId } = req.body;
 	const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 	connection.query(
-		query,
-		{
-			title,
-			photo: path,
-			description,
-			price,
-			postDate: timestamp,
-			categoryId,
-			owner: req.username,
-		},
+		`select Id from users where username=${req.username}`,
 		(err, dbRes) => {
-			if (err) return res.status(500).json({ message: serverErr });
+			if (err) return res.sendStatus(500);
 
 			//TODO CLG
 			console.log(dbRes);
-			return res.sendStatus(201);
+			if (dbRes.length === 0) return res.sendStatus(401);
+
+			connection.query(
+				query,
+				{
+					title,
+					photo: filename,
+					description,
+					price,
+					postDate: timestamp,
+					categoryId,
+					owner: dbRes,
+				},
+				err => {
+					if (err) return res.sendStatus(500);
+
+					return res.sendStatus(201);
+				}
+			);
 		}
 	);
 }
