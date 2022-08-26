@@ -8,6 +8,7 @@ import setInputColor, {
 	passwdValidator,
 } from '../../utils/validations';
 import { pubAxios } from '../../services/api/axios';
+import handleError from '../../utils/errorHandling';
 
 /**
  * Handle sign up process
@@ -125,12 +126,7 @@ export default function SignUp(props) {
 				setAuthMessage('Sign up was successful. Sign in now.');
 				setTimeout(() => props.onNavClick(), 3500);
 			} catch (err) {
-				if (err.response?.status === 0) {
-					setAuthMessage('No server response');
-					return;
-				}
-
-				setAuthMessage(err.response?.data?.message ?? 'Sign up failed');
+				setAuthMessage(handleError(err, 'Sign up failed'));
 			}
 		}
 	};
@@ -149,20 +145,22 @@ export default function SignUp(props) {
 						/*ref={usernameRef}*/
 						id="signUpUsername"
 						type="text"
-						className={usernameColor}
+						className={`customInput ${usernameColor}`}
 						onChange={e => setUsername(e.target.value)}
 						value={username}
 						onFocus={() => setFocus(1)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
-					<label htmlFor="signUpUsername">Username</label>
+					<label className="customLabel" htmlFor="signUpUsername">
+						Username
+					</label>
 				</div>
 				<div className="inputGroup">
 					<input
 						id="signUpEmail"
 						type="text"
-						className={emailColor}
+						className={`customInput ${emailColor}`}
 						onChange={e => setEmail(e.target.value)}
 						value={email}
 						onFocus={() => setFocus(2)}
@@ -170,13 +168,15 @@ export default function SignUp(props) {
 						required
 					></input>
 
-					<label htmlFor="signUpEmail">Email</label>
+					<label className="customLabel" htmlFor="signUpEmail">
+						Email
+					</label>
 				</div>
 				<div className="inputGroup">
 					<input
 						id="signUpPasswd"
 						type="password"
-						className={passwdColor}
+						className={`customInput ${passwdColor}`}
 						onChange={e => setPasswd(e.target.value)}
 						value={passwd}
 						onFocus={() => setFocus(3)}
@@ -184,20 +184,24 @@ export default function SignUp(props) {
 						required
 					></input>
 
-					<label htmlFor="signUpPasswd">Password</label>
+					<label className="customLabel" htmlFor="signUpPasswd">
+						Password
+					</label>
 				</div>
 				<div className="inputGroup">
 					<input
 						id="signUpMatch"
 						type="password"
-						className={matchColor}
+						className={`customInput ${matchColor}`}
 						onChange={e => setMatchPasswd(e.target.value)}
 						value={matchPasswd}
 						onFocus={() => setFocus(4)}
 						onBlur={() => setFocus(0)}
 						required
 					></input>
-					<label htmlFor="signUpMatch">Confirm Password</label>
+					<label className="customLabel" htmlFor="signUpMatch">
+						Confirm Password
+					</label>
 				</div>
 				<div>
 					<SubmitBtn btnEnable={btnEnable} />

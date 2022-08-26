@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useRefreshToken from './useRefreshToken';
+import { useRefreshToken } from './useRefreshToken';
 import { useAuth } from './useAuth';
 import { privAxios } from '../api/axios';
 
@@ -28,7 +28,6 @@ const useInterceptors = () => {
 			response => response,
 			async err => {
 				// Any status codes that falls outside the range of 2xx cause this function to trigger
-				// Do something with response error
 				const prevConfig = err?.config;
 
 				if (err?.response?.status === 403 && !prevConfig.errHandled) {

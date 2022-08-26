@@ -5,7 +5,9 @@ import { ProgressBar } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { toast } from 'react-toastify';
 
+//TODO
 const NewGame = () => {
 	//Input variables
 	const [title, setTitle] = useState('');
@@ -91,7 +93,8 @@ const NewGame = () => {
 				},
 			});
 
-			//TODO: Navigate
+			//TODO: Navigate to
+			toast.success(`New game '${title}' successfully created.`);
 		} catch (err) {
 			setErrMessage('New game failed. Try again later.');
 		}

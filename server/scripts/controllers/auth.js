@@ -63,7 +63,7 @@ async function signIn(req, res) {
 	if (!username || !passwd)
 		return res.status(400).json({ message: 'Username and password required.' });
 
-	let query = `SELECT DISTINCT usr.password , userRoles.Role FROM Users usr join User_Roles userRoles ON usr.id = userRoles.UserId where usr.username ="${username}"`;
+	let query = `SELECT DISTINCT usr.username, usr.password, userRoles.Role FROM Users usr join User_Roles userRoles ON usr.id = userRoles.UserId where usr.username ="${username}"`;
 	connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
@@ -71,7 +71,7 @@ async function signIn(req, res) {
 		if (!dbRes || dbRes.length === 0)
 			return res.status(401).json({ message: authFailed });
 
-		const { password } = dbRes[0];
+		const { username, password } = dbRes[0];
 
 		//Compare input passwd with database records
 		const bcryptMatch = await bcrypt.compare(passwd, password);

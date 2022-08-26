@@ -5,6 +5,7 @@ import './Header.css';
 import '../assets/style/hoverEffects.css';
 import logo from '../assets/images/icon.png';
 import AuthModal from './authentication/AuthModal';
+import SignOut from './authentication/SignOut';
 import { useAuth } from '../services/hooks/useAuth';
 import { FaUserCircle } from 'react-icons/fa';
 
@@ -85,7 +86,7 @@ export default function Header() {
 									Browse
 								</Link>
 							</Nav.Link>
-							{auth?.username ? (
+							{auth?.username && (
 								/* Authentication Required */
 								//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
 								// TODO: Check for role instead
@@ -94,12 +95,13 @@ export default function Header() {
 										Users
 									</Link>
 								</Nav.Link>
-							) : (
-								<></>
 							)}
 						</Nav>
 						{auth?.username ? (
-							<FaUserCircle size="2em" title="User icon" />
+							<>
+								<FaUserCircle size="2em" title="User icon" />
+								<SignOut />
+							</>
 						) : (
 							<Nav>
 								<Nav.Link

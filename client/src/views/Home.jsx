@@ -1,5 +1,4 @@
 import GamesCarousel from '../components/GamesCarousel';
-/* import NewGame from '../components/NewGame'; */
 
 export default function Home() {
 	return (

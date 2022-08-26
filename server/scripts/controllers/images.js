@@ -8,4 +8,15 @@ const getImage = (req, res) => {
 	res.download(`uploads/images/${image}`);
 };
 
+//TODO
+const getBanner = (req, res) => {
+	const { banner } = req.params;
+	res.download(`uploads/images/banners/${banner}`);
+};
+
+const getCover = (req, res) => {
+	const { cover } = req.params;
+	res.download(`uploads/images/banners/${cover}`);
+};
+
 module.exports = { getImage };

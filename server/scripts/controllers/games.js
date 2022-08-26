@@ -7,14 +7,11 @@ const { serverErr } = require('../models/errorMessages');
  * @param {Object} res response
  */
 function mostPlayed(req, res) {
-	//TODO: Maybe add the limit to req.body ( client side obviously )
 	const query = `SELECT p.* FROM posts p LEFT JOIN users_posts up ON up.PostId=p.Id WHERE up.DidPlay=1 GROUP BY up.PostId ORDER BY count(*) desc limit 0,5;`;
 
 	connection.query(query, (err, dbRes) => {
-		if (err) {
-			console.log(err); //TODO: Add logs to all error handling
-			return res.status(500).json({ message: serverErr });
-		}
+		if (err) return res.status(500).json({ message: serverErr });
+
 		return res.json({ mostPlayed: dbRes });
 	});
 }

@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const serverErr = 'Server internal error. Try again later';
 
 /**
- *
+ * Generates a new access token using the refresh token to authenticate the user
  * @param {*} req request
  * @param {*} res response
- * @returns
+ * @returns accessToken
  */
 function refreshTokenHandler(req, res) {
 	//Check refresh token existence
@@ -17,7 +17,7 @@ function refreshTokenHandler(req, res) {
 
 	const refreshToken = req.cookies.jwt;
 
-	//Validates user refresh token
+	//Validate user refresh token + Get username and roles
 	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join  User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -27,14 +27,17 @@ function refreshTokenHandler(req, res) {
 		//User not found
 		if (!username) return res.sendStatus(403);
 
+		//User roles
 		let roles = dbRes.map(elem => elem.Role);
 
+		//Verify refresh token authenticity
 		jwt.verify(
 			refreshToken,
 			process.env.REFRESH_TOKEN_SECRET,
 			(err, decoded) => {
 				if (err || username !== decoded.username) return res.sendStatus(403);
 
+				//Sign new access token
 				const accessToken = jwt.sign(
 					{
 						user: {
@@ -45,7 +48,8 @@ function refreshTokenHandler(req, res) {
 					process.env.ACCESS_TOKEN_SECRET,
 					{ expiresIn: '15m' }
 				);
-				res.json({ accessToken });
+				//Send the new accessToken
+				res.json({ username, accessToken });
 			}
 		);
 	});

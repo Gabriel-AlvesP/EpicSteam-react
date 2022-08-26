@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 //Authentication Context
 export const AuthContext = React.createContext();
-
+export const PersistContext = React.createContext();
 //* <-- Custom Hooks -->
 
 //See hooks folder
@@ -21,10 +21,15 @@ export const AuthContext = React.createContext();
  */
 export default function AuthProvider({ children }) {
 	const [auth, setAuth] = useState({});
+	const [authPersist, setAuthPersist] = useState(
+		JSON.parse(localStorage.getItem('persist')) || false
+	);
 
 	return (
-		<AuthContext.Provider value={{ auth, setAuth }}>
-			{children}
-		</AuthContext.Provider>
+		<PersistContext.Provider value={{ authPersist, setAuthPersist }}>
+			<AuthContext.Provider value={{ auth, setAuth }}>
+				{children}
+			</AuthContext.Provider>
+		</PersistContext.Provider>
 	);
 }

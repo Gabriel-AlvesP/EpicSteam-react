@@ -1,5 +1,7 @@
 import { useAuth } from './useAuth';
-import { refreshToken } from '../api/axios';
+import { privAxios } from '../api/axios';
+import { toast } from 'react-toastify';
+import handleError from '../../utils/errorHandling';
 
 /**
  * Hook that uses refresh token to get a new access token when it expires
@@ -11,22 +13,27 @@ const useRefreshToken = () => {
 	/**
 	 * Refresh access token when it expires
 	 */
-	const refresh = async () => {
-		const response = await refreshToken();
-		if (typeof response !== 'object') {
-			return;
+	return async () => {
+		try {
+			const response = await privAxios.get('/refresh');
+
+			//Set new accessToken into authentication state
+			setAuth(prev =>
+				//Overwrite the old access token with the new one
+				({
+					...prev,
+					username: response?.data?.username,
+					accessToken: response?.data?.accessToken,
+				})
+			);
+
+			//New refresh token
+			return response?.data?.accessToken;
+		} catch (err) {
+			if (err?.response?.status === 403)
+				toast.error(handleError(err, 'Authentication refresh failed.'));
 		}
-
-		setAuth(prev =>
-			//overwrite the new access token
-			({ ...prev, accessToken: response.accessToken })
-		);
-
-		//New refresh token
-		return response?.data?.accessToken;
 	};
-	//Function
-	return refresh;
 };
 
-export default useRefreshToken;
+export { useRefreshToken };
