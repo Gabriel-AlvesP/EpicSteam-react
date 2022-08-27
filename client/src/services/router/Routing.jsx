@@ -16,8 +16,8 @@ import PersistSignIn from './PersistSignIn';
 const Routing = () => {
 	return (
 		<Routes>
-			<Route element={<PersistSignIn />}>
-				<Route path="/" element={<App />}>
+			<Route path="/" element={<App />}>
+				<Route element={<PersistSignIn />}>
 					{/* Public routes */}
 					<Route index element={<Home />} />
 					<Route path="/browse" element={<Browse />} />
@@ -28,16 +28,16 @@ const Routing = () => {
 						<Route path="/users">
 							{/* add element to be rendered into children */}
 							<Route index element={<Users />} />
-							<Route path=":id" element={<Profile />}></Route>
+							<Route path=":id" element={<Profile />} />
 						</Route>
 					</Route>
 					<Route element={<RequireAuth allowedRoles={[2008, 1899]} />}>
 						<Route path="/categories" />
 					</Route>
 				</Route>
-				{/* Catch 404 errors */}
-				<Route path="*" element={<NotFound />} />
 			</Route>
+			{/* Catch 404 errors */}
+			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);
 };

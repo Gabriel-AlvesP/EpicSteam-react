@@ -71,7 +71,6 @@ export default function SignIn(props) {
 
 			setAuth({ username, accessToken });
 			setAuthPersist(checked);
-			localStorage.setItem('persist', checked);
 
 			//clear inputs
 			setUsername('');

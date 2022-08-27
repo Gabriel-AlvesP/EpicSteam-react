@@ -15,7 +15,7 @@ const { serverErr } = require('../models/errorMessages');
  * @param {*} res
  */
 async function signUp(req, res) {
-	const { username, email, passwd, matchPasswd } = req.body;
+	const { username, email, passwd, matchPasswd } = req.body || {};
 
 	if (!username || !email || !passwd)
 		return res
@@ -58,7 +58,7 @@ async function signUp(req, res) {
  * @param {*} res
  */
 async function signIn(req, res) {
-	const { username, passwd } = req.body;
+	const { username, passwd } = req.body || {};
 
 	if (!username || !passwd)
 		return res.status(400).json({ message: 'Username and password required.' });
@@ -134,13 +134,13 @@ async function signIn(req, res) {
 function logout(req, res) {
 	if (!req.cookies?.jwt) return res.sendStatus(204);
 	const refreshToken = req.cookies?.jwt;
+
 	const query = `Select username from Users where refreshToken = "${refreshToken}"`;
 
 	connection.query(query, (err, dbRes) => {
-		if (err) throw err;
 		if (err) return res.status(500).json({ message: serverErr });
 
-		const { username } = dbRes[0];
+		const { username } = dbRes[0] || {};
 
 		if (username) {
 			connection.query(

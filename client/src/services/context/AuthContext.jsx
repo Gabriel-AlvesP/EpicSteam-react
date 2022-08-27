@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 //* <-- Context -->
 
@@ -24,6 +25,10 @@ export default function AuthProvider({ children }) {
 	const [authPersist, setAuthPersist] = useState(
 		JSON.parse(localStorage.getItem('persist')) || false
 	);
+
+	useEffect(() => {
+		localStorage.setItem('persist', authPersist);
+	}, [authPersist]);
 
 	return (
 		<PersistContext.Provider value={{ authPersist, setAuthPersist }}>

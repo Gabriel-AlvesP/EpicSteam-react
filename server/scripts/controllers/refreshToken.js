@@ -22,7 +22,7 @@ function refreshTokenHandler(req, res) {
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
-		const { username } = dbRes[0];
+		const { username } = dbRes[0] || {};
 
 		//User not found
 		if (!username) return res.sendStatus(403);

@@ -114,45 +114,57 @@ const NewGame = () => {
 			<form className="mt-5 mb-5" onSubmit={submitForm}>
 				<div className="inputGroup">
 					<input
+						className="customInput"
 						id="title"
 						type="text"
 						onChange={e => setTitle(e.target.value)}
 						value={title}
 						required
 					/>
-					<label htmlFor="title">Title</label>
+					<label className="customLabel" htmlFor="title">
+						Title
+					</label>
 				</div>
 
 				<div className="inputGroup">
 					<input
 						id="gameImage"
+						className="customInput"
 						type="file"
 						name="image"
 						accept="image/*"
 						multiple={false}
 						onChange={e => setImage(e.target.files[0])}
 					/>
-					<label htmlFor="gameImage">Select image</label>
+					<label className="customLabel" htmlFor="gameImage">
+						Select image
+					</label>
 				</div>
 				<div className="inputGroup">
 					<input
 						id="description"
+						className="customInput"
 						type="text"
 						onChange={e => setDescription(e.target.value)}
 						value={description}
 						required
 					/>
-					<label htmlFor="description">Description</label>
+					<label className="customLabel" htmlFor="description">
+						Description
+					</label>
 				</div>
 				<div className="inputGroup">
 					<input
 						id="price"
+						className="customInput"
 						type="number"
 						onChange={e => setPrice(e.target.value)}
 						value={price}
 						required
 					/>
-					<label htmlFor="price">Price</label>
+					<label className="customLabel" htmlFor="price">
+						Price
+					</label>
 				</div>
 				<div className="inputGroup">
 					<DropdownButton

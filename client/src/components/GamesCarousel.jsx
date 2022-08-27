@@ -25,13 +25,13 @@ export default function GamesCarousel() {
 			{games.length > 0 ? (
 				<Carousel>
 					{games.map(game => (
-						<Carousel.Item key={game.Id}>
+						<Carousel.Item style={{ textAlign: 'center' }} key={game.Id}>
 							<Image
+								style={{ objectFit: 'cover' }}
 								className="d-block w-100"
 								fileName={game.Photo}
 								alt={game.Title}
 							/>
-
 							<Carousel.Caption>
 								<h3>{game.Title}</h3>
 								<p>{game.Description}</p>
