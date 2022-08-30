@@ -1,7 +1,10 @@
 import { useLogout } from '../../services/hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
 
-//TODO: Atualizar + documentar
+/**
+ * Sign out - clear authentication state and related cookies
+ * @returns
+ */
 const SignOut = () => {
 	const navigate = useNavigate();
 	const logout = useLogout();
@@ -15,6 +18,7 @@ const SignOut = () => {
 		navigate('/', { replace: true });
 	};
 
+	//TODO Update component
 	return <button onClick={handleSignOut}>Sign Out</button>;
 };
 

@@ -1,7 +1,7 @@
-import { pubAxios } from '../../services/api/axios';
+import { axios } from '../../services/api/axios';
 
 const Image = props => {
-	const image = `${pubAxios.defaults.baseURL}/picture/${props.fileName}`;
+	const image = `${axios.defaults.baseURL}/picture/${props.fileName}`;
 	return <img src={image} alt={props.alt} />;
 };
 

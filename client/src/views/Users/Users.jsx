@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
-import useInterceptors from '../../services/hooks/useInterceptors';
+import useAccessAxios from '../../services/hooks/useAccessAxios';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
 	const [err, setErr] = useState('');
-	const axiosInterceptor = useInterceptors();
+	const accessAxios = useAccessAxios();
 
 	useEffect(() => {
 		let isMounted = true;
@@ -14,7 +14,7 @@ export default function Users() {
 
 		const handleUsers = async () => {
 			try {
-				const res = await axiosInterceptor.get(`/users`, {
+				const res = await accessAxios.get(`/users`, {
 					signal: controller.signal,
 				});
 				isMounted && setUsers(res.data);
@@ -35,7 +35,7 @@ export default function Users() {
 			isMounted = false;
 			controller.abort();
 		};
-	}, [axiosInterceptor]);
+	}, [accessAxios]);
 
 	return (
 		<>

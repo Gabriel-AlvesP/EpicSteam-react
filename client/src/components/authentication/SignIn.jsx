@@ -4,7 +4,7 @@ import './Auth.css';
 import AuthMessage from './AuthMessage';
 import SubmitBtn from './SubmitBtn';
 import { usernameValidator, passwdValidator } from '../../utils/validations';
-import { privAxios } from '../../services/api/axios';
+import { axiosWCredentials } from '../../services/api/axios';
 import handleError from '../../utils/errorHandling';
 import { FaRegCheckCircle, FaCheckCircle } from 'react-icons/fa';
 
@@ -63,7 +63,7 @@ export default function SignIn(props) {
 
 		//Login request
 		try {
-			const response = await privAxios.post('/login', {
+			const response = await axiosWCredentials.post('/login', {
 				username,
 				passwd,
 			});

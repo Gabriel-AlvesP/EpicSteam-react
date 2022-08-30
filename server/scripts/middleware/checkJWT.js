@@ -1,14 +1,15 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
+//TODO: Add checkRefreshJWT + change checkJWT name => checkAccessJWT
 /**
- * Check access jwt token
+ * Verify access json web token validity
  * @param {*} req
  * @param {*} res
  * @param {*} next
  * @returns
  */
-const checkJWT = (req, res, next) => {
+const checkAccessJWT = (req, res, next) => {
 	const auth = req.headers.Authorization || req.headers.authorization; //Catch any case
 
 	//Validate authorization type
@@ -30,4 +31,4 @@ const checkJWT = (req, res, next) => {
 	});
 };
 
-module.exports = checkJWT;
+module.exports = { checkAccessJWT };

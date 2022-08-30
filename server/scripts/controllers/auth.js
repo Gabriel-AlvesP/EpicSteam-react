@@ -116,7 +116,7 @@ async function signIn(req, res) {
 				httpOnly: true,
 				sameSite: 'None',
 				secure: true, // Comment to use thunder client
-				maxAge: 24 * 60 * 60 * 1000, //1day
+				maxAge: 24 * 60 * 60 * 1000, // 1 day
 			});
 			res.json({ accessToken });
 		} catch {
@@ -135,6 +135,7 @@ function logout(req, res) {
 	if (!req.cookies?.jwt) return res.sendStatus(204);
 	const refreshToken = req.cookies?.jwt;
 
+	//TODO: check refresh token before it goes into the database
 	const query = `Select username from Users where refreshToken = "${refreshToken}"`;
 
 	connection.query(query, (err, dbRes) => {

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { pubAxios } from '../services/api/axios';
+import { axios } from '../services/api/axios';
 import Image from './images/Image';
+import { toast } from 'react-toastify';
+import handleError from '../utils/errorHandling';
 
 export default function GamesCarousel() {
 	const [games, setGames] = useState([]);
@@ -9,11 +11,10 @@ export default function GamesCarousel() {
 	useEffect(() => {
 		const getItems = async () => {
 			try {
-				const res = await pubAxios('/games/mostPlayed');
+				const res = await axios('/games/mostPlayed');
 				setGames(res.data.mostPlayed?.slice(0, 5));
 			} catch (err) {
-				//TODO CLG
-				console.log(err);
+				toast.error(handleError(err));
 			}
 		};
 

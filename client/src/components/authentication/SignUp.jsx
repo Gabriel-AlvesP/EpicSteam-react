@@ -7,7 +7,7 @@ import setInputColor, {
 	emailValidator,
 	passwdValidator,
 } from '../../utils/validations';
-import { pubAxios } from '../../services/api/axios';
+import { axios } from '../../services/api/axios';
 import handleError from '../../utils/errorHandling';
 
 /**
@@ -115,7 +115,7 @@ export default function SignUp(props) {
 		if (validUsername && validEmail && validPasswd && validMatch) {
 			//Sign up request
 			try {
-				await pubAxios.post('/signup', {
+				await axios.post('/signup', {
 					username,
 					email,
 					passwd,

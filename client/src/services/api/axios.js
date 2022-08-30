@@ -11,10 +11,10 @@ axios.defaults.headers = { 'Content-Type': 'application/json' };
  */
 const pubAxios = axios.create();
 /**
- * Axios private routes configuration
+ * Axios with credentials, useful for private routes configuration
  */
-const privAxios = axios.create({
+const credAxios = axios.create({
 	withCredentials: true,
 });
 
-export { pubAxios, privAxios };
+export { pubAxios as axios, credAxios as axiosWCredentials };

@@ -1,4 +1,4 @@
-import { privAxios } from '../api/axios';
+import { axiosWCredentials } from '../api/axios';
 import { useAuth, usePersist } from './useAuth';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
@@ -19,7 +19,7 @@ const useLogout = () => {
 
 		//Remove refresh token
 		try {
-			await privAxios.get('/logout');
+			await axiosWCredentials.get('/logout');
 		} catch (err) {
 			toast.error(handleError(err, 'Logout failed. Please try again later.'));
 		}

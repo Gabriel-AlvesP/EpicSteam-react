@@ -93,7 +93,7 @@ const NewGame = () => {
 				},
 			});
 
-			//TODO: Navigate to
+			//TODO: Navigate to ? (maybe game page?)
 			toast.success(`New game '${title}' successfully created.`);
 		} catch (err) {
 			setErrMessage('New game failed. Try again later.');

@@ -16,7 +16,7 @@ const getBanner = (req, res) => {
 
 const getCover = (req, res) => {
 	const { cover } = req.params;
-	res.download(`uploads/images/banners/${cover}`);
+	res.download(`uploads/images/covers/${cover}`);
 };
 
 module.exports = { getImage };

@@ -1,19 +1,30 @@
 import { useEffect } from 'react';
 import { useRefreshToken } from './useRefreshToken';
 import { useAuth } from './useAuth';
-import { privAxios } from '../api/axios';
+import { axiosWCredentials } from '../api/axios';
 
-const useInterceptors = () => {
+/**
+ * Header authorization configuration
+ *
+ * Middleware makes sure that accessToken is set inside header authorization field in the
+ * request and it tries to handle response forbidden errors (403),
+ * refreshing the access token. Useful for routes that need accessToken
+ *
+ * @returns
+ */
+const useAccessAxios = () => {
 	const { auth } = useAuth();
 	const refresh = useRefreshToken();
 
 	useEffect(() => {
 		/*
-		 *
+		 * Config header authorization field in case it isn't already defined
 		 */
-		const requestInterceptor = privAxios.interceptors.request.use(
+		const requestInterceptor = axiosWCredentials.interceptors.request.use(
 			config => {
 				// Do something before request is sent
+
+				//Set header authorization field
 				if (!config.headers['Authorization'])
 					config.headers['Authorization'] = `Bearer ${auth.accessToken}`;
 				return config;
@@ -24,7 +35,7 @@ const useInterceptors = () => {
 		/*
 		 * Set a new access token into header authorization field in case of invalid token
 		 */
-		const responseInterceptor = privAxios.interceptors.response.use(
+		const responseInterceptor = axiosWCredentials.interceptors.response.use(
 			response => response,
 			async err => {
 				// Any status codes that falls outside the range of 2xx cause this function to trigger
@@ -38,7 +49,7 @@ const useInterceptors = () => {
 					//Set new access token into authorization
 					prevConfig.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
-					return privAxios(prevConfig);
+					return axiosWCredentials(prevConfig);
 				}
 				return Promise.reject(err);
 			}
@@ -46,12 +57,12 @@ const useInterceptors = () => {
 
 		//Unmount func
 		return () => {
-			privAxios.interceptors.request.eject(requestInterceptor);
-			privAxios.interceptors.response.eject(responseInterceptor);
+			axiosWCredentials.interceptors.request.eject(requestInterceptor);
+			axiosWCredentials.interceptors.response.eject(responseInterceptor);
 		};
 	}, [auth, refresh]);
 
-	return privAxios;
+	return axiosWCredentials;
 };
 
-export default useInterceptors;
+export default useAccessAxios;

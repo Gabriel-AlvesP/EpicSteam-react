@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 //Middleware
 const checkRoles = require('../middleware/checkRoles');
-const checkJWT = require('../middleware/checkJWT');
+const { checkAccessJWT } = require('../middleware/checkJWT');
 const { upload } = require('../middleware/multer');
 //Controllers
 const { signIn, signUp, logout } = require('../controllers/auth');
@@ -34,18 +34,19 @@ router.get('/picture/:image', getImage);
 
 //* <-- Private routes -->
 
+//TODO: use checkRefreshJWT in functions that use refresh token in queries
 router.get('/refresh', refreshTokenHandler);
 router.get('/logout', logout);
-router.get('/users', checkJWT, checkRoles(roles.forumManager), users);
+router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
 router.get(
 	'/categories',
-	checkJWT,
+	checkAccessJWT,
 	checkRoles(roles.forumManager, roles.contentManager),
 	categories
 );
 router.post(
 	'/games/new',
-	checkJWT,
+	checkAccessJWT,
 	checkRoles(roles.contentManager, roles.forumManager),
 	upload.single('image'),
 	addGame

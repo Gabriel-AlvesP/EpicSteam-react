@@ -9,6 +9,7 @@ export default function Home() {
 			<div className="mt-5 mb-5 pb-5">
 				<GamesCarousel />
 			</div>
+			<div></div>
 		</div>
 	);
 }
