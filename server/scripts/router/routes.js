@@ -21,14 +21,14 @@ const roles = require('../models/roles');
 
 //* <-- Public routes -->
 
-//?Authentication
+//? Authentication
 router.post('/signup', signUp);
 router.post('/login', signIn);
-//?Games|Posts
+//? Games
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);
-//?Pictures
+//? Pictures
 router.get('/picture/:image', getImage);
 //router.get('/game/:id', getGame);
 

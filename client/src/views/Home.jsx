@@ -1,15 +1,15 @@
-import GamesCarousel from '../components/GamesCarousel';
+import GamesCarousel from '../components/Games/GamesCarousel';
+import CardsCollection from '../components/Games/CardsCollection';
 
 export default function Home() {
 	return (
 		<div>
-			<div className="mb-5">
-				<h1>Home</h1>
-			</div>
-			<div className="mt-5 mb-5 pb-5">
+			<div className="mt-3 mb-5 pb-5">
 				<GamesCarousel />
 			</div>
-			<div></div>
+			<div>
+				<CardsCollection />
+			</div>
 		</div>
 	);
 }

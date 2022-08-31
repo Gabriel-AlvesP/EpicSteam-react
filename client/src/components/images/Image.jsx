@@ -1,8 +1,8 @@
 import { axios } from '../../services/api/axios';
 
-const Image = props => {
-	const image = `${axios.defaults.baseURL}/picture/${props.fileName}`;
-	return <img src={image} alt={props.alt} />;
+const Image = ({ src, alt, style }) => {
+	const image = `${axios.defaults.baseURL}/picture/${src}`;
+	return <img src={image} style={style} alt={alt} />;
 };
 
 export default Image;

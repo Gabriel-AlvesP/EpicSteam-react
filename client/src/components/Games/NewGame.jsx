@@ -1,6 +1,6 @@
-import { privAxios } from '../services/api/axios';
+import { privAxios } from '../../services/api/axios';
 import { useState, useEffect } from 'react';
-import { imageValidator } from '../utils/validations';
+import { imageValidator } from '../../utils/validations';
 import { ProgressBar } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';

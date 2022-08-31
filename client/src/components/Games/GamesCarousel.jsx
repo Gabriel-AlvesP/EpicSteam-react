@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { axios } from '../services/api/axios';
-import Image from './images/Image';
+import { axios } from '../../services/api/axios';
+import Image from '../images/Image';
 import { toast } from 'react-toastify';
-import handleError from '../utils/errorHandling';
+import handleError from '../../utils/errorHandling';
 
 export default function GamesCarousel() {
 	const [games, setGames] = useState([]);
@@ -30,7 +30,7 @@ export default function GamesCarousel() {
 							<Image
 								style={{ objectFit: 'cover' }}
 								className="d-block w-100"
-								fileName={game.Photo}
+								src={game.Photo}
 								alt={game.Title}
 							/>
 							<Carousel.Caption>

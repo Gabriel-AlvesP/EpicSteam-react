@@ -40,7 +40,7 @@ const dummyData = async () => {
 			},
 			{
 				Id: 1,
-				Title: "Uncharted:A Thief's End",
+				Title: "Uncharted: A Thief's End",
 				Photo: 'uncharted4.png',
 				Description: 'Naughty Dog - 2016',
 				Price: 39.99,
