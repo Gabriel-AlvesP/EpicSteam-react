@@ -9,13 +9,13 @@ const TypeCollection = ({ title, games }) => {
 				<Col>
 					<h6 style={{ textAlign: 'left', marginLeft: '5px' }}>{title}</h6>
 				</Col>
-				<Col>
+				<Col style={{ textAlign: 'right' }}>
 					{/* TODO: add filter*/}
 					{/* TODO: Add css file with hover animations */}
 					<Link
 						to="/browse"
 						style={{
-							textAlign: 'right',
+							paddingRight: '18px',
 							textDecoration: 'none',
 							color: '#ff7800',
 						}}
@@ -27,13 +27,13 @@ const TypeCollection = ({ title, games }) => {
 			<Row xs={1} md={1} className="g-4">
 				{games.map((game, idx) => (
 					<Col key={idx}>
-						{/* Add hover style/animation */}
+						{/* TODO: Add hover style/animation */}
 						<Link
 							style={{ textDecoration: 'none', color: '#fff' }}
 							to={`/games/${game.Id}`}
 						>
 							<Row>
-								<Col className="ps-4 pe-0" style={{ textAlign: 'left' }}>
+								<Col className="ps-4" style={{ textAlign: 'left' }}>
 									<Image
 										src={game.Photo}
 										style={{
@@ -47,6 +47,8 @@ const TypeCollection = ({ title, games }) => {
 								</Col>
 
 								<Col
+									md={'auto'}
+									lg={7}
 									className="ps-0"
 									style={{
 										textAlign: 'left',

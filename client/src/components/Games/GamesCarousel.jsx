@@ -28,8 +28,12 @@ export default function GamesCarousel() {
 					{games.map(game => (
 						<Carousel.Item style={{ textAlign: 'center' }} key={game.Id}>
 							<Image
-								style={{ objectFit: 'cover' }}
-								className="d-block w-100"
+								style={{
+									width: '100%',
+									height: '600px',
+									objectFit: 'cover',
+									borderRadius: '20px',
+								}}
 								src={game.Photo}
 								alt={game.Title}
 							/>

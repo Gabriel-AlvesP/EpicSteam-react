@@ -35,8 +35,8 @@ router.get('/picture/:image', getImage);
 //* <-- Private routes -->
 
 //TODO: use checkRefreshJWT in functions that use refresh token in queries
-router.get('/refresh', refreshTokenHandler);
-router.get('/logout', logout);
+router.get('/refresh', refreshTokenHandler); //refreshToken
+router.get('/logout', logout); //refreshToken
 router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
 router.get(
 	'/categories',

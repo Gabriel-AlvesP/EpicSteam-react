@@ -31,7 +31,7 @@ export default function Header() {
 	 * Change navbar background
 	 */
 	const changeNavBg = () => {
-		if (window.scrollY > 300) setNavbarBg('navbar-container');
+		if (window.scrollY > 90) setNavbarBg('navbar-container');
 		else setNavbarBg('navbar-container active');
 	};
 

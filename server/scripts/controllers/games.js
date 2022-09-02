@@ -63,8 +63,6 @@ function addGame(req, res) {
 		(err, dbRes) => {
 			if (err) return res.sendStatus(500);
 
-			//TODO CLG
-			console.log(dbRes);
 			if (dbRes.length === 0) return res.sendStatus(401);
 
 			connection.query(
