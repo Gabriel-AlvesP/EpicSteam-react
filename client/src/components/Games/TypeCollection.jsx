@@ -25,24 +25,24 @@ const TypeCollection = ({ title, games }) => {
 				</Col>
 			</Row>
 			<Row xs={1} md={1} className="g-4">
-				{games.map((game, idx) => (
-					<Col key={idx}>
+				{games.map(game => (
+					<Col key={game.id}>
 						{/* TODO: Add hover style/animation */}
 						<Link
 							style={{ textDecoration: 'none', color: '#fff' }}
-							to={`/games/${game.Id}`}
+							to={`/games/${game.id}`}
 						>
 							<Row>
 								<Col className="ps-4" style={{ textAlign: 'left' }}>
 									<Image
-										src={game.Photo}
+										src={game.cover}
 										style={{
 											objectFit: 'cover',
 											width: '100px',
 											height: '150px',
 											borderRadius: '15px',
 										}}
-										alt={game.Title}
+										alt={game.title}
 									/>
 								</Col>
 
@@ -57,8 +57,8 @@ const TypeCollection = ({ title, games }) => {
 										flexDirection: 'column',
 									}}
 								>
-									<p>{game.Title}</p>
-									<p>{game.Price ? `${game.Price}€` : 'Free'}</p>
+									<p>{game.title}</p>
+									<p>{game.price ? `${game.price} €` : 'Free'}</p>
 								</Col>
 							</Row>
 						</Link>

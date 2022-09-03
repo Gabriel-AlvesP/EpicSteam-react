@@ -14,7 +14,7 @@ const {
 	recentlyAdded,
 	addGame,
 } = require('../controllers/games');
-const { categories } = require('../controllers/categories');
+const { categories, newCategory } = require('../controllers/categories');
 const { getImage } = require('../controllers/images');
 //Models
 const roles = require('../models/roles');
@@ -24,6 +24,8 @@ const roles = require('../models/roles');
 //? Authentication
 router.post('/signup', signUp);
 router.post('/login', signIn);
+//? Categories
+router.get('/categories', categories);
 //? Games
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
@@ -38,12 +40,6 @@ router.get('/picture/:image', getImage);
 router.get('/refresh', refreshTokenHandler); //refreshToken
 router.get('/logout', logout); //refreshToken
 router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
-router.get(
-	'/categories',
-	checkAccessJWT,
-	checkRoles(roles.forumManager, roles.contentManager),
-	categories
-);
 router.post(
 	'/games/new',
 	checkAccessJWT,
@@ -51,8 +47,12 @@ router.post(
 	upload.single('image'),
 	addGame
 );
-
-//router.post('/game', checkJWT, checkRoles([roles.forumManager, roles.contentManager]),requestHandlers.postGame);
-//router.post('/comment', requestHandlers.comment);
+router.post(
+	'/categories/new',
+	checkAccessJWT,
+	checkRoles(roles.forumManager, roles.contentManager),
+	newCategory
+);
+//router.post('/comment', comment);
 
 module.exports = router;

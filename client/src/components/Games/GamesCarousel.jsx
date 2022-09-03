@@ -26,7 +26,7 @@ export default function GamesCarousel() {
 			{games.length > 0 ? (
 				<Carousel>
 					{games.map(game => (
-						<Carousel.Item style={{ textAlign: 'center' }} key={game.Id}>
+						<Carousel.Item style={{ textAlign: 'center' }} key={game.id}>
 							<Image
 								style={{
 									width: '100%',
@@ -34,12 +34,12 @@ export default function GamesCarousel() {
 									objectFit: 'cover',
 									borderRadius: '20px',
 								}}
-								src={game.Photo}
-								alt={game.Title}
+								src={game.cover}
+								alt={game.title}
 							/>
 							<Carousel.Caption>
-								<h3>{game.Title}</h3>
-								<p>{game.Description}</p>
+								<h3>{game.title}</h3>
+								<p>{game.description}</p>
 							</Carousel.Caption>
 						</Carousel.Item>
 					))}
