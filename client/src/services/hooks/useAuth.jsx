@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext, PersistContext } from '../context/AuthContext';
+import { AuthContext, PersistContext } from '../contexts/AuthContext';
 
 /**
  * Get the state of authentication

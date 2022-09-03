@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import TypeCollection from './TypeCollection';
-import { axios } from '../../services/api/axios';
+import { axios } from '../../services/apis/axios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 

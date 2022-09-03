@@ -1,4 +1,4 @@
-import { axios } from '../../services/api/axios';
+import { axios } from '../../services/apis/axios';
 
 const Image = ({ src, alt, style }) => {
 	const image = `${axios.defaults.baseURL}/picture/${src}`;

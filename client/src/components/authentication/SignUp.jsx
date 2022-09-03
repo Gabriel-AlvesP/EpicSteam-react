@@ -7,7 +7,7 @@ import setInputColor, {
 	emailValidator,
 	passwdValidator,
 } from '../../utils/validations';
-import { axios } from '../../services/api/axios';
+import { axios } from '../../services/apis/axios';
 import handleError from '../../utils/errorHandling';
 
 /**

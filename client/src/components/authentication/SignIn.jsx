@@ -4,7 +4,7 @@ import './Auth.css';
 import AuthMessage from './AuthMessage';
 import SubmitBtn from './SubmitBtn';
 import { usernameValidator, passwdValidator } from '../../utils/validations';
-import { axiosWCredentials } from '../../services/api/axios';
+import { axiosWCredentials } from '../../services/apis/axios';
 import handleError from '../../utils/errorHandling';
 import { FaRegCheckCircle, FaCheckCircle } from 'react-icons/fa';
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { axios } from '../../services/api/axios';
+import { axios } from '../../services/apis/axios';
 import Slider from 'react-slick';
 import Image from '../images/Image';
 import 'slick-carousel/slick/slick.css';
@@ -11,14 +11,12 @@ export const CategoriesCarousel = () => {
 	const [categories, setCategories] = useState([]);
 	const settings = {
 		className: 'center',
-		//centerMode: true,
 		infinite: true,
 		centerPadding: '60px',
 		slidesToShow: 4,
 		swipeToSlide: true,
 		speed: 500,
-		//autoplay: true,
-		autoplay: false,
+		autoplay: true,
 		autoplaySpeed: 4500,
 		pauseOnHover: true,
 	};

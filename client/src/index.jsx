@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
-import AuthProvider from './services/context/AuthContext';
+import AuthProvider from './services/contexts/AuthContext';
 import Routing from './services/router/Routing';
 //import reportWebVitals from './reportWebVitals';
 

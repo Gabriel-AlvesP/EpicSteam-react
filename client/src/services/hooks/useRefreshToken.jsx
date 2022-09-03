@@ -1,5 +1,5 @@
 import { useAuth, usePersist } from './useAuth';
-import { axiosWCredentials } from '../api/axios';
+import { axiosWCredentials } from '../apis/axios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 

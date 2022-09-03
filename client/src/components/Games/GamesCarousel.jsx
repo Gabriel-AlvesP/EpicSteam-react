@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
-import { axios } from '../../services/api/axios';
+import { axios } from '../../services/apis/axios';
 import Image from '../images/Image';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
+import './gamesCarousel.css';
 
 export default function GamesCarousel() {
 	const [games, setGames] = useState([]);
@@ -34,10 +35,10 @@ export default function GamesCarousel() {
 									objectFit: 'cover',
 									borderRadius: '20px',
 								}}
-								src={game.cover}
+								src={game.banner}
 								alt={game.title}
 							/>
-							<Carousel.Caption>
+							<Carousel.Caption className="carouselCaption">
 								<h3>{game.title}</h3>
 								<p>{game.description}</p>
 							</Carousel.Caption>
