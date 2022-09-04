@@ -27,7 +27,6 @@ app.use(allowCredentials); //Credentials check
 app.use(cors(corsOptions)); // Cors
 app.use(logger('dev')); // Logger
 // Middleware config
-app.use(express.static(path.join(__dirname, 'uploads'))); //TODO: Remove?
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

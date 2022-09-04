@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const dummyData = async () => {
-	const passwd = await bcrypt.hash('Dummy100', 10);
+	const passwd = await bcrypt.hash('Admin123', 10);
 	return [
 		[
 			'Users',
@@ -10,6 +10,7 @@ const dummyData = async () => {
 			'Categories',
 			'Categories',
 			'Categories',
+			'Posts',
 			'Posts',
 			'Posts',
 			'Posts',
@@ -25,6 +26,8 @@ const dummyData = async () => {
 			'Users_Posts',
 			'Users_Posts',
 			'Users_Posts',
+			'Users_Posts',
+			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
@@ -35,9 +38,9 @@ const dummyData = async () => {
 		],
 		[
 			{
-				id: 'Dummy1',
-				username: 'SrBatatinha',
-				email: 'srBatats@batata.com',
+				id: 'Adminarino',
+				username: 'SrAdministrador',
+				email: 'admin@epicsteam.com',
 				password: passwd,
 				joinDate: '2022-07-30',
 				picture: '',
@@ -77,11 +80,11 @@ const dummyData = async () => {
 				postDate: '2022-07-20',
 				upVotes: 1,
 				downVotes: 0,
-				owner: 'Dummy1',
+				owner: 'Adminarino',
 			},
 			{
 				id: 2,
-				title: 'CSGO',
+				title: 'CS: Global Offensive',
 				cover: 'csgo.jpg',
 				banner: 'csgoBanner.jpg',
 				description: 'Valve - 2012',
@@ -89,7 +92,7 @@ const dummyData = async () => {
 				postDate: '2022-07-30',
 				upVotes: 0,
 				downVotes: 1,
-				owner: 'Dummy1',
+				owner: 'Adminarino',
 			},
 			{
 				id: 3,
@@ -101,7 +104,7 @@ const dummyData = async () => {
 				postDate: '2022-07-30',
 				upVotes: 1,
 				downVotes: 0,
-				owner: 'Dummy1',
+				owner: 'Adminarino',
 			},
 			{
 				id: 4,
@@ -113,12 +116,24 @@ const dummyData = async () => {
 				postDate: '2022-07-30',
 				upVotes: 1,
 				downVotes: 0,
-				owner: 'Dummy1',
+				owner: 'Adminarino',
+			},
+			{
+				id: 5,
+				title: 'Flight Simulator',
+				cover: 'flightSimulator.jpg',
+				banner: 'flightSimulatorBanner.jpg',
+				description: 'Xbox Game Studios - 2020',
+				price: 69.99,
+				postDate: '2022-07-30',
+				upVotes: 1,
+				downVotes: 0,
+				owner: 'Adminarino',
 			},
 			{
 				id: 1,
 				description: 'Excelente',
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 				postId: 1,
 			},
 			{
@@ -132,34 +147,39 @@ const dummyData = async () => {
 			},
 			{
 				role: 1899,
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 			},
 			{
 				role: 5204,
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 			},
 			{
 				role: 666,
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 			},
 			{
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 				postId: 1,
 				didPlay: true,
 			},
 			{
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 				postId: 2,
 				didPlay: true,
 			},
 			{
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 				postId: 3,
 				didPlay: true,
 			},
 			{
-				userId: 'Dummy1',
+				userId: 'Adminarino',
 				postId: 4,
+				didPlay: true,
+			},
+			{
+				userId: 'Adminarino',
+				postId: 5,
 				didPlay: true,
 			},
 			{
@@ -189,6 +209,10 @@ const dummyData = async () => {
 			{
 				postId: 4,
 				categoryId: 3,
+			},
+			{
+				postId: 5,
+				categoryId: 4,
 			},
 		],
 	];

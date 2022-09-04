@@ -36,7 +36,7 @@ export const CategoriesCarousel = () => {
 	return (
 		categories?.length > 0 && (
 			<div>
-				<h3>Categories</h3>
+				<p style={{ fontSize: '24px' }}>Categories</p>
 				<Slider style={{ textAlign: 'center' }} {...settings}>
 					{categories.map(category => (
 						<div key={category.id}>
@@ -44,13 +44,16 @@ export const CategoriesCarousel = () => {
 								style={{
 									objectFit: 'cover',
 									width: '90%',
+									margin: '0 auto',
 									height: '200px',
 									borderRadius: '15px',
 								}}
 								alt={`${category.name} picture`}
 								src={category.icon}
 							/>
-							<h4 className="me-4 pe-2">{category.name}</h4>
+							<p style={{ fontSize: '20px' }} className="mt-1 me-4 pe-2">
+								{category.name}
+							</p>
 						</div>
 					))}
 				</Slider>

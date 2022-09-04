@@ -157,7 +157,7 @@ function logout(req, res) {
 		res.clearCookie('jwt', {
 			httpOnly: true,
 			sameSite: 'None',
-			secure: true, //TODO: comment to use thunder client
+			secure: true, //! comment to use thunder client
 		});
 		res.sendStatus(204);
 	});

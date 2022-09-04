@@ -27,9 +27,10 @@ router.post('/signup', signUp);
 router.post('/login', signIn);
 //? Categories
 router.get('/categories', categories);
+//router.get('/categories/:id, getCategory);
 //? Games
 router.get('/games', allGames);
-//router.get('/games/:id', )
+//router.get('/games/:id', getGame);
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);

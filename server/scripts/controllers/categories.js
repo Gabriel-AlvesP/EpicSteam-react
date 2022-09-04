@@ -12,7 +12,7 @@ function categories(req, res) {
 
 function newCategory(req, res) {
 	const query = `INSERT INTO categories SET ?`;
-	//TODO: Check data
+	//TODO: Check req data
 	connection.query(query, req.body, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
