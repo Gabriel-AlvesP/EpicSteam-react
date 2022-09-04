@@ -46,6 +46,16 @@ function recentlyAdded(req, res) {
 	});
 }
 
+function allGames(req, res) {
+	const query = `SELECT * from posts`;
+
+	connection.query(query, (err, dbRes) => {
+		if (err) return res.status(500).json({ message: serverErr });
+
+		return res.json({ games: dbRes });
+	});
+}
+
 /**
  * Post a new game into the database
  * @param {Object} req request
@@ -86,4 +96,4 @@ function addGame(req, res) {
 	);
 }
 
-module.exports = { mostPlayed, mostLiked, recentlyAdded, addGame };
+module.exports = { allGames, mostPlayed, mostLiked, recentlyAdded, addGame };

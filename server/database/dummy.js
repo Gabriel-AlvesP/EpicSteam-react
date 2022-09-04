@@ -13,6 +13,7 @@ const dummyData = async () => {
 			'Posts',
 			'Posts',
 			'Posts',
+			'Posts',
 			'Comments',
 			'Roles',
 			'Roles',
@@ -23,6 +24,9 @@ const dummyData = async () => {
 			'Users_Posts',
 			'Users_Posts',
 			'Users_Posts',
+			'Users_Posts',
+			'Posts_Categories',
+			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
@@ -100,6 +104,18 @@ const dummyData = async () => {
 				owner: 'Dummy1',
 			},
 			{
+				id: 4,
+				title: 'Forza Horizon 5',
+				cover: 'forzaHorizon5.jpg',
+				banner: 'forzaHorizon5Banner.jpg',
+				description: ' Xbox Game Studios - 2021',
+				price: 59.99,
+				postDate: '2022-07-30',
+				upVotes: 1,
+				downVotes: 0,
+				owner: 'Dummy1',
+			},
+			{
 				id: 1,
 				description: 'Excelente',
 				userId: 'Dummy1',
@@ -142,6 +158,11 @@ const dummyData = async () => {
 				didPlay: true,
 			},
 			{
+				userId: 'Dummy1',
+				postId: 4,
+				didPlay: true,
+			},
+			{
 				postId: 1,
 				categoryId: 1,
 			},
@@ -160,6 +181,14 @@ const dummyData = async () => {
 			{
 				postId: 3,
 				categoryId: 5,
+			},
+			{
+				postId: 4,
+				categoryId: 2,
+			},
+			{
+				postId: 4,
+				categoryId: 3,
 			},
 		],
 	];

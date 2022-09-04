@@ -9,6 +9,7 @@ const { signIn, signUp, logout } = require('../controllers/auth');
 const { users } = require('../controllers/users');
 const { refreshTokenHandler } = require('../controllers/refreshToken');
 const {
+	allGames,
 	mostPlayed,
 	mostLiked,
 	recentlyAdded,
@@ -27,12 +28,13 @@ router.post('/login', signIn);
 //? Categories
 router.get('/categories', categories);
 //? Games
+router.get('/games', allGames);
+//router.get('/games/:id', )
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);
 //? Pictures
 router.get('/picture/:image', getImage);
-//router.get('/game/:id', getGame);
 
 //* <-- Private routes -->
 

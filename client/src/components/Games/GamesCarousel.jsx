@@ -4,7 +4,7 @@ import { axios } from '../../services/apis/axios';
 import Image from '../images/Image';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
-import './gamesCarousel.css';
+import './GamesCarousel.css';
 
 export default function GamesCarousel() {
 	const [games, setGames] = useState([]);

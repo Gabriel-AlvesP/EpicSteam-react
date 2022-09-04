@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import TypeCollection from './TypeCollection';
+import GamesGroup from './GamesGroup';
 import { axios } from '../../services/apis/axios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 
-const CardsCollection = () => {
+const GroupCollection = () => {
 	const [mostLiked, setMostLiked] = useState([]);
 	const [mostPlayed, setMostPlayed] = useState([]);
 	const [mostRecent, setMostRecent] = useState([]);
@@ -32,7 +32,7 @@ const CardsCollection = () => {
 		<Container fluid className="mb-5" style={{ textAlign: 'center' }}>
 			<Row>
 				<Col>
-					<TypeCollection title="Most Played" games={mostPlayed} />
+					<GamesGroup title="Most Played" games={mostPlayed} />
 				</Col>
 				<Col
 					style={{
@@ -40,14 +40,14 @@ const CardsCollection = () => {
 						borderRight: '1px solid #757575',
 					}}
 				>
-					<TypeCollection title="Most Liked" games={mostLiked} />
+					<GamesGroup title="Most Liked" games={mostLiked} />
 				</Col>
 				<Col>
-					<TypeCollection title="Recently Added" games={mostRecent} />
+					<GamesGroup title="Recently Added" games={mostRecent} />
 				</Col>
 			</Row>
 		</Container>
 	);
 };
 
-export default CardsCollection;
+export default GroupCollection;

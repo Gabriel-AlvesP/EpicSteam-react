@@ -1,5 +1,5 @@
 import GamesCarousel from '../components/Games/GamesCarousel';
-import CardsCollection from '../components/Games/CardsCollection';
+import GroupCollection from '../components/Games/GroupCollection';
 
 export default function Home() {
 	return (
@@ -8,7 +8,7 @@ export default function Home() {
 				<GamesCarousel />
 			</div>
 			<div>
-				<CardsCollection />
+				<GroupCollection />
 			</div>
 		</>
 	);

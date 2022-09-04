@@ -1,4 +1,5 @@
 import { CategoriesCarousel } from '../components/Categories/CategoriesCarousel';
+import GamesCollection from '../components/Games/GamesCollection';
 
 export default function Browse() {
 	return (
@@ -7,7 +8,9 @@ export default function Browse() {
 				<CategoriesCarousel />
 			</div>
 
-			<div>All games + filter</div>
+			<div>
+				<GamesCollection />
+			</div>
 		</div>
 	);
 }
