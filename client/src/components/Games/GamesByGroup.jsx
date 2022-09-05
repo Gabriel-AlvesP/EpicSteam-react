@@ -2,7 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Image from '../images/Image';
 
-const GamesGroup = ({ title, games }) => {
+const GamesByGroup = ({ title, games }) => {
 	return (
 		<Col>
 			<Row className="pb-4">
@@ -69,4 +69,4 @@ const GamesGroup = ({ title, games }) => {
 	);
 };
 
-export default GamesGroup;
+export default GamesByGroup;

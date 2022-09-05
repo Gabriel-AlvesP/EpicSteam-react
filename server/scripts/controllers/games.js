@@ -46,6 +46,11 @@ function recentlyAdded(req, res) {
 	});
 }
 
+/**
+ * Get all games
+ * @param {Object} req request
+ * @param {Object} res response
+ */
 function allGames(req, res) {
 	const query = `SELECT * from posts`;
 
@@ -53,6 +58,27 @@ function allGames(req, res) {
 		if (err) return res.status(500).json({ message: serverErr });
 
 		return res.json({ games: dbRes });
+	});
+}
+
+/**
+ * Get a information about a game
+ *
+ * @param {Object} req request
+ * @param {Object} res response
+ */
+function getGame(req, res) {
+	const { id } = req.params || {};
+
+	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
+
+	const query = `SELECT * from Posts p where p.id = ${id}`;
+	connection.query(query, (err, dbRes) => {
+		if (err) return res.status(500).json({ message: serverErr });
+
+		if (dbRes.length <= 0) return res.sendStatus(404);
+
+		return res.json(dbRes[0]);
 	});
 }
 
@@ -96,4 +122,11 @@ function addGame(req, res) {
 	);
 }
 
-module.exports = { allGames, mostPlayed, mostLiked, recentlyAdded, addGame };
+module.exports = {
+	mostPlayed,
+	mostLiked,
+	recentlyAdded,
+	allGames,
+	getGame,
+	addGame,
+};

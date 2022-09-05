@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import GamesGroup from './GamesGroup';
+import GamesByGroup from './GamesByGroup';
 import { axios } from '../../services/apis/axios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
@@ -17,9 +17,9 @@ const GroupCollection = () => {
 				const mostPlayedRes = await axios.get('/games/mostPlayed');
 				const mostLikedRes = await axios.get('/games/mostLiked');
 
-				setMostPlayed(mostPlayedRes?.data?.mostPlayed);
-				setMostLiked(mostLikedRes?.data?.mostLiked);
-				setMostRecent(mostRecentRes?.data?.recentlyAdded);
+				setMostPlayed(mostPlayedRes?.data?.mostPlayed?.slice(0, 5));
+				setMostLiked(mostLikedRes?.data?.mostLiked?.slice(0, 5));
+				setMostRecent(mostRecentRes?.data?.recentlyAdded?.slice(0, 5));
 			} catch (err) {
 				toast.error(handleError(err, `Couldn't fetch data from the server.`));
 			}
@@ -32,7 +32,7 @@ const GroupCollection = () => {
 		<Container fluid className="mb-5" style={{ textAlign: 'center' }}>
 			<Row>
 				<Col>
-					<GamesGroup title="Most Played" games={mostPlayed} />
+					<GamesByGroup title="Most Played" games={mostPlayed} />
 				</Col>
 				<Col
 					style={{
@@ -40,10 +40,10 @@ const GroupCollection = () => {
 						borderRight: '1px solid #757575',
 					}}
 				>
-					<GamesGroup title="Most Liked" games={mostLiked} />
+					<GamesByGroup title="Most Liked" games={mostLiked} />
 				</Col>
 				<Col>
-					<GamesGroup title="Recently Added" games={mostRecent} />
+					<GamesByGroup title="Recently Added" games={mostRecent} />
 				</Col>
 			</Row>
 		</Container>

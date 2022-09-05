@@ -20,7 +20,7 @@
 }
 
 .navbar-container:active{
-    color:orange;
+    color: #ff7800;
 }
 
 .navbar-link:hover{

@@ -8,6 +8,7 @@ import Profile from '../../views/Users/Profile';
 import NotFound from '../../views/Errors/NotFound';
 import App from '../../App';
 import PersistSignIn from './PersistSignIn';
+import { Category } from '../../views/Category';
 
 /**
  * Application routing handling
@@ -21,7 +22,8 @@ const Routing = () => {
 					{/* Public routes */}
 					<Route index element={<Home />} />
 					<Route path="/browse" element={<Browse />} />
-					<Route path="/game/:id" element={<Game />} />
+					<Route path="/games/:id" element={<Game />} />
+					<Route path="/categories/:id" element={<Category />} />
 
 					{/* Protected routes */}
 					<Route element={<RequireAuth allowedRoles={[1899]} />}>
@@ -30,9 +32,6 @@ const Routing = () => {
 							<Route index element={<Users />} />
 							<Route path=":id" element={<Profile />} />
 						</Route>
-					</Route>
-					<Route element={<RequireAuth allowedRoles={[2008, 1899]} />}>
-						<Route path="/categories" />
 					</Route>
 				</Route>
 			</Route>

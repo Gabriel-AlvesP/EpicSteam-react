@@ -12,8 +12,8 @@ export default function GamesCarousel() {
 	useEffect(() => {
 		const getItems = async () => {
 			try {
-				const res = await axios('/games/mostPlayed');
-				setGames(res.data.mostPlayed?.slice(0, 5));
+				const res = await axios('/games/mostLiked');
+				setGames(res.data.mostLiked?.slice(0, 5));
 			} catch (err) {
 				toast.error(handleError(err));
 			}

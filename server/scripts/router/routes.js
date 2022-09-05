@@ -9,13 +9,18 @@ const { signIn, signUp, logout } = require('../controllers/auth');
 const { users } = require('../controllers/users');
 const { refreshTokenHandler } = require('../controllers/refreshToken');
 const {
-	allGames,
 	mostPlayed,
 	mostLiked,
 	recentlyAdded,
+	allGames,
+	getGame,
 	addGame,
 } = require('../controllers/games');
-const { categories, newCategory } = require('../controllers/categories');
+const {
+	categories,
+	getCategory,
+	newCategory,
+} = require('../controllers/categories');
 const { getImage } = require('../controllers/images');
 //Models
 const roles = require('../models/roles');
@@ -27,10 +32,10 @@ router.post('/signup', signUp);
 router.post('/login', signIn);
 //? Categories
 router.get('/categories', categories);
-//router.get('/categories/:id, getCategory);
+router.get('/categories/:id', getCategory);
 //? Games
 router.get('/games', allGames);
-//router.get('/games/:id', getGame);
+router.get('/games/game/:id', getGame);
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);

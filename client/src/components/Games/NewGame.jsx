@@ -1,4 +1,4 @@
-import { privAxios } from '../../services/api/axios';
+import { axiosWCredentials } from '../../services/apis/axios';
 import { useState, useEffect } from 'react';
 import { imageValidator } from '../../utils/validations';
 import { ProgressBar } from 'react-bootstrap';
@@ -27,7 +27,7 @@ const NewGame = () => {
 	useEffect(() => {
 		const getCategories = async () => {
 			try {
-				const response = await privAxios('/categories');
+				const response = await axiosWCredentials('/categories');
 				setCategory(response.data.categories[0].Id);
 				setCategories(response.data.categories);
 			} catch (err) {
@@ -84,7 +84,7 @@ const NewGame = () => {
 
 			setErrMessage('');
 
-			await privAxios.post('/games/new', formData, {
+			await axiosWCredentials.post('/games/new', formData, {
 				onUploadProgress: data => {
 					setUploadStatus(Math.round((data.loaded / data.total) * 100));
 				},

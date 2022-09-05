@@ -31,7 +31,7 @@ const GamesCollection = () => {
 						<Col className="mb-3" key={game.id}>
 							<Link
 								style={{ textDecoration: 'none', color: '#fff' }}
-								to={`/categories/${game.id}`}
+								to={`/games/${game.id}`}
 							>
 								<Image
 									style={{
