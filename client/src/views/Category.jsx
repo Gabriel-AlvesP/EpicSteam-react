@@ -30,8 +30,17 @@ export const Category = () => {
 
 	return (
 		<>
-			{category && <h3>{category.name}</h3>}
-			<GamesCollection gamesList={games} containerStyle={{ width: '100%' }} />
+			{category && <h2 className="mt-2 mb-4">{category.name} Games</h2>}
+			<GamesCollection
+				gamesList={games}
+				contentTitle={''}
+				containerStyle={{
+					width: '100%',
+					paddingTop: '1px',
+					background: 'rgba(0, 0, 0, 0.4)',
+					borderRadius: '20px',
+				}}
+			/>
 		</>
 	);
 };

@@ -6,7 +6,7 @@ import handleError from '../../utils/errorHandling';
 import Image from '../images/Image';
 import { Link } from 'react-router-dom';
 
-const GamesCollection = ({ gamesList, containerStyle }) => {
+const GamesCollection = ({ gamesList, containerStyle, contentTitle }) => {
 	const [games, setGames] = useState([]);
 
 	useEffect(() => {
@@ -29,8 +29,11 @@ const GamesCollection = ({ gamesList, containerStyle }) => {
 
 	return (
 		games?.length > 0 && (
-			<Container style={containerStyle || { width: '80%', marginLeft: '0%' }}>
-				<p style={{ fontSize: '24px' }}>Games</p>
+			<Container
+				fluid
+				style={containerStyle || { width: '80%', marginLeft: '0%' }}
+			>
+				<p style={{ fontSize: '24px' }}>{contentTitle ?? 'Games'}</p>
 				<Row sm={'auto'} md={'auto'} lg={'auto'}>
 					{games.map(game => (
 						<Col className="mb-3" key={game.id}>
@@ -50,7 +53,11 @@ const GamesCollection = ({ gamesList, containerStyle }) => {
 								/>
 								<p
 									className="pt-2"
-									style={{ maxWidth: '200px', wordBreak: 'break-word' }}
+									style={{
+										maxWidth: '200px',
+										wordBreak: 'break-word',
+										textAlign: 'center',
+									}}
 								>
 									{game.title}
 								</p>
