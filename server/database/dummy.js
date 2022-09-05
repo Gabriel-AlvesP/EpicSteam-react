@@ -137,7 +137,7 @@ const dummyData = async () => {
 				id: 6,
 				title: 'Red Dead Redemption 2',
 				cover: 'rdr2.jpg',
-				banner: 'rdr2banner2.jpg',
+				banner: 'rdr2banner.jpg',
 				description: 'Rockstar Games - 2018',
 				price: 59.99,
 				postDate: '2022-07-27',

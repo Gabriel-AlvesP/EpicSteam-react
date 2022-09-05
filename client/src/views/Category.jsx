@@ -4,6 +4,7 @@ import { axios } from '../services/apis/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import handleError from '../utils/errorHandling';
+import GamesCollection from '../components/Games/GamesCollection';
 
 export const Category = () => {
 	const { id } = useParams();
@@ -30,7 +31,7 @@ export const Category = () => {
 	return (
 		<>
 			{category && <h3>{category.name}</h3>}
-			<div>{games.length > 0 && games.map(game => <p>{game.title}</p>)}</div>
+			<GamesCollection gamesList={games} containerStyle={{ width: '100%' }} />
 		</>
 	);
 };

@@ -76,7 +76,7 @@ function getGame(req, res) {
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
-		if (dbRes.length <= 0) return res.sendStatus(404);
+		if (dbRes.length !== 1) return res.sendStatus(404);
 
 		return res.json(dbRes[0]);
 	});

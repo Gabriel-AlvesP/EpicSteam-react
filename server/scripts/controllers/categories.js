@@ -34,7 +34,7 @@ function getCategory(req, res) {
 	connection.query(query, (err, categoryRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
-		if (categoryRes.length <= 0) return res.sendStatus(404);
+		if (categoryRes.length !== 1) return res.sendStatus(404);
 
 		const category = categoryRes[0];
 		const gamesQuery = `select p.* from posts p join posts_categories pc on pc.postId=p.id where pc.categoryId = ${category.id};`;
