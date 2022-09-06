@@ -72,13 +72,14 @@ function getGame(req, res) {
 
 	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
 
-	const query = `SELECT * from Posts p where p.id = ${id}`;
+	const query = `SELECT p.*, u.username FROM Posts p left join Users u on p.owner = u.id where p.id = ${id}`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
 		if (dbRes.length !== 1) return res.sendStatus(404);
+		const { owner, ...response } = dbRes[0]; //remove user id from the response object
 
-		return res.json(dbRes[0]);
+		return res.json(response);
 	});
 }
 

@@ -64,6 +64,7 @@ const GamesCollection = ({ gamesList, containerStyle, contentTitle }) => {
 							</Link>
 						</Col>
 					))}
+					{/* TODO: Add filter col */}
 				</Row>
 			</Container>
 		)

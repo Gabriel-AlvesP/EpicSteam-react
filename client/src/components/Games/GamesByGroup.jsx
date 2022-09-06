@@ -10,7 +10,6 @@ const GamesByGroup = ({ title, games }) => {
 					<h6 style={{ textAlign: 'left', marginLeft: '5px' }}>{title}</h6>
 				</Col>
 				<Col style={{ textAlign: 'right' }}>
-					{/* TODO: add filter*/}
 					{/* TODO: Add css file with hover animations */}
 					<Link
 						to="/browse"

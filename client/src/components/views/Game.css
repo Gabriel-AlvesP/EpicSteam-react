@@ -1,0 +1,22 @@
+.gameTitle{
+    font-size: 26px;
+}
+
+.gameDescriptionRow{
+    width: 95%;
+}
+
+.gameAttributesRow{
+    width: 95%;
+	border-bottom: 1px solid #757575;
+}
+
+.gameAttributeName{
+    text-align: left;
+    color: #999;
+    padding-left: 0;
+}
+
+.gameAttribute{
+    text-align: right;
+}

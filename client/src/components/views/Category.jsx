@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 import GamesCollection from '../Games/GamesCollection';
 
-const Category = () => {
+export default function Category() {
 	const { id } = useParams();
 	const [category, setCategory] = useState({});
 	const [games, setGames] = useState([]);
@@ -43,6 +43,4 @@ const Category = () => {
 			/>
 		</>
 	);
-};
-
-export default Category;
+}
