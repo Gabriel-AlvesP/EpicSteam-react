@@ -123,6 +123,41 @@ function addGame(req, res) {
 	);
 }
 
+/**
+ * Get users that played a game
+ * @param {Object} req request
+ * @param {Object} res response
+ */
+function gamePlayers(req, res) {
+	const { gameId } = req.params || {};
+
+	if (!Number.isInteger(Number(gameId))) return res.sendStatus(404);
+
+	const query = `select u.username, bin(up.didPlay) as didPlay from Users u join Users_Posts up on up.userId = u.id where up.postId = ${gameId};`;
+	connection.query(query, (err, dbRes) => {
+		if (err) return res.sendStatus(500);
+
+		if (dbRes.length === 0)
+			return res.status(400).json({ message: 'Game not found.' });
+
+		const gamePlayers = dbRes.map(elem => {
+			if (elem.didPlay === '1') return elem.username;
+		});
+		res.json(gamePlayers);
+	});
+}
+
+/**
+ * Update if a user played a game
+ * @param {Object} req request
+ * @param {Object} res response
+ */
+function updatePlayers(req, res) {
+	const { gameId } = req.body || {};
+
+	if (!gameId) res.sendStatus(400);
+}
+
 module.exports = {
 	mostPlayed,
 	mostLiked,
@@ -130,4 +165,6 @@ module.exports = {
 	allGames,
 	getGame,
 	addGame,
+	gamePlayers,
+	updatePlayers,
 };

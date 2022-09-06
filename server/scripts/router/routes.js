@@ -15,6 +15,8 @@ const {
 	allGames,
 	getGame,
 	addGame,
+	gamePlayers,
+	updatePlayers,
 } = require('../controllers/games');
 const {
 	categories,
@@ -35,10 +37,12 @@ router.get('/categories', categories);
 router.get('/categories/:id', getCategory);
 //? Games
 router.get('/games', allGames);
-router.get('/games/game/:id', getGame);
 router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);
+router.get('/games/game/:id', getGame);
+router.get('/games/game/players/:gameId', gamePlayers);
+//game comments,
 //? Pictures
 router.get('/picture/:image', getImage);
 
@@ -61,6 +65,7 @@ router.post(
 	checkRoles(roles.forumManager, roles.contentManager),
 	newCategory
 );
+router.post('/games/game/players/', updatePlayers);
 //router.post('/comment', comment);
 
 module.exports = router;

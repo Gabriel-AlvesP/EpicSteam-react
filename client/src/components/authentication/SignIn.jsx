@@ -67,9 +67,9 @@ export default function SignIn(props) {
 				username,
 				passwd,
 			});
-			const { accessToken } = response.data;
+			const { user, accessToken } = response.data;
 
-			setAuth({ username, accessToken });
+			setAuth({ username: user, accessToken });
 			setAuthPersist(checked);
 
 			//clear inputs

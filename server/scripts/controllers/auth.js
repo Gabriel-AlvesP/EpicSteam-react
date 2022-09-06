@@ -118,7 +118,7 @@ async function signIn(req, res) {
 				secure: true, // Comment to use thunder client
 				maxAge: 24 * 60 * 60 * 1000, // 1 day
 			});
-			res.json({ accessToken });
+			res.json({ user: username, accessToken });
 		} catch {
 			res.status(500).json({ message: serverErr });
 		}
