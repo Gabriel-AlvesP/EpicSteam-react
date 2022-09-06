@@ -140,9 +140,12 @@ function gamePlayers(req, res) {
 		if (dbRes.length === 0)
 			return res.status(400).json({ message: 'Game not found.' });
 
-		const gamePlayers = dbRes.map(elem => {
-			if (elem.didPlay === '1') return elem.username;
-		});
+		const gamePlayers = (() => {
+			let arr = [];
+			dbRes.forEach(elem => Number(elem.didPlay) && arr.push(elem.username));
+			return arr;
+		})();
+
 		res.json(gamePlayers);
 	});
 }
