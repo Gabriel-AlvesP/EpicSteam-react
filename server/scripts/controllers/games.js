@@ -7,7 +7,7 @@ const { serverErr } = require('../models/errorMessages');
  * @param {Object} res response
  */
 function mostPlayed(req, res) {
-	const query = `SELECT p.* FROM posts p LEFT JOIN users_posts up ON up.PostId=p.Id WHERE up.DidPlay=1 GROUP BY up.PostId ORDER BY count(*) desc limit 0,5;`;
+	const query = `SELECT p.* FROM Posts p LEFT JOIN Users_Posts up ON up.PostId=p.Id WHERE up.DidPlay=1 GROUP BY up.PostId ORDER BY count(*) desc limit 0,5;`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -22,7 +22,7 @@ function mostPlayed(req, res) {
  * @param {Object} res response
  */
 function mostLiked(req, res) {
-	const query = `select * from posts order by UpVotes desc, DownVotes asc limit 0,5;`;
+	const query = `select * from Posts order by UpVotes desc, DownVotes asc limit 0,5;`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -37,7 +37,7 @@ function mostLiked(req, res) {
  * @param {Object} res response
  */
 function recentlyAdded(req, res) {
-	const query = `select * from posts p order by PostDate desc limit 0,5;`;
+	const query = `select * from Posts p order by PostDate desc limit 0,5;`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -52,7 +52,7 @@ function recentlyAdded(req, res) {
  * @param {Object} res response
  */
 function allGames(req, res) {
-	const query = `SELECT * from posts`;
+	const query = `SELECT * from Posts`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -88,7 +88,7 @@ function getGame(req, res) {
  * @param {Object} res response
  */
 function addGame(req, res) {
-	const query = `INSERT INTO posts SET ?`;
+	const query = `INSERT INTO Posts SET ?`;
 
 	const { filename } = req.file;
 	const { title, description, price, categoryId } = req.body;

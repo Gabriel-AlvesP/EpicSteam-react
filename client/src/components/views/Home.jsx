@@ -1,5 +1,5 @@
-import GamesCarousel from '../components/Games/GamesCarousel';
-import GroupCollection from '../components/Games/GroupCollection';
+import GamesCarousel from '../Games/GamesCarousel';
+import GroupCollection from '../Games/GroupCollection';
 
 export default function Home() {
 	return (

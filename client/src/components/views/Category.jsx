@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { axios } from '../services/apis/axios';
+import { axios } from '../../services/apis/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import handleError from '../utils/errorHandling';
-import GamesCollection from '../components/Games/GamesCollection';
+import handleError from '../../utils/errorHandling';
+import GamesCollection from '../Games/GamesCollection';
 
-export const Category = () => {
+const Category = () => {
 	const { id } = useParams();
 	const [category, setCategory] = useState({});
 	const [games, setGames] = useState([]);
@@ -44,3 +44,5 @@ export const Category = () => {
 		</>
 	);
 };
+
+export default Category;

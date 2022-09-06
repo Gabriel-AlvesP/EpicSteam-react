@@ -1,5 +1,5 @@
-import { CategoriesCarousel } from '../components/Categories/CategoriesCarousel';
-import GamesCollection from '../components/Games/GamesCollection';
+import { CategoriesCarousel } from '../Categories/CategoriesCarousel';
+import GamesCollection from '../Games/GamesCollection';
 
 export default function Browse() {
 	return (

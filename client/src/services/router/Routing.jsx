@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import RequireAuth from './RequireAuth';
-import Home from '../../views/Home';
-import Browse from '../../views/Browse';
-import Game from '../../views/Game';
-import Users from '../../views/Users/Users';
-import Profile from '../../views/Users/Profile';
-import NotFound from '../../views/Errors/NotFound';
+import Home from '../../components/views/Home';
+import Browse from '../../components/views/Browse';
+import Game from '../../components/views/Game';
+import Users from '../../components/views/Users/Users';
+import Profile from '../../components/views/Users/Profile';
+import NotFound from '../../components/views/Errors/NotFound';
+import Category from '../../components/views/Category';
 import App from '../../App';
 import PersistSignIn from './PersistSignIn';
-import { Category } from '../../views/Category';
 
 /**
  * Application routing handling

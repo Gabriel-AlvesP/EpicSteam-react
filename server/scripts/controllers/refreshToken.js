@@ -20,7 +20,7 @@ function refreshTokenHandler(req, res) {
 	// Validate user refresh token
 	//TODO: check refresh token before it goes into the database
 	// Get username and roles
-	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join  User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
+	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 

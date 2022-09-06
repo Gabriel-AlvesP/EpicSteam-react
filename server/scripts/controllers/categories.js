@@ -10,7 +10,7 @@ const { serverErr } = require('../models/errorMessages');
  * @param {Object} res response
  */
 function categories(req, res) {
-	const query = `select * from categories;`;
+	const query = `select * from Categories;`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
@@ -29,7 +29,7 @@ function getCategory(req, res) {
 
 	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
 
-	const query = `SELECT * from categories WHERE id = ${id}`;
+	const query = `SELECT * from Categories WHERE id = ${id}`;
 
 	connection.query(query, (err, categoryRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -37,7 +37,7 @@ function getCategory(req, res) {
 		if (categoryRes.length !== 1) return res.sendStatus(404);
 
 		const category = categoryRes[0];
-		const gamesQuery = `select p.* from posts p join posts_categories pc on pc.postId=p.id where pc.categoryId = ${category.id};`;
+		const gamesQuery = `select p.* from Posts p join Posts_Categories pc on pc.postId=p.id where pc.categoryId = ${category.id};`;
 
 		connection.query(gamesQuery, (err, gamesRes) => {
 			if (err) return res.status(500).json({ message: serverErr });
@@ -53,7 +53,7 @@ function getCategory(req, res) {
  * @param {Object} res response
  */
 function newCategory(req, res) {
-	const query = `INSERT INTO categories SET ?`;
+	const query = `INSERT INTO Categories SET ?`;
 	//TODO: Check req data
 	connection.query(query, req.body, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
