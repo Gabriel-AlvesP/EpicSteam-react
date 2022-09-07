@@ -8,15 +8,20 @@ import handleError from '../../utils/errorHandling';
 import './Game.css';
 
 export default function Game() {
-	const { id } = useParams();
-	const [game, setGame] = useState({});
+	const { gameId } = useParams();
 	const navigate = useNavigate();
+	//Variables
+	const [game, setGame] = useState({});
+	const [players, setPlayers] = useState([]);
 
 	useEffect(() => {
-		const getGame = async () => {
+		const getData = async () => {
 			try {
-				const res = await axios(`/games/game/${id}`);
+				let res = await axios(`/games/game/${gameId}`);
 				setGame(res?.data);
+
+				res = await axios(`/games/game/players/${gameId}`);
+				setPlayers(res?.data);
 			} catch (err) {
 				if (err.response?.status === 404) return navigate('/notfound');
 
@@ -24,8 +29,8 @@ export default function Game() {
 			}
 		};
 
-		getGame();
-	}, [id, navigate]);
+		getData();
+	}, [gameId, navigate]);
 
 	return (
 		<Container fluid className="mt-3">
@@ -79,6 +84,12 @@ export default function Game() {
 						<Col className="ps-0 gameAttributeName">Publish Date</Col>
 						<Col className="pe-0 mb-2 gameAttribute">
 							{game.postDate?.split('T')[0].replaceAll('-', '/')}
+						</Col>
+					</Row>
+					<Row className="mt-2 ms-0 gameDescriptionRow">
+						<Col className="ps-0">Have you played it?</Col>
+						<Col className="pe-0 mb-2 gameAttribute playersListBtn">
+							See who played it
 						</Col>
 					</Row>
 				</Col>

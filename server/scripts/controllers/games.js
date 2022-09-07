@@ -1,10 +1,11 @@
 const { connection } = require('../../database/dbConfig');
 const { serverErr } = require('../models/errorMessages');
+const { usernameValidator } = require('../models/validations');
 
 /**
  * Get from the database the 5 most played games
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function mostPlayed(req, res) {
 	const query = `SELECT p.* FROM Posts p LEFT JOIN Users_Posts up ON up.PostId=p.Id WHERE up.DidPlay=1 GROUP BY up.PostId ORDER BY count(*) desc limit 0,5;`;
@@ -18,8 +19,8 @@ function mostPlayed(req, res) {
 
 /**
  * Get from the database the 5 most liked games (most up votes)
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function mostLiked(req, res) {
 	const query = `select * from Posts order by UpVotes desc, DownVotes asc limit 0,5;`;
@@ -33,8 +34,8 @@ function mostLiked(req, res) {
 
 /**
  * Get the last games added into the database
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function recentlyAdded(req, res) {
 	const query = `select * from Posts p order by PostDate desc limit 0,5;`;
@@ -48,8 +49,8 @@ function recentlyAdded(req, res) {
 
 /**
  * Get all games
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function allGames(req, res) {
 	const query = `SELECT * from Posts`;
@@ -64,8 +65,8 @@ function allGames(req, res) {
 /**
  * Get a information about a game
  *
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function getGame(req, res) {
 	const { id } = req.params || {};
@@ -85,8 +86,8 @@ function getGame(req, res) {
 
 /**
  * Post a new game into the database
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function addGame(req, res) {
 	const query = `INSERT INTO Posts SET ?`;
@@ -96,37 +97,28 @@ function addGame(req, res) {
 	const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 	connection.query(
-		`select Id from users where username=${req.username}`,
-		(err, dbRes) => {
+		query,
+		{
+			title,
+			photo: filename,
+			description,
+			price,
+			postDate: timestamp,
+			categoryId,
+			owner: req.uid,
+		},
+		err => {
 			if (err) return res.sendStatus(500);
 
-			if (dbRes.length === 0) return res.sendStatus(401);
-
-			connection.query(
-				query,
-				{
-					title,
-					photo: filename,
-					description,
-					price,
-					postDate: timestamp,
-					categoryId,
-					owner: dbRes,
-				},
-				err => {
-					if (err) return res.sendStatus(500);
-
-					return res.sendStatus(201);
-				}
-			);
+			return res.sendStatus(201);
 		}
 	);
 }
 
 /**
  * Get users that played a game
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function gamePlayers(req, res) {
 	const { gameId } = req.params || {};
@@ -152,13 +144,20 @@ function gamePlayers(req, res) {
 
 /**
  * Update if a user played a game
- * @param {Object} req request
- * @param {Object} res response
+ * @param {object} req request
+ * @param {object} res response
  */
 function updatePlayers(req, res) {
-	const { gameId } = req.body || {};
+	const { gameId, didPlay } = req.body || {};
 
-	if (!gameId) res.sendStatus(400);
+	if (!Number(gameId) || typeof didPlay !== 'boolean') res.sendStatus(400);
+
+	let query = `INSERT into Users_Posts(userId, postId, didPlay) VALUES('${req.uid}', ${gameId}, ${didPlay}) ON DUPLICATE KEY UPDATE didPlay=${didPlay};`;
+	connection.query(query, (err, dbRes) => {
+		if (err) return res.sendStatus(500);
+
+		res.sendStatus(201);
+	});
 }
 
 module.exports = {

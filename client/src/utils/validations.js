@@ -1,8 +1,8 @@
 /**
  * Set input corresponding to the state parameter
- * @param {String} state state property
- * @param {Boolean} validation corresponding state validation
- * @param {Function} callback setState
+ * @param {string} state state property
+ * @param {boolean} validation corresponding state validation
+ * @param {function} callback setState
  */
 export default function setInputColor(state, validation, callback) {
 	if (state) callback(validation ? '' : 'inputErr');
@@ -17,8 +17,9 @@ const usernameValidator = RegExp(
 	'^(?=[a-zA-Z0-9._]{3,20}$)(?!.*[_.]{2})[^._].*[^.]$'
 );
 
-/* Email Validator
- *  Credits to 'manishsaraan/email-validator' (https://github.com/manishsaraan/email-validator)
+/**
+ * Email Validator
+ * Credits to 'manishsaraan/email-validator' (https://github.com/manishsaraan/email-validator)
  */
 const emailValidator = email => {
 	var tester =
@@ -57,6 +58,12 @@ const emailValidator = email => {
 const passwdValidator =
 	/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&^#~$]{8,28}$/;
 
+/**
+ * Sends an error message
+ *
+ * @param {number} msgNumb - message number
+ * @returns sign up message or empty string
+ */
 const signUpHints = msgNumb => {
 	if (msgNumb === 1)
 		return 'Username must contain at least 3 characters. Only supports . and _ as special characters (nonconsecutive)';
@@ -71,6 +78,11 @@ const signUpHints = msgNumb => {
 	return '';
 };
 
+/**
+ * Checks if an input value is an image (png, jpep, jpg)
+ * @param {string} image
+ * @returns {boolean} image validation
+ */
 const imageValidator = image => {
 	const imageValidator = /\.(jpe?g|png)$/i;
 

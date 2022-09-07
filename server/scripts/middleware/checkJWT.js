@@ -24,7 +24,7 @@ const checkAccessJWT = (req, res, next) => {
 		if (err) return res.sendStatus(403);
 
 		//Fetch decoded username and roles into request
-		req.username = decoded.user.username;
+		req.uid = decoded.user.id;
 		req.roles = decoded.user.roles; //Used in "checkRoles" to validate them
 
 		next();

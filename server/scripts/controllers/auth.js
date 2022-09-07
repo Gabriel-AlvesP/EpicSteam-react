@@ -7,6 +7,7 @@ const { v4: uuidV4 } = require('uuid');
 const { connection } = require('../../database/dbConfig');
 const { insertNewUser } = require('../../database/queries');
 const { serverErr } = require('../models/errorMessages');
+const { usernameValidator } = require('../models/validations');
 
 /**
  * Sign up request handler
@@ -60,10 +61,10 @@ async function signUp(req, res) {
 async function signIn(req, res) {
 	const { username, passwd } = req.body || {};
 
-	if (!username || !passwd)
+	if (!usernameValidator.test(username) || !passwd)
 		return res.status(400).json({ message: 'Username and password required.' });
 
-	let query = `SELECT DISTINCT usr.username, usr.password, userRoles.Role FROM Users usr join User_Roles userRoles ON usr.id = userRoles.UserId where usr.username ="${username}"`;
+	let query = `SELECT DISTINCT usr.id, usr.username, usr.password, userRoles.Role FROM Users usr join User_Roles userRoles ON usr.id = userRoles.UserId where usr.username ="${username}"`;
 	connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
@@ -71,7 +72,7 @@ async function signIn(req, res) {
 		if (!dbRes || dbRes.length === 0)
 			return res.status(401).json({ message: authFailed });
 
-		const { username, password } = dbRes[0];
+		const { id, username, password } = dbRes[0];
 
 		//Compare input passwd with database records
 		const bcryptMatch = await bcrypt.compare(passwd, password);
@@ -86,7 +87,7 @@ async function signIn(req, res) {
 			const accessToken = jwt.sign(
 				{
 					user: {
-						username: username,
+						id: id,
 						roles: roles,
 					},
 				},
@@ -96,7 +97,7 @@ async function signIn(req, res) {
 
 			//Refresh token
 			const refreshToken = jwt.sign(
-				{ username: username },
+				{ user: id },
 				process.env.REFRESH_TOKEN_SECRET,
 				{ expiresIn: '1d' }
 			);
@@ -104,7 +105,7 @@ async function signIn(req, res) {
 			//? Should I save refresh tokens inside a hidden json file, like google do with google calendar their refresh tokens?
 			//Insert refreshToken into database
 			connection.query(
-				`UPDATE Users SET RefreshToken=? WHERE Username='${username}'`,
+				`UPDATE Users SET RefreshToken=? WHERE id='${id}'`,
 				refreshToken,
 				(err, res) => {
 					if (err) return res.status(500).json({ message: serverErr });
@@ -136,17 +137,17 @@ function logout(req, res) {
 	const refreshToken = req.cookies?.jwt;
 
 	//TODO: check refresh token before it goes into the database
-	const query = `Select username from Users where refreshToken = "${refreshToken}"`;
+	const query = `Select id from Users where refreshToken = "${refreshToken}"`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
-		const { username } = dbRes[0] || {};
+		const { id } = dbRes[0] || {};
 
-		if (username) {
+		if (id) {
 			connection.query(
-				'UPDATE Users SET RefreshToken=NULL where username=?',
-				username,
+				'UPDATE Users SET RefreshToken=NULL where id=?',
+				id,
 				err => {
 					if (err) return res.sendStatus(500);
 				}

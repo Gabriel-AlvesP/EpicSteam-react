@@ -20,3 +20,8 @@
 .gameAttribute{
     text-align: right;
 }
+
+.playersListBtn{
+    color: #ff7800;
+    cursor: pointer;
+}

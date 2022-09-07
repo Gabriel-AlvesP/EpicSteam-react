@@ -20,14 +20,14 @@ function refreshTokenHandler(req, res) {
 	// Validate user refresh token
 	//TODO: check refresh token before it goes into the database
 	// Get username and roles
-	const query = `SELECT DISTINCT usr.username, userRoles.Role from Users usr join User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
+	const query = `SELECT DISTINCT usr.id, usr.username, userRoles.Role from Users usr join User_Roles userRoles ON userRoles.UserId = usr.id WHERE RefreshToken = "${refreshToken}";`;
 	db.connection.query(query, async (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
-		const { username } = dbRes[0] || {};
+		const { id, username } = dbRes[0] || {};
 
 		// User not found
-		if (!username) return res.sendStatus(403);
+		if (!id || !username) return res.sendStatus(403);
 
 		// User roles
 		let roles = dbRes.map(elem => elem.Role);
@@ -37,13 +37,13 @@ function refreshTokenHandler(req, res) {
 			refreshToken,
 			process.env.REFRESH_TOKEN_SECRET,
 			(err, decoded) => {
-				if (err || username !== decoded.username) return res.sendStatus(403);
+				if (err || id !== decoded.user) return res.sendStatus(403);
 
 				// Sign new access token
 				const accessToken = jwt.sign(
 					{
 						user: {
-							username: decoded.username,
+							id: decoded.id,
 							roles: roles,
 						},
 					},

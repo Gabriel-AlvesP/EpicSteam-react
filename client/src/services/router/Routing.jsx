@@ -22,7 +22,7 @@ const Routing = () => {
 					{/* Public routes */}
 					<Route index element={<Home />} />
 					<Route path="/browse" element={<Browse />} />
-					<Route path="/games/:id" element={<Game />} />
+					<Route path="/games/:gameId" element={<Game />} />
 					<Route path="/categories/:id" element={<Category />} />
 
 					{/* Protected routes */}

@@ -65,7 +65,7 @@ router.post(
 	checkRoles(roles.forumManager, roles.contentManager),
 	newCategory
 );
-router.post('/games/game/players/', updatePlayers);
+router.post('/games/game/players/', checkAccessJWT, updatePlayers);
 //router.post('/comment', comment);
 
 module.exports = router;

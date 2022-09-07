@@ -28,7 +28,6 @@ const dummyData = async () => {
 			'Users_Posts',
 			'Users_Posts',
 			'Users_Posts',
-			'Users_Posts',
 			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
@@ -191,11 +190,6 @@ const dummyData = async () => {
 				userId: 'Adminarino',
 				postId: 4,
 				didPlay: true,
-			},
-			{
-				userId: 'Adminarino',
-				postId: 5,
-				didPlay: false,
 			},
 			{
 				userId: 'Adminarino',
