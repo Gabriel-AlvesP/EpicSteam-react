@@ -1,6 +1,5 @@
 const { connection } = require('../../database/dbConfig');
 const { serverErr } = require('../models/errorMessages');
-const { usernameValidator } = require('../models/validations');
 
 /**
  * Get from the database the 5 most played games
@@ -128,9 +127,6 @@ function gamePlayers(req, res) {
 	const query = `select u.username, bin(up.didPlay) as didPlay from Users u join Users_Posts up on up.userId = u.id where up.postId = ${gameId};`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.sendStatus(500);
-
-		if (dbRes.length === 0)
-			return res.status(400).json({ message: 'Game not found.' });
 
 		const gamePlayers = (() => {
 			let arr = [];
