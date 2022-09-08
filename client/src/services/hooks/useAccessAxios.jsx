@@ -65,4 +65,4 @@ const useAccessAxios = () => {
 	return axiosWCredentials;
 };
 
-export default useAccessAxios;
+export { useAccessAxios };

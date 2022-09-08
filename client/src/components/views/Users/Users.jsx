@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
-import useAccessAxios from '../../../services/hooks/useAccessAxios';
+import { useAccessAxios } from '../../../services/hooks/useAccessAxios';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
@@ -45,7 +45,7 @@ export default function Users() {
 				) : (
 					<ul>
 						{users?.map((val, key) => {
-							return <li key={key}>{val.Username}</li>;
+							return <li key={key}>{val.username}</li>;
 						})}
 					</ul>
 				)}

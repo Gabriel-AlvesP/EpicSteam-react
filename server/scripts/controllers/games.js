@@ -149,7 +149,7 @@ function updatePlayers(req, res) {
 	if (!Number(gameId) || typeof didPlay !== 'boolean') res.sendStatus(400);
 
 	let query = `INSERT into Users_Posts(userId, postId, didPlay) VALUES('${req.uid}', ${gameId}, ${didPlay}) ON DUPLICATE KEY UPDATE didPlay=${didPlay};`;
-	connection.query(query, (err, dbRes) => {
+	connection.query(query, err => {
 		if (err) return res.sendStatus(500);
 
 		res.sendStatus(201);

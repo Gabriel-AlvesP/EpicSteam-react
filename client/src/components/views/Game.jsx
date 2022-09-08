@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axios } from '../../services/apis/axios';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Modal } from 'react-bootstrap';
 import Image from '../images/Image';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 import './Game.css';
+import { FaAngleRight } from 'react-icons/fa';
+import DidPlayBtn from '../Games/DidPlayBtn';
 
 export default function Game() {
 	const { gameId } = useParams();
@@ -13,6 +15,7 @@ export default function Game() {
 	//Variables
 	const [game, setGame] = useState({});
 	const [players, setPlayers] = useState([]);
+	const [showPlayers, setShowPlayers] = useState(false);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -87,8 +90,17 @@ export default function Game() {
 						</Col>
 					</Row>
 					<Row className="mt-2 ms-0 gameDescriptionRow">
-						<Col className="ps-0">Have you played it?</Col>
-						<Col className="pe-0 mb-2 gameAttribute playersListBtn">
+						<DidPlayBtn
+							players={players}
+							gameId={gameId}
+							setPlayers={setPlayers}
+						/>
+						<Col
+							className="pe-0 mb-2 gameAttribute playersListBtn"
+							onClick={() => {
+								setShowPlayers(true);
+							}}
+						>
 							See who played it
 						</Col>
 					</Row>
@@ -111,6 +123,36 @@ export default function Game() {
 					</Row>
 				</Col>
 			</Row>
+			<Modal
+				className="my-modal"
+				show={showPlayers}
+				onHide={() => setShowPlayers(false)}
+			>
+				<Modal.Body>
+					<h2 className="auth-title">{game.title}</h2>
+
+					<div className="loginContainer">
+						{players.length > 0 ? (
+							<>
+								<h4 className="text-center mb-4">Players</h4>
+								{players.map((player, idx) => (
+									<div key={idx}>
+										<p>
+											<FaAngleRight /> {player}
+										</p>
+									</div>
+								))}
+							</>
+						) : (
+							<div className="text-center">
+								<p style={{ fontSize: '22px' }}>
+									No user played this game yet. Be the first!
+								</p>
+							</div>
+						)}
+					</div>
+				</Modal.Body>
+			</Modal>
 		</Container>
 	);
 }

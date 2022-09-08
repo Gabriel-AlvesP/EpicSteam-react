@@ -43,7 +43,7 @@ function refreshTokenHandler(req, res) {
 				const accessToken = jwt.sign(
 					{
 						user: {
-							id: decoded.id,
+							id: decoded.user,
 							roles: roles,
 						},
 					},
