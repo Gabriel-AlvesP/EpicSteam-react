@@ -17,6 +17,8 @@ const {
 	addGame,
 	gamePlayers,
 	updatePlayers,
+	getUserVote,
+	voteGame,
 } = require('../controllers/games');
 const {
 	categories,
@@ -66,6 +68,8 @@ router.post(
 	newCategory
 );
 router.post('/games/game/players/', checkAccessJWT, updatePlayers);
+router.get('/games/game/vote/:gameId', checkAccessJWT, getUserVote);
+router.post('/games/game/vote', checkAccessJWT, voteGame);
 //router.post('/comment', comment);
 
 module.exports = router;

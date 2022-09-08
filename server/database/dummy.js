@@ -28,6 +28,7 @@ const dummyData = async () => {
 			'Users_Posts',
 			'Users_Posts',
 			'Users_Posts',
+			'Users_Posts',
 			'Posts_Categories',
 			'Posts_Categories',
 			'Posts_Categories',
@@ -80,8 +81,6 @@ const dummyData = async () => {
 				description: 'Naughty Dog - 2016',
 				price: 39.99,
 				postDate: '2022-07-20',
-				upVotes: 1,
-				downVotes: 0,
 				owner: 'Adminarino',
 			},
 			{
@@ -92,8 +91,6 @@ const dummyData = async () => {
 				description: 'Valve - 2012',
 				price: 0.0,
 				postDate: '2022-07-25',
-				upVotes: 0,
-				downVotes: 1,
 				owner: 'Adminarino',
 			},
 			{
@@ -104,8 +101,6 @@ const dummyData = async () => {
 				description: 'Ubisoft - 2015',
 				price: 19.99,
 				postDate: '2022-07-26',
-				upVotes: 1,
-				downVotes: 0,
 				owner: 'Adminarino',
 			},
 			{
@@ -116,8 +111,6 @@ const dummyData = async () => {
 				description: ' Xbox Game Studios - 2021',
 				price: 59.99,
 				postDate: '2022-07-28',
-				upVotes: 1,
-				downVotes: 0,
 				owner: 'Adminarino',
 			},
 			{
@@ -128,8 +121,6 @@ const dummyData = async () => {
 				description: 'Xbox Game Studios - 2020',
 				price: 69.99,
 				postDate: '2022-07-27',
-				upVotes: 1,
-				downVotes: 0,
 				owner: 'Adminarino',
 			},
 			{
@@ -140,8 +131,6 @@ const dummyData = async () => {
 				description: 'Rockstar Games - 2018',
 				price: 59.99,
 				postDate: '2022-07-27',
-				upVotes: 1,
-				downVotes: 0,
 				owner: 'Adminarino',
 			},
 			{
@@ -175,26 +164,37 @@ const dummyData = async () => {
 				userId: 'Adminarino',
 				postId: 1,
 				didPlay: true,
+				vote: 1,
 			},
 			{
 				userId: 'Adminarino',
 				postId: 2,
 				didPlay: true,
+				vote: 2,
 			},
 			{
 				userId: 'Adminarino',
 				postId: 3,
 				didPlay: true,
+				vote: 1,
 			},
 			{
 				userId: 'Adminarino',
 				postId: 4,
 				didPlay: true,
+				vote: 1,
+			},
+			{
+				userId: 'Adminarino',
+				postId: 5,
+				didPlay: false,
+				vote: 1,
 			},
 			{
 				userId: 'Adminarino',
 				postId: 6,
 				didPlay: true,
+				vote: 1,
 			},
 			{
 				postId: 1,

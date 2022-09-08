@@ -8,6 +8,8 @@ import handleError from '../../utils/errorHandling';
 import './Game.css';
 import { FaAngleRight } from 'react-icons/fa';
 import DidPlayBtn from '../Games/DidPlayBtn';
+import VotesSection from '../Games/VotesSection';
+import Comments from '../Games/Comments';
 
 export default function Game() {
 	const { gameId } = useParams();
@@ -15,6 +17,8 @@ export default function Game() {
 	//Variables
 	const [game, setGame] = useState({});
 	const [players, setPlayers] = useState([]);
+	const [likes, setLikes] = useState(0);
+	const [dislikes, setDislikes] = useState(0);
 	const [showPlayers, setShowPlayers] = useState(false);
 
 	useEffect(() => {
@@ -22,6 +26,8 @@ export default function Game() {
 			try {
 				let res = await axios(`/games/game/${gameId}`);
 				setGame(res?.data);
+				setLikes(res?.data?.upVotes);
+				setDislikes(res?.data?.downVotes);
 
 				res = await axios(`/games/game/players/${gameId}`);
 				setPlayers(res?.data);
@@ -73,11 +79,11 @@ export default function Game() {
 					</Row>
 					<Row className="mt-2  me-0 pe-0 ms-0 gameAttributesRow">
 						<Col className="ps-0 gameAttributeName">Likes</Col>
-						<Col className="pe-0 mb-2 gameAttribute">{game.upVotes}</Col>
+						<Col className="pe-0 mb-2 gameAttribute">{likes}</Col>
 					</Row>
 					<Row className="mt-2 me-0 pe-0 ms-0 gameAttributesRow">
 						<Col className="ps-0 gameAttributeName">Dislikes</Col>
-						<Col className="pe-0 mb-2 gameAttribute">{game.downVotes}</Col>
+						<Col className="pe-0 mb-2 gameAttribute">{dislikes}</Col>
 					</Row>
 					<Row className="mt-2 ms-0 gameAttributesRow">
 						<Col className="ps-0 gameAttributeName">Publish by</Col>
@@ -106,6 +112,7 @@ export default function Game() {
 					</Row>
 				</Col>
 				<Col md={9} lg={9} className="ps-0">
+					{/* Banner */}
 					<Row>
 						<Image
 							src={game.banner}
@@ -118,11 +125,18 @@ export default function Game() {
 							}}
 						/>
 					</Row>
-					<Row>
-						<p style={{ textAlign: 'center' }}>{game.description}</p>
-					</Row>
+					{/* UpVote/DownVote section */}
+					<VotesSection
+						game={game?.id}
+						title={game?.title}
+						setLikes={setLikes}
+						setDislikes={setDislikes}
+					/>
+					{/* Comments section */}
+					<Comments />
 				</Col>
 			</Row>
+			{/* Players Modal */}
 			<Modal
 				className="my-modal"
 				show={showPlayers}

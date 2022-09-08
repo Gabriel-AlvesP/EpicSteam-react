@@ -22,7 +22,7 @@ function mostPlayed(req, res) {
  * @param {object} res response
  */
 function mostLiked(req, res) {
-	const query = `select * from Posts order by UpVotes desc, DownVotes asc limit 0,5;`;
+	const query = `select p.*, count(*) as likes from Posts p left join Users_Posts up on up.postId=p.Id where up.vote=1 group by up.postId order by count(*) desc limit 0,5;`;
 
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
@@ -72,12 +72,15 @@ function getGame(req, res) {
 
 	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
 
-	const query = `SELECT p.*, u.username FROM Posts p left join Users u on p.owner = u.id where p.id = ${id}`;
+	let query = `SELECT p.*, u.username, sum(up.vote=1) as upVotes, sum(up.vote=2) as downVotes FROM Posts p inner join Users u on p.owner = u.id inner join Users_Posts up on up.postId=${id} where p.id = ${id}`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
 		if (dbRes.length !== 1) return res.sendStatus(404);
+
 		const { owner, ...response } = dbRes[0]; //remove user id from the response object
+
+		if (!response?.id) return res.sendStatus(404);
 
 		return res.json(response);
 	});
@@ -148,11 +151,36 @@ function updatePlayers(req, res) {
 
 	if (!Number(gameId) || typeof didPlay !== 'boolean') res.sendStatus(400);
 
-	let query = `INSERT into Users_Posts(userId, postId, didPlay) VALUES('${req.uid}', ${gameId}, ${didPlay}) ON DUPLICATE KEY UPDATE didPlay=${didPlay};`;
+	const query = `INSERT into Users_Posts(userId, postId, didPlay) VALUES('${req.uid}', ${gameId}, ${didPlay}) ON DUPLICATE KEY UPDATE didPlay=${didPlay};`;
 	connection.query(query, err => {
 		if (err) return res.sendStatus(500);
 
 		res.sendStatus(201);
+	});
+}
+
+function getUserVote(req, res) {
+	const { uid } = req;
+	const { gameId } = req.params;
+
+	const query = `select vote from Users_Posts where userId = '${uid}' and postId = ${gameId}`;
+	connection.query(query, (err, dbRes) => {
+		if (err) throw err;
+		if (err) return res.sendStatus(500);
+		res.json(dbRes[0]);
+	});
+}
+
+function voteGame(req, res) {
+	const { vote, gameId } = req.body || {};
+
+	if (!Number(vote) || !Number(gameId)) return res.sendStatus(400);
+
+	const query = `INSERT into Users_Posts(userId, postId, didPlay, vote) VALUES('${req.uid}', ${gameId}, false, ${vote}) ON DUPLICATE KEY UPDATE vote=${vote};`;
+	connection.query(query, vote, err => {
+		if (err) return res.sendStatus(500);
+
+		res.sendStatus(204);
 	});
 }
 
@@ -165,4 +193,6 @@ module.exports = {
 	addGame,
 	gamePlayers,
 	updatePlayers,
+	getUserVote,
+	voteGame,
 };
