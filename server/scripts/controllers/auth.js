@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { v4: uuidV4 } = require('uuid');
 const { connection } = require('../../database/dbConfig');
-const { insertNewUser } = require('../../database/queries');
 const { serverErr } = require('../models/errorMessages');
+const roles = require('../models/roles');
 const { usernameValidator } = require('../models/validations');
 
 /**
@@ -30,10 +30,10 @@ async function signUp(req, res) {
 
 	const user = {
 		id: uuidV4(),
-		Username: username,
-		Email: email,
-		Password: hashed,
-		JoinDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+		username: username,
+		email: email,
+		password: hashed,
+		joinDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
 	};
 
 	let query = `SELECT * from Users WHERE Username = "${username}";`;
@@ -44,10 +44,17 @@ async function signUp(req, res) {
 		if (dbRes.length > 0)
 			return res.status(409).json({ message: 'Credentials in use' });
 
-		insertNewUser(user, err => {
+		let query = 'INSERT INTO Users SET ?';
+		connection.query(query, user, err => {
 			if (err) return res.status(500).json({ message: serverErr });
 
-			return res.sendStatus(201);
+			let userRole = { userId: user.id, role: roles.visitor };
+			let query = `insert into User_Roles set ?`;
+			connection.query(query, userRole, err => {
+				if (err) return res.status(500).json({ message: serverErr });
+
+				res.sendStatus(201);
+			});
 		});
 	});
 }

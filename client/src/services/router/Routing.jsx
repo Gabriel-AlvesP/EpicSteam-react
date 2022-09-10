@@ -4,7 +4,7 @@ import Home from '../../components/views/Home';
 import Browse from '../../components/views/Browse';
 import Game from '../../components/views/Game';
 import Users from '../../components/views/Users/Users';
-import Profile from '../../components/views/Users/Profile';
+/* import Profile from '../../components/views/Users/Profile'; */
 import NotFound from '../../components/views/Errors/NotFound';
 import Category from '../../components/views/Category';
 import App from '../../App';
@@ -30,7 +30,7 @@ const Routing = () => {
 						<Route path="/users">
 							{/* add element to be rendered into children */}
 							<Route index element={<Users />} />
-							<Route path=":id" element={<Profile />} />
+							{/* <Route path=":id" element={<Profile />} /> */}
 						</Route>
 					</Route>
 				</Route>

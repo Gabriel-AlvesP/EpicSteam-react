@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 //Middleware
+const checkOwnership = require('../middleware/checkOwnership');
 const checkRoles = require('../middleware/checkRoles');
 const { checkAccessJWT } = require('../middleware/checkJWT');
 const { upload } = require('../middleware/multer');
@@ -15,6 +16,7 @@ const {
 	allGames,
 	getGame,
 	addGame,
+	deleteGame,
 	gamePlayers,
 	updatePlayers,
 	getUserVote,
@@ -28,6 +30,7 @@ const {
 const { getImage } = require('../controllers/images');
 //Models
 const roles = require('../models/roles');
+const { removeUser, updateUserRole } = require('../controllers/userManagement');
 
 //* <-- Public routes -->
 
@@ -43,7 +46,7 @@ router.get('/games/mostPlayed', mostPlayed);
 router.get('/games/mostLiked', mostLiked);
 router.get('/games/recentlyAdded', recentlyAdded);
 router.get('/games/game/:id', getGame);
-router.get('/games/game/players/:gameId', gamePlayers);
+router.get('/games/game/players/:id', gamePlayers);
 //game comments,
 //? Pictures
 router.get('/picture/:image', getImage);
@@ -55,6 +58,24 @@ router.get('/refresh', refreshTokenHandler); //refreshToken
 router.get('/logout', logout); //refreshToken
 router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
 router.post(
+	'/users',
+	checkAccessJWT,
+	checkRoles(roles.forumManager),
+	updateUserRole
+);
+router.delete(
+	'/users/:id',
+	checkAccessJWT,
+	checkRoles(roles.forumManager),
+	removeUser
+);
+router.post(
+	'/categories/new',
+	checkAccessJWT,
+	checkRoles(roles.forumManager, roles.contentManager),
+	newCategory
+);
+router.post(
 	'/games/new',
 	checkAccessJWT,
 	checkRoles(roles.contentManager, roles.forumManager),
@@ -64,15 +85,16 @@ router.post(
 	]),
 	addGame
 );
-router.post(
-	'/categories/new',
-	checkAccessJWT,
-	checkRoles(roles.forumManager, roles.contentManager),
-	newCategory
-);
 router.post('/games/game/players/', checkAccessJWT, updatePlayers);
-router.get('/games/game/vote/:gameId', checkAccessJWT, getUserVote);
+router.get('/games/game/vote/:id', checkAccessJWT, getUserVote);
 router.post('/games/game/vote', checkAccessJWT, voteGame);
+router.delete(
+	'/games/game/:id',
+	checkAccessJWT,
+	checkRoles(roles.contentManager, roles.contentManager),
+	checkOwnership,
+	deleteGame
+);
 //router.post('/comment', comment);
 
 module.exports = router;

@@ -10,6 +10,8 @@ import { FaAngleRight } from 'react-icons/fa';
 import DidPlayBtn from '../Games/DidPlayBtn';
 import VotesSection from '../Games/VotesSection';
 import Comments from '../Games/Comments';
+import DeleteGame from '../Games/DeleteGame/DeleteGame';
+import { useAccessToken } from '../../services/hooks/useAccessToken';
 
 export default function Game() {
 	const { gameId } = useParams();
@@ -20,6 +22,9 @@ export default function Game() {
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
 	const [showPlayers, setShowPlayers] = useState(false);
+	//Verification
+	const verifyRoles = useAccessToken();
+	const [canDelete, setCanDelete] = useState(false);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -40,6 +45,12 @@ export default function Game() {
 
 		getData();
 	}, [gameId, navigate]);
+
+	useEffect(() => {
+		if (game.username) {
+			setCanDelete(verifyRoles([1899, 5204], game.username));
+		}
+	}, [game, verifyRoles]);
 
 	return (
 		<Container fluid className="mt-3">
@@ -95,7 +106,11 @@ export default function Game() {
 							{game.postDate?.split('T')[0].replaceAll('-', '/')}
 						</Col>
 					</Row>
-					<Row className="mt-2 ms-0 gameDescriptionRow">
+					<Row
+						className={`mt-2 ms-0  ${
+							canDelete ? 'gameAttributesRow' : 'gameDescriptionRow'
+						} `}
+					>
 						<DidPlayBtn
 							players={players}
 							gameId={gameId}
@@ -110,7 +125,13 @@ export default function Game() {
 							See who played it
 						</Col>
 					</Row>
+					{canDelete && (
+						<Row className={`mt-2 ms-0 gameDescriptionRow`}>
+							<DeleteGame gameId={gameId} owner={game.username} />
+						</Row>
+					)}
 				</Col>
+				{/* Column 2 */}
 				<Col md={9} lg={9} className="ps-0">
 					{/* Banner */}
 					<Row>

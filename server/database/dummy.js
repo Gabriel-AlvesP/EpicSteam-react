@@ -2,8 +2,10 @@ const bcrypt = require('bcrypt');
 
 const dummyData = async () => {
 	const passwd = await bcrypt.hash('Admin123', 10);
+	const manPasswd = await bcrypt.hash('Manager123', 10);
 	return [
 		[
+			'Users',
 			'Users',
 			'Categories',
 			'Categories',
@@ -45,6 +47,14 @@ const dummyData = async () => {
 				username: 'SrAdministrador',
 				email: 'admin@epicsteam.com',
 				password: passwd,
+				joinDate: '2022-07-30',
+				picture: '',
+			},
+			{
+				id: 'ContentManager',
+				username: 'Manager',
+				email: 'manager@epicsteam.com',
+				password: manPasswd,
 				joinDate: '2022-07-30',
 				picture: '',
 			},
@@ -157,8 +167,8 @@ const dummyData = async () => {
 				userId: 'Adminarino',
 			},
 			{
-				role: 666,
-				userId: 'Adminarino',
+				role: 5204,
+				userId: 'ContentManager',
 			},
 			{
 				userId: 'Adminarino',

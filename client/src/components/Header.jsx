@@ -8,6 +8,7 @@ import AuthModal from './authentication/AuthModal';
 import SignOut from './authentication/SignOut';
 import { useAuth } from '../services/hooks/useAuth';
 import { FaUserCircle } from 'react-icons/fa';
+import { useAccessToken } from '../services/hooks/useAccessToken';
 
 /**
  * Header Component is composed by a navbar and the authentication modal
@@ -19,6 +20,7 @@ export default function Header() {
 	const [modalShow, setModalShow] = useState(false);
 	const [modalContent, setModalContent] = useState(true);
 	const [navbarBg, setNavbarBg] = useState('navbar-container active');
+	const checkRoles = useAccessToken();
 
 	/**
 	 * Set a listener for scroll event
@@ -86,10 +88,8 @@ export default function Header() {
 									Browse
 								</Link>
 							</Nav.Link>
-							{auth?.username && (
+							{auth?.username && checkRoles([1899]) && (
 								/* Authentication Required */
-								//TODO: Adicionar backoffice/paginas escondidas para utilizadores com roles
-								// TODO: Check for role instead
 								<Nav.Link as="div">
 									<Link className="navbar-link" to="/users">
 										Users

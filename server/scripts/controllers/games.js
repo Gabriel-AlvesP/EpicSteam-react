@@ -137,17 +137,31 @@ function addGame(req, res) {
 	);
 }
 
+function deleteGame(req, res) {
+	//const {game}
+	const { id } = req.params;
+
+	if (!Number(id)) return res.sendStatus(400);
+
+	connection.query(`DELETE FROM Posts where id=${id}`, err => {
+		if (err) throw err;
+		if (err) return res.status(500).json({ message: serverErr });
+
+		res.sendStatus(202);
+	});
+}
+
 /**
  * Get users that played a game
  * @param {object} req request
  * @param {object} res response
  */
 function gamePlayers(req, res) {
-	const { gameId } = req.params || {};
+	const { id } = req.params || {};
 
-	if (!Number.isInteger(Number(gameId))) return res.sendStatus(404);
+	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
 
-	const query = `select u.username, bin(up.didPlay) as didPlay from Users u join Users_Posts up on up.userId = u.id where up.postId = ${gameId};`;
+	const query = `select u.username, bin(up.didPlay) as didPlay from Users u join Users_Posts up on up.userId = u.id where up.postId = ${id};`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.sendStatus(500);
 
@@ -186,9 +200,9 @@ function updatePlayers(req, res) {
  */
 function getUserVote(req, res) {
 	const { uid } = req;
-	const { gameId } = req.params;
+	const { id } = req.params;
 
-	const query = `select vote from Users_Posts where userId = '${uid}' and postId = ${gameId}`;
+	const query = `select vote from Users_Posts where userId = '${uid}' and postId = ${id}`;
 	connection.query(query, (err, dbRes) => {
 		if (err) throw err;
 		if (err) return res.sendStatus(500);
@@ -222,6 +236,7 @@ module.exports = {
 	allGames,
 	getGame,
 	addGame,
+	deleteGame,
 	gamePlayers,
 	updatePlayers,
 	getUserVote,

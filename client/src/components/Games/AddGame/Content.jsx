@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { axios } from '../../../services/apis/axios';
 import { useAccessAxios } from '../../../services/hooks/useAccessAxios';
 
-//TODO
 const NewGameContent = ({ categoryId, setShowModal }) => {
 	//Input variables
 	const [title, setTitle] = useState('');
@@ -79,7 +78,10 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 				return;
 			}
 
-			if (!selectedCategories || selectedCategories.length === 0) {
+			if (
+				!categoryId &&
+				(!selectedCategories || selectedCategories.length === 0)
+			) {
 				setErrMessage('Select at least 1 category!');
 				return;
 			}
