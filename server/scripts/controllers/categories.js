@@ -53,9 +53,13 @@ function getCategory(req, res) {
  * @param {Object} res response
  */
 function newCategory(req, res) {
+	const { name } = req.body;
+
+	if (!req.file || !name) return res.sendStatus(400);
+
 	const query = `INSERT INTO Categories SET ?`;
-	//TODO: Check req data
-	connection.query(query, req.body, (err, dbRes) => {
+
+	connection.query(query, { name: name, icon: req.file.filename }, err => {
 		if (err) return res.status(500).json({ message: serverErr });
 
 		return res.sendStatus(201);

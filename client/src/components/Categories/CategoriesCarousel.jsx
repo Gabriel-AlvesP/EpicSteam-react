@@ -8,6 +8,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import './CategoriesCarousel.css';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
+import AddCategory from './AddCategory/AddCategory';
+import { Row, Col } from 'react-bootstrap';
 
 export const CategoriesCarousel = () => {
 	const [categories, setCategories] = useState([]);
@@ -51,7 +53,14 @@ export const CategoriesCarousel = () => {
 	return (
 		categories?.length > 0 && (
 			<div>
-				<p style={{ fontSize: '24px' }}>Categories</p>
+				<Row>
+					<Col>
+						<p style={{ fontSize: '24px' }}>Categories</p>
+					</Col>
+					<Col>
+						<AddCategory />
+					</Col>
+				</Row>
 				<Slider style={{ textAlign: 'center' }} {...settings}>
 					{categories.map(category => (
 						<div

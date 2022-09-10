@@ -72,7 +72,8 @@ router.delete(
 router.post(
 	'/categories/new',
 	checkAccessJWT,
-	checkRoles(roles.forumManager, roles.contentManager),
+	checkRoles(roles.forumManager),
+	upload.single('icon'),
 	newCategory
 );
 router.post(
