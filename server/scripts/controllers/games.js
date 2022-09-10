@@ -72,13 +72,16 @@ function getGame(req, res) {
 
 	if (!Number.isInteger(Number(id))) return res.sendStatus(404);
 
-	let query = `SELECT p.*, u.username, sum(up.vote=1) as upVotes, sum(up.vote=2) as downVotes FROM Posts p inner join Users u on p.owner = u.id inner join Users_Posts up on up.postId=${id} where p.id = ${id}`;
+	let query = `SELECT p.*, u.username, sum(up.vote=1) as upVotes, sum(up.vote=2) as downVotes FROM Posts p inner join Users u on p.owner = u.id left join Users_Posts up on up.postId=${id} where p.id = ${id}`;
 	connection.query(query, (err, dbRes) => {
 		if (err) return res.status(500).json({ message: serverErr });
 
 		if (dbRes.length !== 1) return res.sendStatus(404);
 
 		const { owner, ...response } = dbRes[0]; //remove user id from the response object
+
+		if (!response.upVotes) response.upVotes = 0;
+		if (!response.downVotes) response.downVotes = 0;
 
 		if (!response?.id) return res.sendStatus(404);
 
@@ -116,20 +119,17 @@ function addGame(req, res) {
 			let gameId = dbRes.insertId;
 
 			categories.split(',').forEach(categoryId => {
-				let id = Number(categoryId);
-
-				if (!id) return;
-
 				connection.query(
 					manyToManyQuery,
 					{
-						categoryId: id,
+						categoryId: Number(categoryId),
 						postId: gameId,
 					},
 					err => {
+						if (err) throw err;
 						if (err) return res.sendStatus(500);
 
-						return res.status(201).json({ gameId: gameId });
+						return res.sendStatus(201);
 					}
 				);
 			});

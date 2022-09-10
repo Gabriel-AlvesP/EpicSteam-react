@@ -5,10 +5,9 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { axios } from '../../../services/apis/axios';
 import { useAccessAxios } from '../../../services/hooks/useAccessAxios';
-import { useNavigate } from 'react-router-dom';
 
 //TODO
-const NewGameContent = ({ categoryId }) => {
+const NewGameContent = ({ categoryId, setShowModal }) => {
 	//Input variables
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -27,7 +26,6 @@ const NewGameContent = ({ categoryId }) => {
 	//Request
 	const accessAxios = useAccessAxios();
 	//Navigate
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!categoryId) {
@@ -64,6 +62,7 @@ const NewGameContent = ({ categoryId }) => {
 		[...e.target.selectedOptions].forEach(
 			option => option.value && selectedCats.push(option.value)
 		);
+		setSelectedCategories(selectedCats);
 	};
 
 	/**
@@ -80,17 +79,25 @@ const NewGameContent = ({ categoryId }) => {
 				return;
 			}
 
+			if (!selectedCategories || selectedCategories.length === 0) {
+				setErrMessage('Select at least 1 category!');
+				return;
+			}
+
 			const formData = new FormData();
 			formData.append('cover', cover);
 			formData.append('banner', banner);
 			formData.append('title', title);
 			formData.append('description', description);
 			formData.append('price', price);
-			formData.append('categories', [categoryId] || selectedCategories);
+			formData.append(
+				'categories',
+				categoryId ? [categoryId] : selectedCategories
+			);
 
 			setErrMessage('');
 
-			var res = await accessAxios.post('/games/new', formData, {
+			await accessAxios.post('/games/new', formData, {
 				onUploadProgress: data => {
 					setUploadStatus(Math.round((data.loaded / data.total) * 100));
 				},
@@ -100,7 +107,7 @@ const NewGameContent = ({ categoryId }) => {
 			});
 
 			toast.success(`New game '${title}' successfully created.`);
-			navigate(`/games/${res?.data.gameId}`);
+			setShowModal(false);
 		} catch (err) {
 			setErrMessage('New game failed. Try again later.');
 		}
@@ -193,6 +200,7 @@ const NewGameContent = ({ categoryId }) => {
 							onChange={handleSelectChange}
 							size={categoriesList.length}
 							multiple={true}
+							required={true}
 							aria-label="categories"
 						>
 							{categoriesList.map(elem => (

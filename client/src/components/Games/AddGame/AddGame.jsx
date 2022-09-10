@@ -27,7 +27,9 @@ const AddGame = ({ categoryId }) => {
 					</div>
 					<MyModal
 						title={'New Game'}
-						body={<Content categoryId={categoryId} />}
+						body={
+							<Content categoryId={categoryId} setShowModal={setShowModal} />
+						}
 						showModal={showModal}
 						setShowModal={setShowModal}
 					/>
