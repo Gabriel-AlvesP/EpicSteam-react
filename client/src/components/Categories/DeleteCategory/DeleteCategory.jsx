@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import handleError from '../../../utils/errorHandling';
 
-const DeleteGame = ({ gameId }) => {
+const DeleteCategory = ({ categoryId }) => {
 	const accessAxios = useAccessAxios();
 	const navigate = useNavigate();
 
-	const deleteGame = async () => {
-		if (!gameId) {
+	const deleteCategory = async () => {
+		if (!categoryId) {
 			toast.error(`Couldn't make the request. Try again later.`);
 			return;
 		}
 
 		try {
-			await accessAxios.delete(`/games/game/${gameId}`);
+			await accessAxios.delete(`/categories/${categoryId}`);
 			navigate('/');
-			toast.success('Game removed with success.');
+			toast.success('Category removed with success.');
 		} catch (err) {
 			toast.error(
 				handleError(err, `Couldn't remove this game. Try again later.`)
@@ -26,17 +26,19 @@ const DeleteGame = ({ gameId }) => {
 	};
 
 	return (
-		<Button
-			style={{
-				color: 'white',
-				background: '#FF0000',
-				border: 'none',
-			}}
-			onClick={deleteGame}
-		>
-			Remove Game
-		</Button>
+		<div className="d-flex justify-content-end">
+			<Button
+				style={{
+					color: 'white',
+					background: '#FF0000',
+					border: 'none',
+				}}
+				onClick={deleteCategory}
+			>
+				Remove Category
+			</Button>
+		</div>
 	);
 };
 
-export default DeleteGame;
+export default DeleteCategory;

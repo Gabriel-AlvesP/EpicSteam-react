@@ -66,4 +66,17 @@ function newCategory(req, res) {
 	});
 }
 
-module.exports = { categories, getCategory, newCategory };
+function deleteCategory(req, res) {
+	const { id } = req.params;
+
+	if (!Number(id)) return res.sendStatus(400);
+
+	const query = `DELETE FROM Categories where id=${id};`;
+	connection.query(query, err => {
+		if (err) return res.sendStatus(500);
+
+		return res.sendStatus(202);
+	});
+}
+
+module.exports = { categories, getCategory, newCategory, deleteCategory };

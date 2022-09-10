@@ -26,6 +26,7 @@ const {
 	categories,
 	getCategory,
 	newCategory,
+	deleteCategory,
 } = require('../controllers/categories');
 const { getImage } = require('../controllers/images');
 //Models
@@ -75,6 +76,12 @@ router.post(
 	checkRoles(roles.forumManager),
 	upload.single('icon'),
 	newCategory
+);
+router.delete(
+	'/categories/:id',
+	checkAccessJWT,
+	checkRoles(roles.forumManager),
+	deleteCategory
 );
 router.post(
 	'/games/new',

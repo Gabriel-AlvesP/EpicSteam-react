@@ -144,7 +144,6 @@ function deleteGame(req, res) {
 	if (!Number(id)) return res.sendStatus(400);
 
 	connection.query(`DELETE FROM Posts where id=${id}`, err => {
-		if (err) throw err;
 		if (err) return res.status(500).json({ message: serverErr });
 
 		res.sendStatus(202);

@@ -21,7 +21,7 @@ const SignOut = () => {
 	return (
 		<button
 			style={{
-				paddingLeft: '5px',
+				paddingLeft: '9px',
 				color: '#fff',
 				padding: '0',
 				border: 'none',
