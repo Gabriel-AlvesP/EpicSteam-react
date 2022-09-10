@@ -18,8 +18,20 @@ const SignOut = () => {
 		navigate('/', { replace: true });
 	};
 
-	//TODO Update component
-	return <button onClick={handleSignOut}>Sign Out</button>;
+	return (
+		<button
+			style={{
+				paddingLeft: '5px',
+				color: '#fff',
+				padding: '0',
+				border: 'none',
+				background: 'none',
+			}}
+			onClick={handleSignOut}
+		>
+			Sign Out
+		</button>
+	);
 };
 
 export default SignOut;

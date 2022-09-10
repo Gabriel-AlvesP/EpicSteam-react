@@ -9,7 +9,9 @@ export default function Browse() {
 			</div>
 
 			<div>
-				<GamesCollection />
+				<div>
+					<GamesCollection addGame={true} />
+				</div>
 			</div>
 		</div>
 	);

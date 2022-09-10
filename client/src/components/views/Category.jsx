@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 import GamesCollection from '../Games/GamesCollection';
+import AddGame from '../Games/AddGame/AddGame';
+import { Row, Col } from 'react-bootstrap';
 
 export default function Category() {
 	const { id } = useParams();
@@ -30,7 +32,14 @@ export default function Category() {
 
 	return (
 		<>
-			{category && <h2 className="mt-2 mb-4">{category.name} Games</h2>}
+			<Row>
+				<Col>
+					{category && <h2 className="mt-2 mb-4">{category.name} Games</h2>}
+				</Col>
+				<Col>
+					<AddGame categoryId={id} />
+				</Col>
+			</Row>
 			<GamesCollection
 				gamesList={games}
 				contentTitle={''}

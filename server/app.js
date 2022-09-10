@@ -16,7 +16,6 @@ const cookieParser = require('cookie-parser');
 const database = require('./database/dbConfig');
 const routes = require('./scripts/router/routes');
 const { allowCredentials, corsOptions } = require('./config/cors');
-const path = require('path');
 
 // Configs
 const app = express();

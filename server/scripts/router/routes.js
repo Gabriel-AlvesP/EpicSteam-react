@@ -58,7 +58,10 @@ router.post(
 	'/games/new',
 	checkAccessJWT,
 	checkRoles(roles.contentManager, roles.forumManager),
-	upload.single('image'),
+	upload.fields([
+		{ name: 'cover', maxCount: 1 },
+		{ name: 'banner', maxCount: 1 },
+	]),
 	addGame
 );
 router.post(

@@ -5,8 +5,14 @@ import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 import Image from '../images/Image';
 import { Link } from 'react-router-dom';
+import AddGame from './AddGame/AddGame';
 
-const GamesCollection = ({ gamesList, containerStyle, contentTitle }) => {
+const GamesCollection = ({
+	gamesList,
+	containerStyle,
+	contentTitle,
+	addGame,
+}) => {
 	const [games, setGames] = useState([]);
 
 	useEffect(() => {
@@ -33,8 +39,17 @@ const GamesCollection = ({ gamesList, containerStyle, contentTitle }) => {
 				fluid
 				style={containerStyle || { width: '80%', marginLeft: '0%' }}
 			>
-				<p style={{ fontSize: '24px' }}>{contentTitle ?? 'Games'}</p>
-				<Row sm={'auto'} md={'auto'} lg={'auto'}>
+				<Row className="mb-3 mt-1">
+					<Col>
+						<p style={{ fontSize: '24px' }}>{contentTitle ?? 'Games'}</p>
+					</Col>
+					{addGame && (
+						<Col>
+							<AddGame />
+						</Col>
+					)}
+				</Row>
+				<Row m={'auto'} md={'auto'} lg={'auto'}>
 					{games.map(game => (
 						<Col className="mb-3" key={game.id}>
 							<Link

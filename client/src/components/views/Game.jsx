@@ -144,7 +144,6 @@ export default function Game() {
 			>
 				<Modal.Body>
 					<h2 className="auth-title">{game.title}</h2>
-
 					<div className="loginContainer">
 						{players.length > 0 ? (
 							<>

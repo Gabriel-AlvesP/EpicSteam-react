@@ -93,26 +93,46 @@ function getGame(req, res) {
  */
 function addGame(req, res) {
 	const query = `INSERT INTO Posts SET ?`;
+	const manyToManyQuery = `INSERT INTO Posts_Categories SET ?`;
 
-	const { filename } = req.file;
-	const { title, description, price, categoryId } = req.body;
+	const { cover, banner } = req.files || {};
+	const { title, description, price, categories } = req.body;
 	const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
 	connection.query(
 		query,
 		{
 			title,
-			photo: filename,
+			cover: cover[0].filename,
+			banner: banner[0].filename,
 			description,
 			price,
 			postDate: timestamp,
-			categoryId,
 			owner: req.uid,
 		},
-		err => {
+		(err, dbRes) => {
 			if (err) return res.sendStatus(500);
 
-			return res.sendStatus(201);
+			let gameId = dbRes.insertId;
+
+			categories.split(',').forEach(categoryId => {
+				let id = Number(categoryId);
+
+				if (!id) return;
+
+				connection.query(
+					manyToManyQuery,
+					{
+						categoryId: id,
+						postId: gameId,
+					},
+					err => {
+						if (err) return res.sendStatus(500);
+
+						return res.status(201).json({ gameId: gameId });
+					}
+				);
+			});
 		}
 	);
 }
@@ -159,6 +179,11 @@ function updatePlayers(req, res) {
 	});
 }
 
+/**
+ * Gets an user vote (up/down vote) related to a specific game/post
+ * @param {object} req request
+ * @param {object} res response
+ */
 function getUserVote(req, res) {
 	const { uid } = req;
 	const { gameId } = req.params;
@@ -171,6 +196,12 @@ function getUserVote(req, res) {
 	});
 }
 
+/**
+ * Inserts or updates an user vote related to a game/post
+ * @param {object} req request
+ * @param {object} res response
+ * @returns
+ */
 function voteGame(req, res) {
 	const { vote, gameId } = req.body || {};
 
