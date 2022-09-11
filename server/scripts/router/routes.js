@@ -56,7 +56,7 @@ router.get('/picture/:image', getImage);
 //TODO: use checkRefreshJWT in functions that use refresh token in queries
 router.get('/refresh', refreshTokenHandler); //refreshToken
 router.get('/logout', logout); //refreshToken
-router.get('/users', users); //todo checkAccessJWT, checkRoles(roles.forumManager),
+router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
 router.post(
 	'/users',
 	checkAccessJWT,

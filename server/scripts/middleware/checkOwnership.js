@@ -1,5 +1,11 @@
 const { connection } = require('../../database/dbConfig');
 
+/**
+ * Verifies if the current user is the owner of a post/game
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ */
 const checkOwnership = (req, res, next) => {
 	const uid = req?.uid;
 	const { id } = req.params;

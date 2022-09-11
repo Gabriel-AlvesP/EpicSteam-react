@@ -1,5 +1,9 @@
 const bcrypt = require('bcrypt');
 
+/**
+ * Dummy data - default webapp data
+ * @returns Array with the dummy data
+ */
 const dummyData = async () => {
 	const passwd = await bcrypt.hash('Admin123', 10);
 	const manPasswd = await bcrypt.hash('Manager123', 10);

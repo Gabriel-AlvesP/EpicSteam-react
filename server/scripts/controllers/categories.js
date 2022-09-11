@@ -1,8 +1,6 @@
 const { connection } = require('../../database/dbConfig');
 const { serverErr } = require('../models/errorMessages');
 
-//TODO: Documentation
-
 /**
  * Get all categories
  *
@@ -66,6 +64,12 @@ function newCategory(req, res) {
 	});
 }
 
+/**
+ * Deletes a category
+ * @param {object} req request
+ * @param {object} res response
+ * @returns
+ */
 function deleteCategory(req, res) {
 	const { id } = req.params;
 

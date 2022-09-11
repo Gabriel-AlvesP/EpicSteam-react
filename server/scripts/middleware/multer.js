@@ -5,9 +5,9 @@ const multer = require('multer');
  * Set images/files names and destinations
  */
 const storage = multer.diskStorage({
-	destination: (req, file, callback) => callback(null, './uploads/images/'),
+	destination: (req, file, callback) => callback(null, './uploads/images/'), //Set destination
 	filename: (req, file, cb) => {
-		cb(null, `${Date.now()}-${file.originalname}`);
+		cb(null, `${Date.now()}-${file.originalname}`); //Set filename
 	},
 });
 

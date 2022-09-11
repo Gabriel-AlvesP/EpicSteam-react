@@ -1,7 +1,7 @@
 const { connection } = require('../../database/dbConfig');
 
 /**
- *
+ * Gets users
  * @param {*} req request
  * @param {*} res response
  */
@@ -35,6 +35,12 @@ function users(req, res) {
 	});
 }
 
+/**
+ * Updates an user role
+ * @param {object} req - request
+ * @param {object} res - response
+ * @returns
+ */
 function updateUserRole(req, res) {
 	const { userId, role } = req.body;
 	const { uid } = req;
@@ -49,6 +55,13 @@ function updateUserRole(req, res) {
 	});
 }
 
+/**
+ * Deletes an user
+ *
+ * @param {object} req - request
+ * @param {object} res - response
+ * @returns
+ */
 function removeUser(req, res) {
 	const { id } = req.params;
 

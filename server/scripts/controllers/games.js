@@ -137,6 +137,12 @@ function addGame(req, res) {
 	);
 }
 
+/**
+ * Deletes a game
+ * @param {object} req request
+ * @param {object} res response
+ * @returns
+ */
 function deleteGame(req, res) {
 	//const {game}
 	const { id } = req.params;
