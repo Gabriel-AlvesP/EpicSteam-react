@@ -7,7 +7,7 @@ const { checkAccessJWT } = require('../middleware/checkJWT');
 const { upload } = require('../middleware/multer');
 //Controllers
 const { signIn, signUp, logout } = require('../controllers/auth');
-const { users } = require('../controllers/users');
+const { users, removeUser, updateUserRole } = require('../controllers/users');
 const { refreshTokenHandler } = require('../controllers/refreshToken');
 const {
 	mostPlayed,
@@ -31,7 +31,6 @@ const {
 const { getImage } = require('../controllers/images');
 //Models
 const roles = require('../models/roles');
-const { removeUser, updateUserRole } = require('../controllers/userManagement');
 
 //* <-- Public routes -->
 
@@ -57,7 +56,7 @@ router.get('/picture/:image', getImage);
 //TODO: use checkRefreshJWT in functions that use refresh token in queries
 router.get('/refresh', refreshTokenHandler); //refreshToken
 router.get('/logout', logout); //refreshToken
-router.get('/users', checkAccessJWT, checkRoles(roles.forumManager), users);
+router.get('/users', users); //todo checkAccessJWT, checkRoles(roles.forumManager),
 router.post(
 	'/users',
 	checkAccessJWT,

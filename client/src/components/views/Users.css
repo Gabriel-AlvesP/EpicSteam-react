@@ -1,0 +1,30 @@
+th{
+
+    color: #ff7800 ;
+}
+
+.tr :hover{
+    color: #ff7800;
+    cursor: pointer;
+}
+
+table{
+    width: 100%;
+}
+
+.colTitle{
+    font-size: 19px;
+}
+
+.tableHeader{
+    border-bottom: 1px solid #fff;
+}
+
+.trHover :hover{
+   color: orange; 
+}
+
+.deleteUserBtn{
+    border-radius: 20px;
+    border: none;
+}
