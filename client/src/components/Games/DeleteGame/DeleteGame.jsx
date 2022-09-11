@@ -4,10 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import handleError from '../../../utils/errorHandling';
 
+/**
+ * Deletes a game
+ * @param {object} properties
+ * @returns
+ */
 const DeleteGame = ({ gameId }) => {
 	const accessAxios = useAccessAxios();
 	const navigate = useNavigate();
 
+	/**
+	 * Makes the request to delete the game
+	 * @returns
+	 */
 	const deleteGame = async () => {
 		if (!gameId) {
 			toast.error(`Couldn't make the request. Try again later.`);

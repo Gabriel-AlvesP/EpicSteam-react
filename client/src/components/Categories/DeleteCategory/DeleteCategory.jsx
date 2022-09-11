@@ -4,10 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import handleError from '../../../utils/errorHandling';
 
+/**
+ * Deletes a category
+ *
+ * @param {number} categoryId
+ * @returns
+ */
 const DeleteCategory = ({ categoryId }) => {
 	const accessAxios = useAccessAxios();
 	const navigate = useNavigate();
 
+	/**
+	 * Makes the request to delete a category
+	 * @returns
+	 */
 	const deleteCategory = async () => {
 		if (!categoryId) {
 			toast.error(`Couldn't make the request. Try again later.`);

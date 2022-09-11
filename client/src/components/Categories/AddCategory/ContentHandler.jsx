@@ -4,6 +4,11 @@ import { useAccessAxios } from '../../../services/hooks/useAccessAxios';
 import handleError from '../../../utils/errorHandling';
 import { imageValidator } from '../../../utils/validations';
 
+/**
+ * Creates a new category
+ * @param {function} setShowModal - changes modal visibility
+ * @returns
+ */
 const ContentHandler = ({ setShowModal }) => {
 	const [name, setName] = useState('');
 	const [icon, setIcon] = useState({});
@@ -11,10 +16,19 @@ const ContentHandler = ({ setShowModal }) => {
 	const [errMessage, setErrMessage] = useState('');
 	const accessAxios = useAccessAxios();
 
+	/*
+	 * Validates the image("icon")
+	 */
 	useEffect(() => {
 		imageValidator(icon.name) ? setValidIcon(true) : setValidIcon(false);
 	}, [icon]);
 
+	/**
+	 * Submits the form, creating a post request
+	 *
+	 * @param {object} e event
+	 * @returns
+	 */
 	const submitForm = async e => {
 		e.preventDefault();
 

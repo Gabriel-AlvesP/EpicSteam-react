@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * Authentication submit button style,
+ * depending on the process (sign in vs sign up) and
+ * enable state
+ *
+ * @param {object} props properties
+ * @returns
+ */
 export default function SubmitBtn(props) {
 	const [btnStyle, setBtnStyle] = useState({
 		borderRadius: 3,

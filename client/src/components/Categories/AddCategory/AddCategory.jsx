@@ -4,6 +4,11 @@ import MyModal from '../../MyModal';
 import ContentHandler from './ContentHandler';
 import Button from 'react-bootstrap/Button';
 
+/**
+ * Facilitates the creation of new categories providing the button,
+ * modal and content to show
+ * @returns
+ */
 const AddCategory = () => {
 	const [showModal, setShowModal] = useState(false);
 	const verifyRoles = useAccessToken();

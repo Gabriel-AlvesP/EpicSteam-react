@@ -13,6 +13,10 @@ import Comments from '../Games/Comments';
 import DeleteGame from '../Games/DeleteGame/DeleteGame';
 import { useAccessToken } from '../../services/hooks/useAccessToken';
 
+/**
+ * Game page component
+ * @returns
+ */
 export default function Game() {
 	const { gameId } = useParams();
 	const navigate = useNavigate();
@@ -26,6 +30,9 @@ export default function Game() {
 	const verifyRoles = useAccessToken();
 	const [canDelete, setCanDelete] = useState(false);
 
+	/**
+	 * Gets game data
+	 */
 	useEffect(() => {
 		const getData = async () => {
 			try {
@@ -46,6 +53,9 @@ export default function Game() {
 		getData();
 	}, [gameId, navigate]);
 
+	/**
+	 * Checks if the user has permissions to delete this game
+	 */
 	useEffect(() => {
 		if (game.username) {
 			setCanDelete(verifyRoles([1899, 5204], game.username));

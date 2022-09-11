@@ -6,6 +6,12 @@ import { toast } from 'react-toastify';
 import { axios } from '../../../services/apis/axios';
 import { useAccessAxios } from '../../../services/hooks/useAccessAxios';
 
+/**
+ * Creates a new post request to insert a new game
+ * Provides and handles the form and server request
+ * @param {object} properties - [number] categoryId & [function] setShowModal
+ * @returns
+ */
 const NewGameContent = ({ categoryId, setShowModal }) => {
 	//Input variables
 	const [title, setTitle] = useState('');
@@ -26,6 +32,9 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 	const accessAxios = useAccessAxios();
 	//Navigate
 
+	/**
+	 * Gets categories
+	 */
 	useEffect(() => {
 		if (!categoryId) {
 			const getCategories = async () => {
@@ -44,10 +53,16 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 		}
 	}, [categoryId]);
 
+	/*
+	 * Validates cover images input
+	 */
 	useEffect(() => {
 		imageValidator(cover.name) ? setValidCover(true) : setValidCover(false);
 	}, [cover]);
 
+	/*
+	 * Validates banner images input
+	 */
 	useEffect(() => {
 		imageValidator(banner.name) ? setValidBanner(true) : setValidBanner(false);
 	}, [banner]);
@@ -73,11 +88,13 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 		e.preventDefault();
 
 		try {
+			//Check images validations
 			if (!validCover || !validBanner) {
 				setErrMessage('Only image files (jpg, jpeg, png) are allowed!');
 				return;
 			}
 
+			//Checks if any category is selected
 			if (
 				!categoryId &&
 				(!selectedCategories || selectedCategories.length === 0)
@@ -86,6 +103,7 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 				return;
 			}
 
+			//Creates formData
 			const formData = new FormData();
 			formData.append('cover', cover);
 			formData.append('banner', banner);
@@ -99,6 +117,7 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 
 			setErrMessage('');
 
+			//Server request
 			await accessAxios.post('/games/new', formData, {
 				onUploadProgress: data => {
 					setUploadStatus(Math.round((data.loaded / data.total) * 100));
@@ -108,6 +127,7 @@ const NewGameContent = ({ categoryId, setShowModal }) => {
 				},
 			});
 
+			//Feedback
 			toast.success(`New game '${title}' successfully created.`);
 			setShowModal(false);
 		} catch (err) {

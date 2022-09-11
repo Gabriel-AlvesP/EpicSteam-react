@@ -12,6 +12,8 @@ import handleError from '../../utils/errorHandling';
 
 /**
  * Handle sign up process
+ *
+ * @param {object} props properties
  * @returns
  */
 export default function SignUp(props) {
@@ -124,7 +126,7 @@ export default function SignUp(props) {
 
 				setSuccess(true);
 				setAuthMessage('Sign up was successful. Sign in now.');
-				setTimeout(() => props.onNavClick(), 3500);
+				setTimeout(() => props.onNavClick(), 1400);
 			} catch (err) {
 				setAuthMessage(handleError(err, 'Sign up failed'));
 			}

@@ -1,3 +1,8 @@
+/**
+ * Gets how much time passed since the date
+ * @param {string} date
+ * @returns
+ */
 const timeSince = date => {
 	let seconds = Math.floor((new Date() - new Date(date)) / 1000);
 

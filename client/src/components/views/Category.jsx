@@ -10,6 +10,10 @@ import { Row, Col } from 'react-bootstrap';
 import { useAccessToken } from '../../services/hooks/useAccessToken';
 import DeleteCategory from '../Categories/DeleteCategory/DeleteCategory';
 
+/**
+ * Category page component
+ * @returns
+ */
 export default function Category() {
 	const { id } = useParams();
 	const [category, setCategory] = useState({});
@@ -17,6 +21,9 @@ export default function Category() {
 	const navigate = useNavigate();
 	const checkRoles = useAccessToken();
 
+	/**
+	 * Gets category info and its associated games
+	 */
 	useEffect(() => {
 		const getData = async () => {
 			try {

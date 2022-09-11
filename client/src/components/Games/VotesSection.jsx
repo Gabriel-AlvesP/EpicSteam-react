@@ -7,12 +7,20 @@ import './VotesSection.css';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 
+/**
+ * Up & Down votes component
+ * @param {object} properties [number] game - gameId, [string] title, [function] setLikes, [function] setDislikes
+ * @returns
+ */
 const VotesSection = ({ game, title, setLikes, setDislikes }) => {
 	const [fade, setFade] = useState('');
 	const [show, setShow] = useState(true);
 	const { auth } = useAuth();
 	const accessAxios = useAccessAxios();
 
+	/**
+	 * Hides this component if user already voted this game
+	 */
 	useEffect(() => {
 		const userVote = async () => {
 			if (auth?.username && game) {
@@ -27,6 +35,11 @@ const VotesSection = ({ game, title, setLikes, setDislikes }) => {
 		userVote();
 	}, [accessAxios, game, auth]);
 
+	/**
+	 * Adds the new vote of an user
+	 * @param {boolean} voteType - [true] like/upVote, [false] dislike/downVote
+	 * @returns
+	 */
 	const onVote = async voteType => {
 		if (!auth?.username) {
 			toast.info('Sign in to vote posts!');

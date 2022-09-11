@@ -2,6 +2,12 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Image from '../images/Image';
 
+/**
+ * Groups a list of games according to some characteristic (most liked, played, ...)
+ * Creates
+ * @param {object} properties [string] title, [array] games
+ * @returns
+ */
 const GamesByGroup = ({ title, games }) => {
 	return (
 		<Col>

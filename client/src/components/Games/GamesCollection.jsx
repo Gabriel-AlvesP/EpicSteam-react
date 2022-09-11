@@ -7,6 +7,11 @@ import Image from '../images/Image';
 import { Link } from 'react-router-dom';
 import AddGame from './AddGame/AddGame';
 
+/**
+ * Shows all games in cards
+ * @param {object} properties - [array] gamesList, [object] containerStyle, [string] contentTitle, [boolean] addGame
+ * @returns
+ */
 const GamesCollection = ({
 	gamesList,
 	containerStyle,

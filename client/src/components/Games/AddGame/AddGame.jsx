@@ -5,6 +5,11 @@ import MyModal from '../../MyModal';
 import Content from './Content';
 import './AddGame.css';
 
+/**
+ * Adds a new game
+ * @param {object} properties - ([number] categoryId)
+ * @returns
+ */
 const AddGame = ({ categoryId }) => {
 	const [showModal, setShowModal] = useState(false);
 	const verifyRoles = useAccessToken();

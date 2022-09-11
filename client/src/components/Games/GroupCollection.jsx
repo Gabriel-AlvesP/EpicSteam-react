@@ -5,11 +5,18 @@ import { axios } from '../../services/apis/axios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 
+/**
+ * Joins multiple groups of games (most liked, played and recently added)
+ * @returns
+ */
 const GroupCollection = () => {
 	const [mostLiked, setMostLiked] = useState([]);
 	const [mostPlayed, setMostPlayed] = useState([]);
 	const [mostRecent, setMostRecent] = useState([]);
 
+	/**
+	 * Gets the different list of games needed
+	 */
 	useEffect(() => {
 		const getData = async () => {
 			try {

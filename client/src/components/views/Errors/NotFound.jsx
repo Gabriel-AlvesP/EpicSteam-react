@@ -1,6 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './NotFound.css';
 
+/**
+ * Not found page component
+ * @returns
+ */
 export default function NotFound() {
 	const navigate = useNavigate();
 

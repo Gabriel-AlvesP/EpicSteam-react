@@ -103,10 +103,6 @@ Categoria – MMOs (Massive Multiplayer Online Games)
 | `Gestor de conteudo` | Criar e moderar os seus posts                                                                                  |
 | `Visitante`          | Comentar posts </br> Reagir a posts e comentários </br> Marcar se já jogou o jogo (no post)                    |
 
-## Mini Jogo
-
-Ligar dicas visuais a titulos de jogos. Deve ter um contador de tempo decrescente (tempo a definir)
-
 ## Materiais a Incluir
 
 - package.json

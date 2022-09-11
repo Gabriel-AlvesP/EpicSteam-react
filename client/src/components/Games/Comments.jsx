@@ -1,5 +1,10 @@
 import { Row } from 'react-bootstrap';
 
+/**
+ * Comments component
+ * @returns
+ */
+//TODO
 const Comments = () => {
 	return (
 		<Row className="mt-3" style={{ margin: '0 auto' }}>

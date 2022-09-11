@@ -1,6 +1,10 @@
 import GamesCarousel from '../Games/GamesCarousel';
 import GroupCollection from '../Games/GroupCollection';
 
+/**
+ * Home page component
+ * @returns
+ */
 export default function Home() {
 	return (
 		<>

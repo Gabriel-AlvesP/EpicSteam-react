@@ -1,5 +1,10 @@
 import { Modal } from 'react-bootstrap';
 
+/**
+ * Modal layout + style
+ * @param {object} param0
+ * @returns
+ */
 const MyModal = ({ title, body, showModal, setShowModal }) => {
 	return (
 		<Modal

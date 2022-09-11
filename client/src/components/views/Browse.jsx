@@ -1,6 +1,10 @@
 import { CategoriesCarousel } from '../Categories/CategoriesCarousel';
 import GamesCollection from '../Games/GamesCollection';
 
+/**
+ * Browse page component
+ * @returns
+ */
 export default function Browse() {
 	return (
 		<div>

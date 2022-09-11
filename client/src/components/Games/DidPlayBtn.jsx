@@ -5,6 +5,13 @@ import { useAccessAxios } from '../../services/hooks/useAccessAxios';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 
+/**
+ * Handles the did play feature,
+ * that allows users to mark games as played
+ *
+ * @param {object} properties - [string] gameId, [array] players, [function] setPlayers
+ * @returns
+ */
 const DidPlayBtn = ({ gameId, players, setPlayers }) => {
 	const { auth } = useAuth();
 	const [didPlay, setDidPlay] = useState(false);
@@ -13,11 +20,17 @@ const DidPlayBtn = ({ gameId, players, setPlayers }) => {
 	});
 	const accessAxios = useAccessAxios();
 
+	/**
+	 * Checks if the current user is in the list of users that played the game
+	 */
 	useEffect(() => {
 		if (players?.includes(auth?.username)) setDidPlay(true);
 		else setDidPlay(false);
 	}, [players, auth]);
 
+	/**
+	 * Label styling
+	 */
 	useEffect(() => {
 		if (!didPlay) {
 			setStyle(prev => ({
@@ -34,6 +47,10 @@ const DidPlayBtn = ({ gameId, players, setPlayers }) => {
 		}
 	}, [didPlay]);
 
+	/**
+	 * Toggles user did play state and saves it
+	 * @param {object} e event
+	 */
 	const toggleDidPlay = e => {
 		setDidPlay(prevState => {
 			let newState = !prevState;

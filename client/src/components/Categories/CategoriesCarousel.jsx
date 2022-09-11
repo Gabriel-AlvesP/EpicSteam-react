@@ -11,6 +11,10 @@ import handleError from '../../utils/errorHandling';
 import AddCategory from './AddCategory/AddCategory';
 import { Row, Col } from 'react-bootstrap';
 
+/**
+ * Carousel with all categories
+ * @returns
+ */
 export const CategoriesCarousel = () => {
 	const [categories, setCategories] = useState([]);
 	const [drag, setDrag] = useState(false);
@@ -28,6 +32,9 @@ export const CategoriesCarousel = () => {
 		pauseOnHover: true,
 	};
 
+	/**
+	 * Gets and sets categories
+	 */
 	useEffect(() => {
 		const getCategories = async () => {
 			try {

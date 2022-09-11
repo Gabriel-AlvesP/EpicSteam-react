@@ -8,6 +8,12 @@ import { axiosWCredentials } from '../../services/apis/axios';
 import handleError from '../../utils/errorHandling';
 import { FaRegCheckCircle, FaCheckCircle } from 'react-icons/fa';
 
+/**
+ * Sign in - influences authentication state
+ *
+ * @param {object} props properties
+ * @returns
+ */
 export default function SignIn(props) {
 	//Authentication Context usage
 	const { setAuth } = useAuth();
@@ -25,10 +31,17 @@ export default function SignIn(props) {
 	const [checked, setChecked] = useState(true);
 	const [color, setColor] = useState('checked');
 
+	/**
+	 * Toggle checked state
+	 * related to authentication persistence
+	 */
 	const toggleCheck = () => {
 		setChecked(prev => !prev);
 	};
 
+	/*
+	 * Changes color depending on checked state
+	 */
 	useEffect(() => {
 		let color = checked ? 'checked' : '';
 		setColor(color);

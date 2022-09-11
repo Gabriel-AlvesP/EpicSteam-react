@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { signUpHints } from '../../utils/validations';
 
+/**
+ * Handles the error/success message that is shown during and
+ * after the authentication process
+ * @param {object} props properties
+ * @returns
+ */
 export default function AuthMessage(props) {
 	const [message, setMessage] = useState('');
 	const [msgStyle, setMsgStyle] = useState({

@@ -6,9 +6,16 @@ import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 import './GamesCarousel.css';
 
+/**
+ * Carousel with the most liked games
+ * @returns
+ */
 export default function GamesCarousel() {
 	const [games, setGames] = useState([]);
 
+	/**
+	 * Gets the most liked games
+	 */
 	useEffect(() => {
 		const getItems = async () => {
 			try {

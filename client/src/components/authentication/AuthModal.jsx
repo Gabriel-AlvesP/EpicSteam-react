@@ -3,6 +3,11 @@ import { Modal } from 'react-bootstrap';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
+/**
+ * Represents the authentication modal
+ * @param {object} props properties
+ * @returns modal
+ */
 export default function AuthModal(props) {
 	//* [True] sign in : [False] sign up
 	const initialContent = props.modalContent;

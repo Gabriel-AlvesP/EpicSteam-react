@@ -8,12 +8,19 @@ import './Users.css';
 import { toast } from 'react-toastify';
 import handleError from '../../utils/errorHandling';
 
+/**
+ * Users page component
+ * @returns
+ */
 export default function Users() {
 	const [users, setUsers] = useState([]);
 	const [err, setErr] = useState('');
 	const { auth } = useAuth();
 	const accessAxios = useAccessAxios();
 
+	/**
+	 * Gets users
+	 */
 	useEffect(() => {
 		let isMounted = true;
 		const controller = new AbortController();
@@ -43,6 +50,10 @@ export default function Users() {
 		};
 	}, [accessAxios]);
 
+	/**
+	 * Makes a request to delete a user
+	 * @param {object} e event
+	 */
 	const deleteUser = async e => {
 		let user = users.find(elm => e.target.value === elm.username);
 		if (!user) toast.error('User was not found.');
