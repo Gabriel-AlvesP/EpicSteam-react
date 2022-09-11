@@ -63,6 +63,7 @@ export default function Users() {
 			setUsers(prevUsers =>
 				prevUsers.filter(elem => elem.username !== user.username)
 			);
+			toast.success('User was removed with success!');
 		} catch (err) {
 			toast.error(
 				handleError(err, `Couldn't delete the user ${user.username}`)
